@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xmi:id="_lHBTQGlFEemBw6Jgkng_gg" version="12.1.0.201708031200">
+  <semanticResources>metamodels/destinoarq.ecore</semanticResources>
+  <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
+  <semanticResources>models/modeloContribuyentes.sql</semanticResources>
+  <semanticResources>transformations/utils.ocl</semanticResources>
+  <semanticResources>models/arqdestino-esperado.xmi</semanticResources>
+  <semanticResources>generated/metamodels/generado.destinoarq</semanticResources>
+  <semanticResources>metamodels/Sql.ecore</semanticResources>
+  <semanticResources>models/modeloContribuyentes.xmi</semanticResources>
+  <semanticResources>models/arqdestino-generado.xmi</semanticResources>
+</viewpoint:DAnalysis>

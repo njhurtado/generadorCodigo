@@ -1,0 +1,88 @@
+[% 
+import "../../utils.eol";
+var nombreXhtml=xhtml.nombre.firstToUpperCamelCase();
+
+var to = Arq!To.all.select(n | n.nombre = xhtml.nombre).first();
+
+var attsCombo=to.att.atributos.select(a|a.isModoCombo() and  a.isAttAuditoria());
+ attsCombo.addAll(to.pk.atributos.select(a|a.isModoCombo() and  a.isAttAuditoria()));
+var attsImput=to.att.atributos.select(a|not a.isModoCombo() and  a.isAttAuditoria());
+attsImput.addAll(to.pk.atributos.select(a|not a.isModoCombo() and  a.isAttAuditoria()));
+%]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/esquema/Esquema.xhtml">
+        <ui:define name="contenido">
+            <f:subview id="viewCrear[%=nombreXhtml%]">
+                <div id="areaDeTrabajo">
+                    <div id="tituloDePlantilla">
+                        <h:outputText value="#{arq_aud_mensajes['lbl_datos_contribuyente']}"/>
+                    </div>
+                    <hr/>
+                    <div id="areaMediaPlantilla">
+                        <h:form id="form[%=nombreXhtml%]">
+                            <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+                           
+                           
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="300">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes GreenButton" icon="ui-icon-check"/>
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no RedButton" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+                       <p:panel id="basic[%=nombreXhtml%]" header="#{arq_aud_mensajes['label_[%=nombreXhtml%]']}" style="margin-bottom:20px">
+                                <h:panelGrid columns="2" styleClass="td-text two-col-medium">  
+                       [%
+                      for(att in attsImput){
+                      %]
+                      		<h:outputLabel value="#{arq_aud_mensajes['[%=att.nombre.firstToUpperCamelCase()%]']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txt[%=att.nombre.firstToUpperCamelCase()%]"
+                                                     required="[%=att.isObligatorio%]"
+                                                     label="#{arq_aud_mensajes['lbl_[%=att.nombre.firstToUpperCamelCase()%]']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrear[%=nombreXhtml%]WBO.to[%=nombreXhtml%].[%=att.nombre.firstToLowerCamelCase()%]}"/>
+                             </h:outputLabel>
+                      
+                      [%                       
+                      }                      
+                       %] 
+                       
+                     [%
+                      for(att in attsCombo){
+                      %]
+                       <h:outputLabel value="#{arq_aud_mensajes['lbl_[%=att.nombre.firstToUpperCamelCase()%]']}:" styleClass="ui-outputlabel  pf_required_field">
+                                  
+                        <p:selectOneMenu id="lst[%=att.nombre.firstToUpperCamelCase()%]" value="#{contribuyenteWBO.[%=att.nombre.firstToUpperCamelCase()%]}" required="true" style="#{ component.valid ? '' : 'border-color:red;'}"
+                                                         label="#{arq_aud_mensajes['lbl_[%=att.nombre.firstToUpperCamelCase()%]']}">
+                                            <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                            <f:selectItems value="#{dcrear[%=nombreXhtml%]WBO.[%=att.nombre.firstToLowerCamelCase()%]List}"/>
+                        </p:selectOneMenu>
+                      </h:outputLabel>
+                      [%                       
+                      }                      
+                       %]
+                       
+                                   </h:panelGrid>
+                            </p:panel>
+                         <h:panelGrid columns="1" styleClass="td-commandbt one-col">
+                            <h:panelGroup>
+                                <p:commandButton id="idBtnDireccionEditar" update="viewCrear[%=nombreXhtml%]:form[%=nombreXhtml%]:basic[%=nombreXhtml%]"
+                                                 actionListener="#{dcrear[%=nombreXhtml%]WBO.crear[%=nombreXhtml%]()}"
+                                                 styleClass="btnd icon_crear" value="Crear [%=nombreXhtml%]" 
+                                                 ajax="true">
+                                </p:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </f:subview>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,82 @@
+[%
+	var nombreClase = Modulo.getNombreClase();
+	var paquete = Paquete;
+  	  	
+  	var unTo = Arq!`To`.all.first();
+  	var paqueteTo = unTo.paquete;
+		
+%]
+
+/**
+ * Republica de Colombia
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%=paquete%].impl.oracle;
+
+import java.util.*;
+import [%=paqueteTo%].*;
+import [%=paquete%].*;
+import [%=paquete%].impl.oracle.*;
+import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAOFactory;
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Fabrica de Objetos de acceso a datos para [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author 
+ * @version 
+ * <pre>
+ 
+ * </pre>
+ */
+ 
+ public class DDAOFactory[%=nombreClase%] extends DDAOFactory implements IDDAOFactory[%=nombreClase%] {
+ 
+ 	 [% var daos = Arq!Dao.all;
+		for(d in daos) {
+		  var nombreDao = d.getNombreClase();
+	%]
+		/**
+		 * Genera un nuevo objeto DAO de tipo [%=nombreDao%]
+		 * @ return  IDDAO[%=nombreDao%]
+		 */			  
+		  public IDDAO[%=nombreDao%] getDao[%=nombreDao%]() {
+		  		return new DDAO[%=nombreDao%]();
+		  } 
+ 	[%}%]
+ 	
+ 	
+ }
+ 
+ [%
+ operation Arq!Modulo getNombreClase() : String {
+     var retorno = self.nombre.substring(0,1).toUpperCase();
+  	 if (self.nombre.indexOf("_") > 0) {
+  	 	retorno = "";
+	  	for (t in self.nombre.toLowerCase.split("_")) {
+	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
+	  	}
+  	 } else {
+  	 	retorno += self.nombre.substring(1).toLowerCase();
+  	 }
+    return retorno;
+  }	
+  
+  operation Arq!Dao getNombreClase() : String {
+     var retorno = self.nombre.substring(0,1).toUpperCase();
+  	 if (self.nombre.indexOf("_") > 0) {
+  	 	retorno = "";
+	  	for (t in self.nombre.toLowerCase.split("_")) {
+	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
+	  	}
+  	 } else {
+  	 	retorno += self.nombre.substring(1).toLowerCase();
+  	 }
+    return retorno;
+  }	
+ %]

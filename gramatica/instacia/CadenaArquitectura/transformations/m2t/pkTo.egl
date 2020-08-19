@@ -1,0 +1,178 @@
+[% import "../utils.eol"; %]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= clase.paquete %];
+
+import co.gov.dian.muisca.arquitectura.general.to.IDTO;
+import org.apache.commons.lang.builder.*;
+
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Objeto de transporte para la PK de [%= clase.nombre.firstToUpperCamelCase() %].</p>
+ * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author user
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
+		private static final long serialVersionUID = -1231029143L; 
+
+	// Atributos PK
+	[%		//todas los atributos excepto pks
+		var atts=new OrderedSet;
+		var setAtts=new OrderedSet;
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var tipo = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			atts.add(tipo +' '+nombre);
+			setAtts.add('set'+att.nombre.firstToUpperCamelCase()+'('+nombre+')');
+		
+	%]
+		private [%=tipo%] [%=nombre%];		
+	[%
+		}	
+	%]
+	
+	/**
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]PKTO por defecto.
+	 */
+	public D[%= clase.nombre.firstToUpperCamelCase() %]PKTO() { }
+
+	/**
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]PKTO con los atributos.
+	 [%		//todas los atributos excepto pks
+		
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+	%]
+		* @param [%=nombre%] [%=type%];
+	[%
+		}	
+	%]
+	 */
+	public D[%= clase.nombre.firstToUpperCamelCase() %]PKTO([%=atts.concat(",")%]) {
+		[%=setAtts.concat(";\n \t \t")%];
+	}
+	
+	
+	
+	 [%		//gets y sets
+		
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			var nombreUpper =att.nombre.firstToUpperCamelCase();
+	%]
+		/**
+	 	* Devuelve el valor de [%=nombre%].
+	 	* @return Un objeto [%=type%] 
+	 	*/
+		public [%=type%] get[%=nombreUpper%] (){
+			return [%=nombre%];
+		}
+		/**
+		 * Establece el valor de [%=nombre%].
+		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
+		 */
+		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
+			this.[%=nombre%] = [%=nombre%];
+		}
+		
+	[%
+		}	
+	%]
+	
+	/**
+	 * Devuelve una representación en String del objeto.
+	 * @return String
+	 */
+	public String toString() {
+		ToStringBuilder builder = new ToStringBuilder(this);
+		
+		 [%		//gets y sets
+		
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			var nombreUpper =att.nombre.firstToUpperCamelCase();
+	%]
+		builder.append("[%=nombre%]", get[%=nombreUpper%]());
+	[%
+		}	
+	%]
+		return builder.toString();
+	}
+	
+	
+	/**
+     * Compara el objeto actual con el objeto especificado.
+     * @param objeto Objeto con el cual se compara
+     * @return true si los objetos son iguales; false de lo contrario
+     */
+     public boolean equals(Object objeto) {
+           if (this == objeto) {
+                 return true;
+           }
+           if (!(objeto instanceof D[%= clase.nombre.firstToUpperCamelCase() %]PKTO)) {
+                 return false;
+           }
+           D[%= clase.nombre.firstToUpperCamelCase() %]PKTO otro = (D[%= clase.nombre.firstToUpperCamelCase() %]PKTO) objeto;
+           EqualsBuilder builder = new EqualsBuilder();       
+           
+           
+            [%		//gets y sets
+		
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			var nombreUpper =att.nombre.firstToUpperCamelCase();
+	%]
+		builder.append(get[%=nombreUpper%](),  otro.get[%=nombreUpper%]());
+	[%
+		}	
+	%]
+           
+           return builder.isEquals();
+     }
+
+     /**
+     * Devuelve el hash code del objeto.
+     * @return int
+     */
+     public int hashCode() {
+           HashCodeBuilder builder = new HashCodeBuilder();
+           	 [%		//gets y sets
+		
+		for(att in clase.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			var nombreUpper =att.nombre.firstToUpperCamelCase();
+	%]
+		builder.append( get[%=nombreUpper%]());
+	[%
+		}	
+	%]
+           return builder.toHashCode();
+           
+           
+     }
+	
+	
+}

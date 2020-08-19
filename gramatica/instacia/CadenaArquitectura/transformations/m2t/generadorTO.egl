@@ -1,0 +1,10 @@
+[% 
+	var nombreModulo = Arq!Modulo.all.at(0).nombre; 
+%]
+<html>
+<head>
+</head>
+<body>
+	<h2>[%= nombreModulo %]</h2>
+</body>
+</html>

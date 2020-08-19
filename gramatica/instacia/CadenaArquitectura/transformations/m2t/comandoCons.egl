@@ -1,0 +1,146 @@
+[% import "../utils.eol"; 
+var nombreClase=clase.nombre.firstToUpperCamelCase();
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= clase.paquete %];
+
+import java.util.*;
+
+import [%=paqueteTO%].D[%=nombreClase%]AttTO;
+import [%=paqueteTO%].D[%=nombreClase%]PKTO;
+import [%=paqueteTO%].D[%=nombreClase%]TO;
+import co.gov.dian.muisca.arquitectura.general.excepcion.*;
+import co.gov.dian.muisca.arquitectura.interfaces.*;
+import co.gov.dian.muisca.arquitectura.interfaces.implgenerica.comandos.*;
+
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Comando de [%=tipoComando%] utilizado para consultar un objeto [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author gencode
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class [%=nomPrefijo%][%=nombreClase%] extends  DComando[%=tipoComando%] {
+	private static final long serialVersionUID = 1788506914L; 
+
+	/** Objeto de transporte de [%=nombreClase%] */
+	protected D[%=nombreClase%]TO to[%=nombreClase%];
+	/** Llave primaria de [%=nombreClase%] */
+	protected D[%=nombreClase%]PKTO pk[%=nombreClase%];
+	/** Atributos de [%=nombreClase%] */
+	protected D[%=nombreClase%]AttTO att[%=nombreClase%];
+
+	/**
+	 * Inicializa la consulta por llave primaria.
+	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
+	 */
+	public void inicializar(D[%=nombreClase%]PKTO pk[%=nombreClase%]) {
+		to[%=nombreClase%] = null;
+		att[%=nombreClase%] = null;
+		this.pk[%=nombreClase%] = pk[%=nombreClase%];
+	}
+
+	/**
+	 * Devuelve el objeto [%=nombreClase%] que se haya consultado.
+	 * @return Un objeto D[%=nombreClase%]TO
+	 */
+	public D[%=nombreClase%]TO get[%=nombreClase%]() {
+		return to[%=nombreClase%];
+	}
+
+	/**
+	 * Ejecuta el comando de [%=tipoComando%].
+	 * @throws DExcepcion Si ocurre algún error al realizar la
+	 * la consulta de [%=nombreClase%]
+	 */
+	[%
+	if(tipoComando='Accion'){
+	%]
+	protected void ejecutarComando(){
+		throw new UnsupportedOperationException();
+	}
+		[%
+	}else{
+	%]
+	protected void ejecutarComando() throws DExcepcion {
+		throw new UnsupportedOperationException();
+	}
+	[%
+	}
+	%]
+
+	/**
+	 * Obtiene una copia (clon) del comando.
+	 * @return Un Object con la copia del comando
+	 */
+	public Object clonar() {
+		return new [%=nomPrefijo%][%=nombreClase%]();
+	}
+
+	/**
+	 * Indica si el comando es auditable.
+	 * @return true si el comando es auditable; false de lo contrario
+	 */
+	public boolean isAuditable() {
+		return true;
+	}
+
+	/**
+	 * Obtiene la descripción del comando.
+	 * @return Un String con la descripción del comando
+	 */
+	public String getDescripcion() {
+		return "Permite consultar un objeto [%=nombreClase%]";
+	}
+
+	/**
+	 * Método para validar los parámetros inicializados, invocado
+	 * previamente a la ejecución del comando.
+	 * @return true si los parámetros son válidos; false de lo contrario
+	 * @throws DValidarExcepcion Si los parámetros no son válidos
+	 */
+	public boolean validar() throws DValidarExcepcion {
+		Map<String, Object> parametros=new HashMap<String, Object>();
+		parametros.put(this.getClass().getName()+":validar:pk[%=nombreClase%]",pk[%=nombreClase%]);
+		
+		[%		//gets y sets
+		var text="parametros.put(this.getClass().getName()+\":validar:";
+		for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
+		{		
+		//att pk		
+		var attPk=to.pk.atributos.collect(a|text+"pk"+to.nombre.firstToUpperCamelCase()+
+		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+to.nombre.firstToUpperCamelCase()+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
+		%]
+		[%=attPk%];		
+		[%
+		}	
+		%]
+		validarParametros("Consulta",parametros);
+		return true;
+	}
+
+	/**
+	 * Para copiar el contenido del comando actual al comando enviado como parámetro.
+	 * @param comando Comando sobre el cual copiar
+	 */
+	public void asignar(IDComando comando) {
+		if (comando instanceof [%=nomPrefijo%][%=nombreClase%]) {
+			[%=nomPrefijo%][%=nombreClase%] copia = ([%=nomPrefijo%][%=nombreClase%]) comando;
+			copia.to[%=nombreClase%] = to[%=nombreClase%];
+			copia.pk[%=nombreClase%] = pk[%=nombreClase%];
+			copia.att[%=nombreClase%] = att[%=nombreClase%];
+		}
+	}
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="arqdestino" nsURI="http://www.uniandes/arquitecturadian/destinoarq"
+    nsPrefix="arqdestino">
+  <eClassifiers xsi:type="ecore:EClass" name="Modulo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="componentes" lowerBound="1"
+        upperBound="-1" eType="#//Componente" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Negocio" eSuperTypes="#//Componente">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clases" upperBound="-1"
+        eType="#//Clase" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Componente" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paquete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Web" eSuperTypes="#//Componente">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recursos" upperBound="-1"
+        eType="#//Recurso" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clases" upperBound="-1"
+        eType="#//Clase" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Accion" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="servicios" lowerBound="1"
+        upperBound="-1" eType="#//Servicio" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alias" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Servicio" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="factory" upperBound="-1"
+        eType="#//Factory" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alias" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dao" eSuperTypes="#//Clase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="To" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pk" lowerBound="1" eType="#//PkTo"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="att" eType="#//AttTo"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Delegado" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="acciones" upperBound="-1"
+        eType="#//Accion" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Wbo" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegados" upperBound="-1"
+        eType="#//Delegado" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tos" upperBound="-1" eType="#//To"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Xhtml" eSuperTypes="#//Clase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Recurso">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tipo" eType="#//RecursoEnum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RecursoEnum">
+    <eLiterals name="PROPERTIES"/>
+    <eLiterals name="JS" value="1"/>
+    <eLiterals name="CSS" value="2"/>
+    <eLiterals name="NAVEGACION" value="3"/>
+    <eLiterals name="CONFIGS" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Clase" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paquete" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="atributos" upperBound="-1"
+        eType="#//Atributo" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="anotaciones" upperBound="-1"
+        eType="#//Anotacion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="detalle" upperBound="-1"
+        eType="#//Clase" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sufijoPkg" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//Clase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="daos" upperBound="-1" eType="#//Dao"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Atributo">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tipo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="anotaciones" upperBound="-1"
+        eType="#//Anotacion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isObligatorio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PkTo" eSuperTypes="#//Clase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AttTo" eSuperTypes="#//Clase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Anotacion" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clase" eType="#//Clase"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="args" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TablaDetalle" eSuperTypes="#//Anotacion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ModoCombo" eSuperTypes="#//Anotacion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Filtro" eSuperTypes="#//Anotacion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ModoReferencia" eSuperTypes="#//Anotacion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refs" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

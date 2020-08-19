@@ -1,0 +1,83 @@
+//Convierte un text AAA_BBB_CC  a AaaBbbCc
+operation String firstToUpperCamelCase() : String {
+var arr=self.split('_');
+var result="";
+for(p in arr){
+result+=p.toLowerCase().firstToUpperCase();
+}
+return result;	
+}
+
+
+//Convierte un text AAA_BBB_CC  a aaaBbbCc
+operation String firstToLowerCamelCase () : String {
+return self.firstToUpperCamelCase().firstToLowerCase;	
+}
+//verifica si el atributo está anotada
+operation Atributo isModoCombo() : Boolean {
+//self.nombre.println();
+//self.anotaciones.println();
+return self.anotaciones.select(an|an.isTypeOf(ModoCombo)).size()>0;	
+}
+
+//Retorna la Clase Referencia de anotacion ModoCombo
+operation Atributo getNomClaseRefModoCombo() : String {
+	
+	if(self.isModoCombo()){
+	//self.anotaciones.select(an|an.isTypeOf(ModoCombo)).first().args.println();
+	return self.anotaciones.select(an|an.isTypeOf(ModoCombo)).first().args;
+	}
+	
+	return "";
+}
+//Retorna la Clase Referencia de anotacion  Upper Camel Case
+operation Atributo getNomClaseRefModoComboCamelCase() : String {
+	var str=new String;
+	//if(self.isModoCombo()){
+	//self.anotaciones.select(an|an.isTypeOf(ModoCombo)).first().args.println();
+	str=self.anotaciones.select(an|an.isTypeOf(ModoCombo)).first().args;
+	if(str <> null)
+	return (str+"").firstToUpperCamelCase();
+	else
+	return "";
+}
+
+//Retorna la Clase
+operation Atributo getClaseRefModoCombo() : To {
+	
+	if(self.isModoCombo()){
+	var nombreTabla=self.anotaciones.select(an|an.isTypeOf(ModoCombo)).first().args;
+	nombreTabla.println();
+	return To.all.select(c|c.nombre=nombreTabla).first();
+	}
+}
+
+//Retorna la Clase
+operation Atributo isAttAuditoria() : Boolean {
+	var nombre=self.nombre.firstToUpperCamelCase();
+	return nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid";
+	
+}
+
+//replace("\\.", "/")
+operation String getUrlCarpeta() : String {
+return self.replace("\\.", "/");	
+}
+
+
+//retorna el tipo de dato java
+operation String toType () : String {
+	if(self='VARCHAR2' or self='CHAR')
+	return 'java.lang.String';
+	else if(self='NUMBER')
+	return 'java.math.BigInteger';
+	else if(self='TIMESTAMP')
+	return 'java.sql.Timestamp';
+	else 
+	return self;
+	
+
+}
+
+
+

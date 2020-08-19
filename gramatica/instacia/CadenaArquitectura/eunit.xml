@@ -1,0 +1,52 @@
+<project>
+<!-- Estas propiedades definen la ubicación de los modelos, metamodelos y las URI de los mismos -->
+<property name="models.location" location="${basedir}/models" />
+<property name="arqdestino.model.location" location="${models.location}/arqdestino-esperado.xmi" />
+<property name="arqdestinogenerado.model.location" location="${models.location}/arqdestino-generado.xmi" />
+<property name="dsql.model.location" location="${models.location}/modeloContribuyentes.sql" /> 
+
+<property name="metamodels.location" location="${basedir}/metamodels" />
+<property name="arqdestino.metamodel.location" location="${metamodels.location}/destinoarq.ecore" />
+<property name="dsql.metamodel.location" location="${metamodels.location}/Sql.ecore" />
+<property name="arqdestino.metamodel.uri" value="http://www.uniandes/arquitecturadian/destinoarq" />
+
+<property name="dsql.metamodel.uri" value="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" />
+
+<!-- Estas propiedades definen la ubicación de los tests (archivos eunit)  -->
+<property name="tests.location" location="${basedir}/tests"/>
+<property name="anttargetmodels.eunit.location" location="${tests.location}/arquitectura-dian-testing.eunit"/>
+
+<!-- Este target se encarga de registrar los metamodelos de dsql y de arqdestino -->
+<target name="with-model-loading-target" description="Registra los metamodelos">
+<epsilon.emf.register file="${dsql.metamodel.location}"/>
+<epsilon.emf.register file="${arqdestino.metamodel.location}"/>
+<epsilon.eunit src="${anttargetmodels.eunit.location}"/>
+</target>
+
+
+<!-- Este target se lanzará desde un método del archivo EUnit anotado con @models. Esto es útil cuando se desea reusar las mismas tareas para la carga de modelos entre distintas test suites.-->
+<target name="load-models" description="Carga los modelos según el metamodelo de cada uno">
+
+<epsilon.emf.loadModel name="Sql"
+modelfile="${dsql.model.location}" metamodeluri="${dsql.metamodel.uri}"
+read="true" store="false"/>
+
+<epsilon.emf.loadModel name="arqdestinoExpected"
+modelfile="${arqdestino.model.location}" metamodeluri="${arqdestino.metamodel.uri}"
+read="true" store="false"/>
+
+<epsilon.emf.loadModel name="Arq"
+modelfile="${arqdestinogenerado.model.location}" metamodeluri="${arqdestino.metamodel.uri}"
+read="false" store="true"/>
+</target>
+
+<!-- Target encargado de ejecutar la transformación -->
+<target name="Sql2Arqdestino">
+<epsilon.etl src="${basedir}/transformations/m2m/Aplication2Modulo.etl">
+<model ref="Sql"/>
+<model ref="Arq"/>
+</epsilon.etl>
+	<epsilon.disposeModels/>
+</target>
+
+</project>

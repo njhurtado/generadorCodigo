@@ -1,0 +1,60 @@
+[% import "../utils.eol"; 
+var nombreClase=clase.nombre.firstToUpperCamelCase();
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ * <p>
+ * $Header:$
+ */
+package [%= clase.paquete %].impl;
+
+import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
+import co.gov.dian.muisca.arquitectura.interfaces.IDAdminPersistencia;
+import [%= clase.paquete.replace('servicios','dao') %].impl.oracle.DDAOFactory[%=modulo.nombre%];
+import [%= clase.paquete.replace('servicios','dao') %].IDDAO[%=nombreClase%];
+import [%= clase.paquete.replace('servicios','dao') %].IDDAOFactory[%=nombremodulo%];
+import [%= clase.paquete %].DCmdSrvElim[%=nombreClase%];
+
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Comando de servicio utilizado para eliminar un objeto [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2012</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author gen code
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class DCmdSrvElim[%=nombreClase%]Impl extends DCmdSrvElim[%=nombreClase%] {
+
+    private static final long serialVersionUID = -431717317L;
+
+    /**
+     * Ejecuta el comando de servicio.
+     *
+     * @throws DExcepcion Si ocurre algn error al realizar la
+     * consulta de [%=nombreClase%] o si el objeto no existe
+     */
+    protected void ejecutarComando( ) throws DExcepcion {
+        IDAdminPersistencia admin = getAdministradorPersistencia( );
+        try {
+            // Iniciar los DAO's
+            IDDAOFactory[%=nombremodulo%] fabrica = new DDAOFactory[%=nombremodulo%]( );
+            IDDAO[%=nombreClase%] dao = fabrica.getDao[%=nombreClase%]( );
+
+            // Eliminar
+            dao.inicializarEliminar( pk[%=nombreClase%] );
+            admin.eliminar( dao );
+        }
+        finally {
+            admin.cerrarSesion( );
+        }
+    }
+}
+
+

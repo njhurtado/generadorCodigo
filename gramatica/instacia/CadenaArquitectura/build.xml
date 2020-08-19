@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project default="build">
+
+	<property name="generated.location" location="${basedir}/generated" />
+	<property name="transformations.location" location="${basedir}/transformations" />
+	<property name="models.location" location="${basedir}/models" />
+	<property name="metamodels.location" location="${basedir}/metamodels" />
+	<property name="destinoarq.metamodel.location" location="${metamodels.location}/destinoarq.ecore" />
+	<property name="destinoarq.metamodel.uri" value="http://www.uniandes/arquitecturadian/destinoarq" />
+	<property name="sql.metamodel.uri" value="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" />
+
+	<target name="build">
+		<echo>Borrando el contenido de la carpeta generated</echo>
+		<delete dir="${generated.location}" failonerror="true" />
+		<antcall target="m2m" />
+	</target>
+
+	<target name="m2m">
+		<echo>Realizar transformación ETL</echo>
+		<epsilon.emf.register file="${destinoarq.metamodel.location}" />
+		<epsilon.emf.loadModel name="Arq" modelfile="${models.location}/arqdestino-generado.xmi" metamodeluri="${destinoarq.metamodel.uri}" read="false" store="true" />
+		<epsilon.emf.loadModel name="Sql" modelfile="${models.location}/modeloContribuyentes.xmi" metamodeluri="${sql.metamodel.uri}" read="true" store="false" />
+
+		<epsilon.etl src="${transformations.location}/m2m/Aplication2Modulo.etl" >
+			<model ref="Arq" alias="Arq"/>
+			<model ref="Sql" alias="Sql"/>
+		</epsilon.etl>
+
+		<antcall target="m2t" />
+		<antcall target="copyFiles" />
+	</target>
+
+	<target name="m2t">
+		<echo>Corriendo Template EGL</echo>
+		<epsilon.emf.register file="${destinoarq.metamodel.location}" />
+		<epsilon.emf.loadModel name="Arq" modelfile="${models.location}/arqdestino-generado.xmi" metamodeluri="${destinoarq.metamodel.uri}" read="true" store="true" />
+
+		<epsilon.egl src="${transformations.location}/m2t/master.egl">
+			<model ref="Arq" />
+		</epsilon.egl>
+
+		<epsilon.disposeModels/>
+	</target>
+
+	<target name="copyFiles">
+
+		<delete>
+			<fileset dir="${basedir}/generated/AUTBuses/src/main/java/co/gov/dian/muisca/automatizacion" includes="*.java" />
+		</delete>
+
+		<copy todir="C:/Users/Usuario/Documents/MISO_AUTOMATIZACION/ArquitecturaDian/ARQDIANBuses/" overwrite="false">
+			<fileset dir="${basedir}/generated/AUTBuses/"/>
+		</copy>
+
+		<copy todir = "C:/Users/Usuario/Documents/MISO_AUTOMATIZACION/ArquitecturaDian/WebArquitecturaDian/src/main/java/" overwrite="true">
+			<fileset dir="${basedir}/generated/WebAutomatizacion/src/main/java/"/>
+		</copy>
+	</target>
+
+</project>

@@ -1,0 +1,45 @@
+@model
+operation loadModels() {
+  runTarget("load-models");
+}
+
+
+@test
+operation transformationWorksAsExpected() {
+  runTarget("Sql2Arqdestino");
+ // assertEqualModels("arqdestinoExpected", "Arq");
+}
+
+@test
+operation transformationUnModulo() {
+  runTarget("Sql2Arqdestino");
+  //Arq!Modulo.all.println();
+  if (Arq!Modulo.all.size() <> 1)
+		fail("Solo debe haber un Modulo");
+  
+	}
+	
+@test
+operation transformationDaoPorTabla() {
+  runTarget("Sql2Arqdestino"); 
+  if (Sql!Table.all.size()<>Arq!Dao.all.size())
+		fail("Solo debe haber un Dao por Tabla");
+  
+	}
+@test
+operation transformationUnDelegado() {
+  runTarget("Sql2Arqdestino"); 
+ if (Arq!Delegado.all.size() <> 1)
+		fail("Solo debe haber un Delegado");
+  
+	}
+
+
+@test
+operation transformationUnXhtml() {
+  runTarget("Sql2Arqdestino"); 
+  Arq!Xhtml.all.size().println();
+ if (Arq!Xhtml.all.size() < 0)
+		fail("Solo debe haber al menos un Xhtml");
+  
+	}

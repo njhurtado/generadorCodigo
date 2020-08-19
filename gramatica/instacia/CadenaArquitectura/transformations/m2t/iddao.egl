@@ -1,0 +1,141 @@
+[%
+import "../utils.eol";
+	var nombreClase = Dao.getNombreClase();
+	var paqueteTO=Dao.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
+  
+%]
+
+/**
+ * Republica de Colombia
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%=Dao.paquete%];
+
+import java.util.*;
+import co.gov.dian.muisca.arquitectura.interfaces.IDDAO;
+import [%=paqueteTO%].*;
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Objeto de acceso a datos para [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author 
+ * @version 
+ * <pre>
+ 
+ * </pre>
+ */
+ 
+ public interface IDDAO[%=nombreClase%] extends IDDAO {
+ 
+ 	static final int CONSULTAR_POR_PK = 0;
+	static final int CREAR = 1;
+	static final int ACTUALIZAR = 2;
+	static final int ELIMINAR = 3;
+ 	static final int CONSULTA_GENERICA = 4;
+ 	[%		//tipo operacion por fks
+		var text="static final int CONSULTAR_POR_";
+		var cont=5;
+		var lstPTKTos=new Set;
+		var lstMetodosPTKTos=new Set;
+		var lstCaseValidacion=new Set;
+		for(to in Dao.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
+		{		
+		//Arq!ModoCombo	
+		var lst=to.att.atributos.select(a|a.isModoCombo());
+		var strLst=new OrderedSet;
+		for(a in lst){
+			var nameUpperCamelCase=a.getNomClaseRefModoComboCamelCase();
+			if(nameUpperCamelCase=""){
+				continue;
+			}
+			strLst.add(text+a.getNomClaseRefModoCombo()+"=" + cont.toString());
+			cont++;	
+		
+		//add objetos pk fk
+		lstPTKTos.add("/** Llave primaria de "+nameUpperCamelCase+" */ \n \t protected D"+nameUpperCamelCase+'PKTO pk'+nameUpperCamelCase);
+			// inicializar por fks
+		lstMetodosPTKTos.add("/**\n \t* Inicializa la consulta por "+nameUpperCamelCase+". \n \t* @param pk"+nameUpperCamelCase+
+			" Llave primaria de "+nameUpperCamelCase+" \n \t*/\n"+
+		 "\t void inicializarConsultarPor"+nameUpperCamelCase
+		 +"(D"+nameUpperCamelCase+"PKTO pk"+nameUpperCamelCase+
+		 ");");
+		 //case para swich
+		 lstCaseValidacion.add("case CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+":\n"
+				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+"\",pk"+nameUpperCamelCase+");\n"
+				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"()\",pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"());\n"
+				+"\t\t break;");
+		
+		}
+		if(strLst.size() > 0)	{%]		
+	[%=strLst.concat(";")%];
+		[%
+		}}	
+		%]
+			
+ 	/**
+	 * Inicializa la consulta por llave primaria.
+	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
+	 */
+	void inicializarConsultarPorPK(D[%=nombreClase%]PKTO pk[%=nombreClase%]);
+
+	/**
+	 * Inicializa la creación de [%=nombreClase%].
+	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
+	 */
+	void inicializarCrear(D[%=nombreClase%]TO to[%=nombreClase%]);
+
+	/**
+	 * Inicializa la actualización de [%=nombreClase%].
+	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
+	 */
+	void inicializarActualizar(D[%=nombreClase%]TO to[%=nombreClase%]);
+
+	/**
+	 * Inicializa la eliminación de [%=nombreClase%].
+	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
+	 */
+	void inicializarEliminar(D[%=nombreClase%]PKTO pk[%=nombreClase%]);
+ 
+ 
+ 	/**
+	 * Inicializa la consulta genérica de [%=nombreClase%].
+	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
+	 */
+	void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]);
+ 	
+ 	[%=lstMetodosPTKTos.concat("; \n \t \t")%]
+ 	
+ 	/**
+	 * Devuelve el objeto [%=nombreClase%] que se haya consultado.
+	 * @return Un objeto D[%=nombreClase%]TO
+	 */
+	D[%=nombreClase%]TO get[%=nombreClase%]();
+
+	/**
+	 * Devuelve la colección de objetos [%=nombreClase%] que se hayan consultado.
+	 * @return Un Collection con objetos D[%=nombreClase%]TO
+	 */
+	Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]();
+ 
+ }
+ 
+ [%
+ operation Arq!Dao getNombreClase() : String {
+     var retorno = self.nombre.substring(0,1).toUpperCase();
+  	 if (self.nombre.indexOf("_") > 0) {
+  	 	retorno = "";
+	  	for (t in self.nombre.toLowerCase.split("_")) {
+	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
+	  	}
+  	 } else {
+  	 	retorno += self.nombre.substring(1).toLowerCase();
+  	 }
+    return retorno;
+  }	
+ %]

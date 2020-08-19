@@ -1,0 +1,99 @@
+//Debe existir al menos una tabla
+operation Database isExistTables() : Boolean {
+		       return self.tables.size()<0;
+}
+
+//Verifica que en el modelo no existan tablas con el mismo nombre
+operation Database isUniqueNameTables() : Boolean {
+		var lstTables=self.tables;
+		var uniques=lstTables.size()=lstTables->asSet().size();
+		
+		/*if(not uniques){
+		Tables.all>forAll(e1| (e1 <> self and e1 <> Jump and e1 <> StateInitial) implies e1.name <> self.name).println();
+		}*/		
+       return uniques;
+}
+
+//Verifica si en na tabla hay mas de una columna con el mismo nobre
+operation Table isUniqueNameColumns() : Boolean {
+		var lstCols=self.columns;
+		var uniques=lstCols.size()=lstCols->asSet().size();
+       return uniques;
+}
+
+//Verifica longitud de nombre no debe exceder 30 char
+operation Database isSizeNameTable() : Boolean {
+		var lstCols=self.tables->select(t|t.name.length>30);
+				
+		for(tab in lstCols){
+		("Nombre Tabla mayor 30char: "+tab.name).println();
+		}		
+       return lstCols.size()>0;
+}
+
+//Verifica longitud de nombre no debe exceder 30 char
+operation Database isSizeNameColumns() : Boolean {
+		var lstCols=Column.all.select(c|c.name.length>30);		
+		for(tab in lstCols){
+		("Nombre Columna mayor 30char: "+tab.name).println();
+		}		
+       return lstCols.size()>0;
+}
+
+//Verifica que tabla referencia debe existir  foreignTable foreignColumns
+
+operation Table isReferenciaValidaFK() : Boolean {		
+	var retorno=true;	
+		if(not self.hasFK()){
+		retorno=true;
+		} else {
+		var lstFk=self.foreignkeys;
+		//verifica si la fk  tiene tablas y columnas referenciadas
+		var okTablefk=lstFk.select(fk|fk.foreignTable=null);
+		var okColsFk=lstFk.select(fk|fk.foreignColumns.isEmpty());	
+				
+		if(okTablefk.notEmpty() or okColsFk.notEmpty())
+		{		
+			("Tabla "+self.name).println();
+			 var errFK=lstFk.select(fk|fk.foreignTable=null or fk.foreignColumns.isEmpty());
+			 ("\t error fk: "+errFK.collect(f|f.name)).println();
+			 		
+			 retorno=false;
+		}
+		else
+		{
+			//verfica si la tabla existe
+			var existTable=Table.all.includesAll(lstFk.collect(fk|fk.foreignTable));
+			var cols=lstFk.collect(fk|fk.foreignColumns).flatten;
+			//verifica si la columna existe
+			var existCols=lstFk.collect(fk|fk.foreignTable).collect(t|t.columns).flatten.includesAll(cols);
+		   
+		   if(not existTable or not existCols ){
+			 retorno=false;
+			}
+			
+					 }
+		//return true;
+		}
+		//retorno.println();
+		return retorno;
+}
+
+//Verifica que una PK tenga solo una de las anotaciones : TableMode o ComboMode
+operation ForeignKey checkAnnotationFK() : Boolean {	
+       return self.annotations.select(f|f.isTypeOf(TableMode) or f.isTypeOf(ComboMode)).size()<=1;
+}
+
+//Verifica si una tabla tiene FKs
+operation Table hasFK() : Boolean {	
+       return self.foreignkeys.size()>0;
+}
+//Valida si tipo dato no está definido.
+operation Aplication checkDataTypes() : Boolean {	
+
+	var nameDataType=Column.all.collect(c|c.type.name).asSet();
+
+       return nameDataType.size()<=4;
+}
+
+

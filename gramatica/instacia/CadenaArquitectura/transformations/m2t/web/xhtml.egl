@@ -1,0 +1,38 @@
+[% 
+import "../../utils.eol";
+var nombreXhtml=xhtml.nombre.firstToUpperCamelCase();
+%]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/esquema/Esquema.xhtml">
+        <ui:define name="contenido">
+            <f:subview id="view[%=nombreXhtml%]">
+                <div id="areaDeTrabajo">
+                    <div id="tituloDePlantilla">
+                        <h:outputText value="#{arq_aud_mensajes['lbl_datos_contribuyente']}"/>
+                    </div>
+                    <hr/>
+                    <div id="areaMediaPlantilla">
+                        <h:form id="form[%=nombreXhtml%]">
+                            <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+                           
+                           
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="300">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes GreenButton" icon="ui-icon-check"/>
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no RedButton" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </div>
+                </div>
+            </f:subview>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,67 @@
+[% 
+import "../../utils.eol";
+var nombreModulo = Arq!Modulo.all.at(0).nombre.firstToUpperCamelCase(); 
+%]
+
+package co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo;
+
+import co.gov.dian.muisca.arquitectura.general.excepcion.DMuiscaAppException;
+import co.gov.dian.muisca.arquitectura.general.excepcion.errores.DErrorInfoBase;
+import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DConfirmacionErrorInfo;
+import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DValidacionWebErrorInfo;
+import co.gov.dian.muisca.arquitectura.general.web.DWbo;
+import co.gov.dian.muisca.arquitectura.general.to.gdto.DGenericoDTO;
+
+import co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.general.to.generico.D[%=nombreModulo%]WebDTO;
+
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
+
+public class D[%=nombreModulo%]BaseWBO extends DWbo {
+
+    private static Logger logger = Logger.getLogger( D[%=nombreModulo%]BaseWBO.class );
+    protected D[%=nombreModulo%]WebDTO dtoWeb = new D[%=nombreModulo%]WebDTO( "D[%=nombreModulo%]WebDTO" );
+    protected DGenericoDTO dto;
+
+    //------------ Manejo de Excepciones Propagadas-----------------------------------------
+
+    protected void notificarUsuarios( Throwable ex ) {
+        if( ex instanceof DMuiscaAppException ) {
+            DMuiscaAppException muiscaException = ( DMuiscaAppException )ex;
+
+            if( muiscaException.getLastError( ) instanceof DValidacionWebErrorInfo ) {
+                FacesContext.getCurrentInstance( ).addMessage( null, construirMensajeErrorFaces( muiscaException.getLastError( ) ) );
+            }
+            else if( muiscaException.getLastError( ) instanceof DConfirmacionErrorInfo ) {
+                FacesContext.getCurrentInstance( ).addMessage( null, construirMensajeConfirmacionFaces( muiscaException.getLastError( ) ) );
+            }
+
+        }
+    }
+
+    protected void notificarNoUsuarios( Throwable ex ) {
+        if( ex instanceof DMuiscaAppException ) {
+            DMuiscaAppException ae = ( DMuiscaAppException )ex;
+            for( DErrorInfoBase error : ae.getErrors( ) ) {
+                logger.debug( "Severidad :" + error.getSeverity( ).name( ) );
+                logger.debug( "Descripcion :" + error.getErrorText( ) );
+                logger.debug( "Codigo Error :" + error.getCode( ).getMessageCode( ) );
+                logger.debug( "Parametros :" + error.getParameters( ).toString( ) );
+                error.getCause( ).printStackTrace( );
+            }
+        }
+    }
+
+    private FacesMessage construirMensajeErrorFaces( DErrorInfoBase errorInfo ) {
+        logger.debug( "Severidad : " + errorInfo.getSeverity( ).name( ) );
+        return new FacesMessage( FacesMessage.SEVERITY_ERROR, errorInfo.getSeverity( ).name( ), errorInfo.getErrorText( ) );
+    }
+
+    private FacesMessage construirMensajeConfirmacionFaces( DErrorInfoBase errorInfo ) {
+        logger.debug( "Severidad : " + errorInfo.getSeverity( ).name( ) );
+        return new FacesMessage( FacesMessage.SEVERITY_INFO, errorInfo.getSeverity( ).name( ), errorInfo.getErrorText( ) );
+    }
+
+}

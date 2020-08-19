@@ -1,0 +1,190 @@
+[% import "../utils.eol"; 
+var nombreClase=clase.nombre.firstToUpperCamelCase();
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= clase.paquete %];
+
+import java.util.*;
+
+import [%=paqueteTO%].*;
+import co.gov.dian.muisca.arquitectura.general.excepcion.*;
+import co.gov.dian.muisca.arquitectura.interfaces.*;
+import co.gov.dian.muisca.arquitectura.interfaces.implgenerica.comandos.*;
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Comando de [%=tipoComando%] utilizado para consultar objetos [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2012</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author Nelson Hurtado
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
+	private static final long serialVersionUID = -1235430177L; 
+	public static final int CONSULTA_GENERICA = 1;
+	[%		//tipo operacion por fks
+		var text="public static final int CONSULTAR_POR_";
+		var cont=1;
+		var lstPTKTos=new Set;
+		var lstMetodosPTKTos=new Set;
+		var lstCaseValidacion=new Set;
+		var lstAsignar=new Set;
+		
+		for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
+		{		
+		//Arq!ModoCombo	
+		var lst=to.att.atributos.select(a|a.isModoCombo() and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
+		var strLst=lst.collect(a|text+a.getNomClaseRefModoCombo()+'='+(cont++)).concat("; \n \t \t");	
+		
+		for(a in lst){
+		var nameUpperCamelCase=a.getNomClaseRefModoComboCamelCase();
+		//nameUpperCamelCase.println("nameUpperCamelCase----->");
+		
+		if(nameUpperCamelCase=""){
+		continue;
+		}
+		//add objetos pk fk
+		lstPTKTos.add("/** Llave primaria de "+nameUpperCamelCase+" */ \n \t protected D"+nameUpperCamelCase+'PKTO pk'+nameUpperCamelCase);
+			// inicializar por fks
+		lstMetodosPTKTos.add("/**\n * Inicializa la consulta por "+nameUpperCamelCase+". \n \t* @param pk"+nameUpperCamelCase+
+			" Llave primaria de "+nameUpperCamelCase+" \n \t*/\n"+
+		 "\t public void inicializarConsultarPor"+nameUpperCamelCase
+		 +"(D"+nameUpperCamelCase+"PKTO pk"+nameUpperCamelCase+
+		 ") { \n \t  tipoOperacion = CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+";\n \t  this.pk"+nameUpperCamelCase+" = pk"+
+		 nameUpperCamelCase+";\n \t 	objetos"+nombreClase+"= null;\n \t}"
+		 );
+		 //case para swich
+		 lstCaseValidacion.add("case CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+":\n"
+				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+"\",pk"+nameUpperCamelCase+");\n"
+				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"()\",pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"());\n"
+				+"\t\t break;");
+				
+		lstAsignar.add("copia.pk"+nameUpperCamelCase+"=pk"+nameUpperCamelCase+";\n");
+		
+		}
+			%]		
+		[%=strLst%][% if(strLst.length()>0){%];[%}%]
+				
+		[%
+		}	
+		%]
+		
+	[%=lstPTKTos.concat("; \n \t \t")%] [% if(lstPTKTos.size()>0){%];[%}%]
+
+	protected D[%=nombreClase%]TO to[%=nombreClase%];
+
+	/** Tipo de operación de consulta */
+	protected int tipoOperacion = -1;
+	/** Colección de objetos D[%=nombreClase%]TO */
+	protected Collection<D[%=nombreClase%]TO> objetos[%=nombreClase%];
+		
+	[%=lstMetodosPTKTos.concat("; \n \t \t")%]
+	
+
+	/**
+	 * Inicializa la consulta genérica de [%=nombreClase%].
+	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
+	 */
+	public void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]) {
+		tipoOperacion = CONSULTA_GENERICA;
+		this.to[%=nombreClase%] = to[%=nombreClase%];
+	}
+
+	/**
+	 * Devuelve la colección de objetos [%=nombreClase%] que se hayan consultado.
+	 * @return Un Collection con objetos D[%=nombreClase%]TO
+	 */
+	public Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]() {
+		return objetos[%=nombreClase%];
+	}
+
+	/**
+	 * Ejecuta el comando de [%=tipoComando%].
+	 * @throws DExcepcion Si ocurre algún error al realizar la
+	 * la consulta de [%=nombreClase%]
+	 */
+	[%
+	if(tipoComando='Accion'){
+	%]
+	protected void ejecutarComando(){
+		throw new UnsupportedOperationException();
+	}
+		[%
+	}else{
+	%]
+	protected void ejecutarComando() throws DExcepcion {
+		throw new UnsupportedOperationException();
+	}
+	[%
+	}
+	%]
+
+	/**
+	 * Obtiene una copia (clon) del comando.
+	 * @return Un Object con la copia del comando
+	 */
+	public Object clonar() {
+		return new [%=nomPrefijo%][%=nombreClase%]();
+	}
+
+	/**
+	 * Indica si el comando es auditable.
+	 * @return true si el comando es auditable; false de lo contrario
+	 */
+	public boolean isAuditable() {
+		return true;
+	}
+
+	/**
+	 * Obtiene la descripción del comando.
+	 * @return Un String con la descripción del comando
+	 */
+	public String getDescripcion() {
+		return "Permite consultar objetos [%=nombreClase%]";
+	}
+
+	/**
+	 * Método para validar los parámetros inicializados, invocado
+	 * previamente a la ejecución del comando.
+	 * @return true si los paretros son váidos; false de lo contrario
+	 * @throws DValidarExcepcion Si los parámetros no son váidos
+	 */
+	public boolean validar() throws DValidarExcepcion {
+		Map<String, Object> parametros=new HashMap<String, Object>();
+		switch (tipoOperacion) {			
+			[%=lstCaseValidacion.concat(" \n \t \t")%]
+			case CONSULTA_GENERICA:
+				parametros.put(this.getClass().getName()+":validar:to[%=nombreClase%]",to[%=nombreClase%]);
+				break;
+
+			default:
+				throw new DValidarExcepcion(getMensajeGeneral("la consulta", "de objetos [%=nombreClase%]"), getMensajeOperInvalida());
+		}
+		validarParametros("Listar",parametros);
+		return true;
+	}
+
+	/**
+	 * Para copiar el contenido del comando actual al comando enviado como parámetro.
+	 * @param comando Comando sobre el cual copiar
+	 */
+	public void asignar(IDComando comando) {
+		if (comando instanceof [%=nomPrefijo%][%=nombreClase%]) {
+			[%=nomPrefijo%][%=nombreClase%] copia = ([%=nomPrefijo%][%=nombreClase%]) comando;
+			copia.tipoOperacion = tipoOperacion;
+			[%=lstAsignar.concat("\t \t")%]
+			copia.objetos[%=nombreClase%] = objetos[%=nombreClase%];
+			copia.to[%=nombreClase%] = to[%=nombreClase%];
+		}
+	}
+}

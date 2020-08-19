@@ -1,0 +1,146 @@
+[% 
+import "../../utils.eol";
+var nombreXhtml=xhtml.nombre.firstToUpperCamelCase();
+var nombreXhtmlLower=xhtml.nombre.firstToLowerCamelCase();
+%]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/esquema/Esquema.xhtml">
+        <ui:define name="contenido">
+            <f:subview id="viewReiniciarClave">
+                <div id="areaDeTrabajo">
+
+                    <div id="tituloDePlantilla">
+                        <h:outputText value="#{arq_aud_mensajes['lbl_datos_[%=nombreXhtmlLower%]']}"/>
+                    </div>
+                    <hr/>
+                    <div id="areaMediaPlantilla">
+                        <h:form id="form[%=nombreXhtmlLower%]">
+                            <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+                            
+                            
+                            
+                            
+                            
+                            
+                            <h:panelGrid columns="2" styleClass="td-text two-col-medium" id="idComponentes">
+                                <h:outputLabel value="#{arq_aud_mensajes['label_cod_tipo_doc']}" styleClass="ui-outputlabel pf_required_field">
+                                    <br/>
+                                    <p:selectOneMenu id="idTipoDoc" value="#{[%=nombreXhtmlLower%]WBO.idTipoDocumento}" required="true" style="#{ component.valid ? '' : 'border-color:red;'}"
+                                                     label="#{arq_aud_mensajes['label_cod_tipo_doc']}">
+                                        <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
+                                        <f:selectItems value="#{[%=nombreXhtmlLower%]WBO.tiposIdentList}"/>
+                                    </p:selectOneMenu>
+                                </h:outputLabel>
+
+                                <h:outputLabel value="#{arq_aud_mensajes['label_numero_identificacion']}" styleClass="ui-outputlabel pf_required_field">
+                                    <br/>
+                                    <p:inputText value="#{[%=nombreXhtmlLower%]WBO.numNit}" required="true" style="#{ component.valid ? 'width:250px' : 'border-color:red;width:250px'}"
+                                                 label="#{arq_aud_mensajes['label_numero_identificacion']}"/>
+                                </h:outputLabel>
+                            </h:panelGrid>
+
+
+                            <h:panelGrid columns="1" styleClass="td-commandbt one-col" style="margin-bottom:50px;">
+                                <h:panelGroup>
+                                    <p:commandButton id="cmdconsutarcontrib"
+                                                     actionListener="#{[%=nombreXhtmlLower%]WBO.buscar[%=nombreXhtmlLower%]}"
+                                                     styleClass="clCmdEnviar btnd icon_buscar" value="Consultar" update="idUsuarioCard,idComponentes">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <p:outputPanel styleClass="card" id="idUsuarioCard" autoUpdate="true" style="#{[%=nombreXhtmlLower%]WBO.verCardUsuario?'visibility:visible':'visibility: hidden'}">
+                                <h3 style="text-align:center">#{arq_aud_mensajes['label_usuario_muisca']}</h3>
+                                <hr/>
+
+                                <p:dataTable value="#{[%=nombreXhtmlLower%]WBO.lst[%=nombreXhtmlLower%]s}" rendered="#{[%=nombreXhtmlLower%]WBO.lst[%=nombreXhtmlLower%]s.size()>0}" var="[%=nombreXhtmlLower%]"
+                                             id="dtdir" expandedRow="true"
+                                             selection="#{[%=nombreXhtmlLower%]WBO.contribuSelGDTO}"
+                                             rowKey="#{[%=nombreXhtmlLower%].idDto}"
+                                             paginator="#{[%=nombreXhtmlLower%]WBO.lst[%=nombreXhtmlLower%]s.size() > 2}"
+                                             paginatorPosition="bottom" rows="10"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             styleClass="redondear-div borde-simple">
+                                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                                    <p:column headerText="#{arq_aud_mensajes['label_cod_tipo_doc']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['idTipoDocumento'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['label_numero_identificacion']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['numNit'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['label_primer_nombre']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['primerNombre'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['label_segundo_nombre']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['segundoNombre'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['label_primer_apellido']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['primerApellido'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['label_segundo_apellido']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['segundoApellido'].value}"/>
+                                    </p:column>
+                                    <p:column headerText="#{arq_aud_mensajes['lbl_nom_o_razon_social']}">
+                                        <h:outputText value="#{[%=nombreXhtmlLower%].attributesMap['nomRazonSocial'].value}"/>
+                                    </p:column>
+
+                                    <p:rowExpansion>
+                                        <p:dataTable value="#{[%=nombreXhtmlLower%].listas['lstDirecciones']}" var="direccion"
+                                                     paginator="#{[%=nombreXhtmlLower%].listas['lstDirecciones'].size() > 10}"
+                                                     paginatorPosition="bottom" rows="10"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     styleClass="redondear-div borde-simple">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{arq_aud_mensajes['lbl_direccion_[%=nombreXhtmlLower%]']}"/>
+                                            </f:facet>
+                                            <p:column headerText="#{arq_aud_mensajes['lbl_pais']}">
+                                                <h:outputText value="#{direccion.attributesMap['idPais'].value}"/>
+                                            </p:column>
+                                            <p:column headerText="#{arq_aud_mensajes['lbl_departamento']}">
+                                                <h:outputText value="#{direccion.attributesMap['idDepartamento'].value}"/>
+                                            </p:column>
+                                            <p:column headerText="#{arq_aud_mensajes['lbl_municipio']}">
+                                                <h:outputText value="#{direccion.attributesMap['idMunicipio'].value}"/>
+                                            </p:column>
+                                            <p:column headerText="#{arq_aud_mensajes['lbl_direccion']}">
+                                                <h:outputText value="#{direccion.attributesMap['direccion'].value}"/>
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                                <h:panelGrid columns="1" styleClass="td-commandbt one-col">
+                                    <h:panelGroup>
+                                        <p:commandButton id="idBtnBorrar" update="messages,idUsuarioCard"
+                                                         actionListener="#{[%=nombreXhtmlLower%]WBO.borrar[%=nombreXhtmlLower%]}"
+                                                         styleClass="clCmdEnviar btnd icon_eliminar" value="Borrar [%=nombreXhtmlLower%]">
+                                            <p:confirm header="Confirmación" message="#{arq_aud_mensajes['msg_confirma_borrado']}" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                        <p:commandButton id="idBtnEditar" update="messages"
+                                                         action="#{[%=nombreXhtmlLower%]WBO.irEditar}"
+                                                         styleClass="clCmdEnviar btnd icon_editar" value="Editar [%=nombreXhtmlLower%]">
+                                        </p:commandButton>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+
+                            </p:outputPanel>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="300">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes GreenButton" icon="ui-icon-check"/>
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no RedButton" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+
+                        </h:form>
+                    </div>
+                </div>
+            </f:subview>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

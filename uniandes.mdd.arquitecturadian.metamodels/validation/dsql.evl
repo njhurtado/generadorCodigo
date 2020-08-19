@@ -1,0 +1,66 @@
+import '../consultas/dsql.eol';
+
+context aplication!Aplication{
+
+critique CheckDataTypes {
+    
+    check : self.checkDataTypes()    
+    message : "Existen tipos de datos no definidos."  
+    
+  }
+ }
+
+
+context aplication!Database{
+
+critique ExistTables {
+    
+    check : not self.isExistTables()    
+    message : "No Existen tablas en el modelo."  
+    
+  }
+
+critique UniqueNameTables {
+    
+    check : self.isUniqueNameTables()    
+    message : "Existen tablas con el mismo nombre."  
+    
+  }
+  
+
+critique SizeNameTable {
+    
+    check : not self.isSizeNameTable()   and not self.isSizeNameColumns()  
+    message : "Existen nombres de tablas/columnas con longitud mayor a 30."  
+    
+  }
+  
+}
+
+context aplication!Table{
+
+critique UniqueNameColumns {
+    
+    check : self.isUniqueNameColumns()    
+    message : "Tabla:"+self.name+" tine columnas con el mismo nombre."  
+    
+  }
+  
+  critique ExistReferenceFK {
+    
+    check : self.isReferenciaValidaFK()
+
+    message : "FK de Tabla:"+self.name+" no tiene referencia en el modelo."  
+    
+  }
+  
+    critique CheckAnnotationFK {
+    
+    check : self.foreignkeys.forAll(f|f.checkAnnotationFK())
+
+    message : "FK de Tabla:"+self.name+" puede tener solo una de las anotaciones : TableMode o ComboMode."  
+    
+  }
+  
+
+}

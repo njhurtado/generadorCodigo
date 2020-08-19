@@ -1,0 +1,63 @@
+[% 
+import "../../utils.eol";
+var nombreModulo = Arq!Modulo.all.at(0).nombre.firstToUpperCamelCase(); 
+%]
+package co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.general.to.generico;
+
+import co.gov.dian.muisca.arquitectura.general.to.gdto.DGenericoDTO;
+import co.gov.dian.muisca.arquitectura.web.jsf.util.to.DGenericoWebDTO;
+
+import javax.faces.model.SelectItem;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
+
+public class D[%=nombreModulo%]WebDTO extends DGenericoWebDTO {
+
+    private static final long serialVersionUID = -3920224824520595894L;
+    private static Logger logger = Logger.getLogger(  D[%=nombreModulo%]WebDTO.class );
+    
+    
+    public D[%=nombreModulo%]WebDTO( String name ) {
+        super( name );
+    }
+
+    public D[%=nombreModulo%]WebDTO( DGenericoDTO genericoDTO ) {
+        super( genericoDTO );
+
+    }
+
+    public void addGenericoDTO( DGenericoDTO genericoDTO ) {
+        this.setName( genericoDTO.getName( ) );
+        this.getAttributesMap( ).putAll( genericoDTO.getAttributesMap( ) );
+        this.getLists( ).putAll( genericoDTO.getLists( ) );
+        this.getRelations( ).putAll( genericoDTO.getRelations( ) );
+
+    }
+
+    public void setGenericoDTO( DGenericoDTO genericoDTO ) {
+        this.setName( genericoDTO.getName( ) );
+        this.setAttributes( genericoDTO.getAttributesMap( ) );
+        this.setListas( genericoDTO.getLists( ) );
+        this.setRelations( genericoDTO.getRelations( ) );
+    }
+    // ----- Generador de SelectItems de los Conceptos
+
+    public List<SelectItem> getSelectItems( String nombreLista ) {
+        List<SelectItem> selectItemlist = new ArrayList<SelectItem>( 0 );
+        Map<Integer, String> comboxMap = new HashMap<Integer, String>( );
+        if( this.getList( nombreLista ) != null ) {
+            List<DGenericoDTO> genericoDTOList = ( List<DGenericoDTO> )this.getList( nombreLista );
+            for( DGenericoDTO conceptoDTO : genericoDTOList ) {
+                comboxMap.put( conceptoDTO.getIntegerValue( "codigo" ), conceptoDTO.getStringValue( "nombre" ) );
+                selectItemlist.add( new SelectItem( conceptoDTO.getIntegerValue( "codigo" ), conceptoDTO.getStringValue( "nombre" ) ) );
+            }
+            this.getValoresComboxMap( ).put( nombreLista, comboxMap );
+        }
+
+        return selectItemlist;
+    }
+
+}

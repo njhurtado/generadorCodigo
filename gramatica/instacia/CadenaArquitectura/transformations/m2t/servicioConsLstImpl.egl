@@ -1,0 +1,97 @@
+[% import "../utils.eol"; 
+var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nomPkgDao=Arq!Dao.all.get(0).paquete;
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= clase.paquete %].impl;
+
+import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
+import co.gov.dian.muisca.arquitectura.general.excepcion.DValidarExcepcion;
+import co.gov.dian.muisca.arquitectura.interfaces.IDAdminPersistencia;
+import [%= nomPkgDao %].IDDAOFactory[%=nombremodulo%];
+import [%= nomPkgDao %].IDDAO[%=nombreClase%];
+import [%= nomPkgDao %].impl.oracle.DDAOFactory[%=nombremodulo%];
+import [%= clase.paquete %].DCmdSrvConsLst[%=nombreClase%];
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: Comando de servicio utilizado para consultar objetos [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author gencode
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class DCmdSrvConsLst[%=nombreClase%]Impl extends DCmdSrvConsLst[%=nombreClase%] {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8790414816659457392L;
+
+	/**
+	 * Ejecuta el comando de servicio.
+	 *
+	 * @throws DExcepcion
+	 *           Si ocurre algn error al realizar la consulta de objetos
+	 *           [%=nombreClase%]
+	 */
+	protected void ejecutarComando() throws DExcepcion {
+		IDAdminPersistencia admin = getAdministradorPersistencia();
+		try {
+			// Iniciar los DAO's
+			IDDAOFactory[%=nombremodulo%] fabrica = new DDAOFactory[%=nombremodulo%]();
+			IDDAO[%=nombreClase%] dao = fabrica.getDao[%=nombreClase%]();
+
+			switch (tipoOperacion) {
+			case CONSULTA_GENERICA:
+				dao.inicializarConsultaGenerica(to[%=nombreClase%]);
+				break;
+				
+			[%		//tipo operacion por fks
+		
+		var cont=1;
+		for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
+		{		
+		//Arq!ModoCombo	
+		var lst=to.att.atributos.select(a|a.isModoCombo() and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
+		var strLst=lst.collect(a|text+a.getNomClaseRefModoCombo()+'='+(cont++));	
+		
+		for(a in lst){
+			var nameUpperCamelCase=a.getNomClaseRefModoComboCamelCase();
+			if(nameUpperCamelCase=""){
+			continue;
+			}
+			 //case para swich
+			strLst="\tcase CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+":\n"
+					+"\t\t\t dao.inicializarConsultarPor"+nameUpperCamelCase+"(pk"+nameUpperCamelCase+");\n"
+					+"\t\t\t break;";		
+			}
+			%]		
+		[%=strLst.concat(" \n \t \t")%]			
+		[%
+		}	
+		%]
+			default:
+				throw new DValidarExcepcion(getMensajeGeneral("la consulta", "de objetos [%=nombreClase%]"),
+						getMensajeOperInvalida());
+			}
+
+			// Consultar
+			admin.buscar(dao);
+			objetos[%=nombreClase%] = dao.getColeccion[%=nombreClase%]();
+		} finally {
+			admin.cerrarSesion();
+		}
+	}
+
+}

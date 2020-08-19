@@ -1,0 +1,304 @@
+[% 
+import "../utils.eol";
+	//Declaracion de variables 
+	var modulo : Arq!Modulo:= Arq!Modulo.all.at(0); 
+	var atts : Set:= Arq!AttTo.allInstances().asSet();
+	var pkTos : Set:= Arq!PkTo.allInstances().asSet();
+	var tos : Set:= Arq!To.allInstances().asSet();
+	var servicios : Set:= Arq!Servicio.allInstances().asSet();
+	var acciones : Set:= Arq!Accion.allInstances().asSet();
+	
+		// ----- CONSTANTES ----------
+	
+	var nomWeb = 'Web'+modulo.nombre.firstToUpperCamelCase();
+	var nomModulo = modulo.nombre.firstToUpperCamelCase();
+  	var nomBuses = modulo.nombre.toUpperCase().substring(0,3)+'Buses';
+	TemplateFactory.setOutputRoot("../../generated/src");
+	
+	var t:Template:= TemplateFactory.load('generadorTO.egl');
+	//generacion de to, pk y att
+	//Recorre clase AttTo
+	for(att in atts) {
+		var attSrc:Template:= TemplateFactory.load('attTo.egl');
+		attSrc.populate('clase', att);
+		attSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+att.paquete.getUrlCarpeta()+ '/D'+att.nombre.firstToUpperCamelCase() + 'AttTO.java');
+	}
+	//Recorre clase PkTo	
+	for(pk in pkTos) {
+		var pkSrc:Template:= TemplateFactory.load('pkTo.egl');
+		pkSrc.populate('clase', pk);
+		pkSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+pk.paquete.getUrlCarpeta()+ '/D'+pk.nombre.firstToUpperCamelCase() + 'PKTO.java');
+	}
+	
+	//Recorre clase to
+	for(to in tos) {	
+		var toSrc:Template:= TemplateFactory.load('to.egl');
+		toSrc.populate('clase', to);
+		toSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+to.paquete.getUrlCarpeta()+ '/D'+to.nombre.firstToUpperCamelCase() + 'TO.java');
+	}
+	
+	
+	//Recorre clase servicio
+	for(srv in servicios) {
+	var nomServcio=srv.nombre.firstToUpperCamelCase() ;
+		var srvSrc:Template:= TemplateFactory.load('comando.egl');
+		srvSrc.populate('clase', srv);
+		srvSrc.populate('nombremodulo', modulo.nombre);
+		srvSrc.populate('tipoComando', 'ServicioNegocio');
+		srvSrc.populate('operacion', 'Actualizar');		
+		srvSrc.populate('nomPrefijo', 'DCmdSrvAct');
+		srvSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/DCmdSrvAct'+nomServcio+ '.java');
+		
+		var srv1Src:Template:= TemplateFactory.load('comando.egl');
+		srv1Src.populate('clase', srv);
+		srv1Src.populate('nombremodulo', modulo.nombre);
+		srv1Src.populate('tipoComando', 'ServicioNegocio');
+		srv1Src.populate('operacion', 'Crear');
+		srv1Src.populate('nomPrefijo', 'DCmdSrvCrear');
+		srv1Src.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/DCmdSrvCrear'+nomServcio+ '.java');
+		
+		var srv1aSrc:Template:= TemplateFactory.load('servicioImpl.egl');
+		srv1aSrc.populate('clase', srv);
+		srv1aSrc.populate('nombremodulo', modulo.nombre);
+		srv1aSrc.populate('tipoComando', 'ServicioNegocio');
+		srv1aSrc.populate('operacion', 'Crear');
+		srv1aSrc.populate('nomPrefijo', 'DCmdSrvCrear');
+		srv1aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/impl/DCmdSrvCrear'+nomServcio+ 'Impl.java');
+		
+		var srv1aSrc:Template:= TemplateFactory.load('servicioImpl.egl');
+		srv1aSrc.populate('clase', srv);
+		srv1aSrc.populate('nombremodulo', modulo.nombre);
+		srv1aSrc.populate('tipoComando', 'ServicioNegocio');
+		srv1aSrc.populate('operacion', 'Actualizar');
+		srv1aSrc.populate('nomPrefijo', 'DCmdSrvAct');
+		srv1aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/impl/DCmdSrvAct'+nomServcio+ 'Impl.java');
+		
+		var srv2Src:Template:= TemplateFactory.load('comandoCons.egl');
+		srv2Src.populate('clase', srv);
+		srv2Src.populate('nombremodulo', modulo.nombre);
+		srv2Src.populate('tipoComando', 'ServicioNegocio');		
+		srv2Src.populate('nomPrefijo', 'DCmdSrvCons');
+		srv2Src.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/DCmdSrvCons'+nomServcio + '.java');
+		
+		var srv2aSrc:Template:= TemplateFactory.load('servicioConsImpl.egl');
+		srv2aSrc.populate('clase', srv);
+		srv2aSrc.populate('nombremodulo', modulo.nombre);
+		srv2aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/impl/DCmdSrvCons'+nomServcio + 'Impl.java');
+		
+		var srv3Src:Template:= TemplateFactory.load('comandoConsLst.egl');
+		srv3Src.populate('clase', srv);
+		srv3Src.populate('nombremodulo', modulo.nombre);
+		srv3Src.populate('tipoComando', 'ServicioNegocio');		
+		srv3Src.populate('nomPrefijo', 'DCmdSrvConsLst');
+		srv3Src.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/DCmdSrvConsLst'+nomServcio + '.java');
+		
+		var srv3aSrc:Template:= TemplateFactory.load('servicioConsLstImpl.egl');
+		srv3aSrc.populate('clase', srv);
+		srv3aSrc.populate('nombremodulo', modulo.nombre);
+		srv3aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/impl/DCmdSrvConsLst'+nomServcio + 'Impl.java');
+		
+		var srv4Src:Template:= TemplateFactory.load('servicioEliminar.egl');
+		srv4Src.populate('clase', srv);
+		srv4Src.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/DCmdSrvElim'+nomServcio + '.java');
+		
+		var srv4aSrc:Template:= TemplateFactory.load('servicioEliminarImpl.egl');
+		srv4aSrc.populate('clase', srv);
+		srv4aSrc.populate('nombremodulo', modulo.nombre);
+		srv4aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+srv.paquete.getUrlCarpeta()+ '/impl/DCmdSrvElim'+nomServcio + 'Impl.java');
+	}
+	
+	//Recorre clase servicio
+	for(acc in acciones) {
+	var nomServcio=acc.nombre.firstToUpperCamelCase() ;
+		var accSrc:Template:= TemplateFactory.load('comando.egl');
+		accSrc.populate('clase', acc);
+		accSrc.populate('nombremodulo', modulo.nombre);
+		accSrc.populate('tipoComando', 'Accion');
+		accSrc.populate('operacion', 'Actualizar');		
+		accSrc.populate('nomPrefijo', 'DCmdAccAct');
+		accSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccAct'+nomServcio+ '.java');
+		
+			var acc1Src:Template:= TemplateFactory.load('comando.egl');
+		acc1Src.populate('clase', acc);
+		acc1Src.populate('nombremodulo', modulo.nombre);
+		acc1Src.populate('tipoComando', 'Accion');
+		acc1Src.populate('operacion', 'Crear');
+		acc1Src.populate('nomPrefijo', 'DCmdAccCrear');
+		acc1Src.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccCrear'+nomServcio+ '.java');
+		
+		var acc1aSrc:Template:= TemplateFactory.load('accionImpl.egl');
+		acc1aSrc.populate('clase', acc);
+		acc1aSrc.populate('nombremodulo', modulo.nombre);
+		acc1aSrc.populate('tipoComando', 'Accion');
+		acc1aSrc.populate('operacion', 'Crear');
+		acc1aSrc.populate('nomPrefijo', 'DCmdAccCrear');
+		acc1aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/impl/DCmdAccCrear'+nomServcio+ 'Impl.java');
+		
+		var acc1aSrc:Template:= TemplateFactory.load('accionImpl.egl');
+		acc1aSrc.populate('clase', acc);
+		acc1aSrc.populate('nombremodulo', modulo.nombre);
+		acc1aSrc.populate('tipoComando', 'Accion');
+		acc1aSrc.populate('operacion', 'Actualizar');
+		acc1aSrc.populate('nomPrefijo', 'DCmdAccAct');
+		acc1aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/impl/DCmdAccAct'+nomServcio+ 'Impl.java');	
+		
+		var acc2Src:Template:= TemplateFactory.load('comandoCons.egl');
+		acc2Src.populate('clase', acc);
+		acc2Src.populate('nombremodulo', modulo.nombre);
+		acc2Src.populate('tipoComando', 'Accion');		
+		acc2Src.populate('nomPrefijo', 'DCmdAccCons');
+		acc2Src.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccCons'+nomServcio + '.java');
+		
+		var acc2aSrc:Template:= TemplateFactory.load('accionConsImpl.egl');
+		acc2aSrc.populate('clase', acc);
+		acc2aSrc.populate('nombremodulo', modulo.nombre);
+		acc2aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/impl/DCmdAccCons'+nomServcio + 'Impl.java');
+		
+		var acc3Src:Template:= TemplateFactory.load('comandoConsLst.egl');
+		acc3Src.populate('clase', acc);
+		acc3Src.populate('nombremodulo', modulo.nombre);
+		acc3Src.populate('tipoComando', 'Accion');		
+		acc3Src.populate('nomPrefijo', 'DCmdAccConsLst');
+		acc3Src.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccConsLst'+nomServcio + '.java');
+		
+		var acc3aSrc:Template:= TemplateFactory.load('accionConsLstImpl.egl');
+		acc3aSrc.populate('clase', acc);
+		acc3aSrc.populate('nombremodulo', modulo.nombre);
+		acc3aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/impl/DCmdAccConsLst'+nomServcio + 'Impl.java');
+		
+		
+		var acc4Src:Template:= TemplateFactory.load('accionEliminar.egl');
+		acc4Src.populate('clase', acc);
+		acc4Src.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccElim'+nomServcio + '.java');
+		
+		var acc4aSrc:Template:= TemplateFactory.load('accionEliminarImpl.egl');
+		acc4aSrc.populate('clase', acc);
+		acc4aSrc.populate('nombremodulo', modulo.nombre);
+		acc4aSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/impl/DCmdAccElim'+nomServcio + 'Impl.java');
+		
+	}
+	
+	var daos = Arq!Dao.all;
+    	var paqueteFactory = "";
+	for(d in daos) {
+		paqueteFactory = d.paquete;
+		var tIdDao:Template:= TemplateFactory.load('iddao.egl');
+		tIdDao.populate('Dao', d);
+		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+d.paquete.replace("\\.", "/") + "/IDDAO" +d.nombre.firstToUpperCamelCase() + '.java');
+		
+		var tDao:Template:= TemplateFactory.load('dao.egl');
+		tDao.populate('Dao', d);
+		tDao.generate('../../generated/'+nomBuses+'/src/main/java/'+ d.paquete.replace("\\.", "/") + "/impl/oracle/DDAO" +d.nombre.firstToUpperCamelCase() + '.java');
+
+	}
+
+  	var modulos = Arq!Modulo.all;
+  	for(m in modulos) {
+		var tIdFactoryDao:Template:= TemplateFactory.load('iddaofactory.egl');
+		tIdFactoryDao.populate('Modulo', m);
+		tIdFactoryDao.populate('Paquete', paqueteFactory);
+		tIdFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/IDDAOFactory" +m.nombre.firstToUpperCamelCase() + '.java');
+				
+		var tFactoryDao:Template:= TemplateFactory.load('ddaofactory.egl');
+		tFactoryDao.populate('Modulo', m);
+		tFactoryDao.populate('Paquete', paqueteFactory);
+		tFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/impl/oracle/DDAOFactory" +m.nombre.firstToUpperCamelCase() + '.java');
+				
+	}
+	
+	for(m in modulos) {
+		var tIdFactoryDao:Template:= TemplateFactory.load('servletTest.egl');
+		tIdFactoryDao.populate('Modulo', m);
+		tIdFactoryDao.populate('Paquete', paqueteFactory);
+		tIdFactoryDao.generate('../../generated/'+nomWeb+ '/src/main/java/co/gov/dian/muisca/'+ m.nombre.toLowerCase()+"/web/servlets/ServletTest.java");
+	}
+
+	for(d in daos) {
+		paqueteFactory = d.paquete;
+		paqueteFactory = paqueteFactory.replace("dao", "test");
+		var tIdDao:Template:= TemplateFactory.load('test.egl');
+		tIdDao.populate('Clase', d);
+		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/D" +d.nombre.firstToUpperCamelCase() + 'Test.java');		
+	}
+
+  	
+	// ----- PARTE WEB ------------------------
+	
+	//Recorre clase wbo
+	var wbos : Set:= Arq!Wbo.allInstances().asSet();	
+	/*for (wbo in wbos){
+		var nomWbo = wbo.nombre.firstToUpperCamelCase() ;
+			var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
+			wboSrc.populate('wbo', wbo);
+			wboSrc.populate('nombreModulo', modulo.nombre);
+			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'D'+nomWbo + 'WBO.java');
+	}*/
+	
+	
+	//Recorre clase xhtml
+	var xhtmls : Set:= Arq!Xhtml.allInstances().asSet();
+	/*for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombre.firstToUpperCamelCase() ;
+			//Operacion: Listar
+			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtml.egl');
+			xhtmlSrc.populate('xhtml', xhtml);
+			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/' + nomXhtml + '.xhtml');
+	}*/
+	
+	//Recorre clase xhtml
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombre.firstToUpperCamelCase() ;
+			//Operacion: Listar
+			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlCrear.egl');
+			xhtmlSrc.populate('xhtml', xhtml);
+			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/Crear' + nomXhtml + '.xhtml');
+	}
+	for (wbo in wbos){
+		var nomWbo = wbo.nombre.firstToUpperCamelCase() ;
+			var wboSrc:Template:= TemplateFactory.load('./web/wboCrear.egl');
+			wboSrc.populate('wbo', wbo);
+			wboSrc.populate('nombreModulo', modulo.nombre);
+			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'DCrear'+nomWbo + 'WBO.java');
+	}
+	
+	//Archivos Unicos
+  	
+    	//WebDTO
+  		var tWebDTO:Template:= TemplateFactory.load('./web/webDTO.egl');
+		tWebDTO.populate('Modulo', modulo);
+		tWebDTO.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/general/to/generico/D'+nomModulo+'WebDTO.java');
+
+    	//WboBase  		
+  		var tWboBase:Template:= TemplateFactory.load('./web/wboBase.egl');
+		tWboBase.populate('Modulo', modulo);
+		tWboBase.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/wbo/D'+nomModulo+'BaseWBO.java');
+	
+	//faces-config-beans.xml
+	var tfacesConfBean:Template:= TemplateFactory.load('./web/webConfigBean.egl');
+		tfacesConfBean.populate('nombreModulo', modulo.nombre);
+		tfacesConfBean.generate('../../generated/'+nomWeb+'/src/main/webapp/WEB-INF/faces-config-beans.xml');
+	
+	//faces-internacionalizacion.xml
+	var tfacesConfInt:Template:= TemplateFactory.load('./web/webConfigInter.egl');
+		tfacesConfInt.populate('nombreModulo', modulo.nombre);
+		tfacesConfInt.generate('../../generated/'+nomWeb+'/src/main/webapp/WEB-INF/faces-internacionalizacion.xml');
+	
+	
+	// ------ PARTE BUSES (EJB)
+
+    	//Delegado Negocio		
+	  	var tDelegadoNegocio:Template:= TemplateFactory.load('./web/delegadoNegocio.egl');
+		tDelegadoNegocio.populate('Modulo', modulo);
+		tDelegadoNegocio.generate('../../generated/'+nomBuses+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/delegados/general/DDelegadoNegocio.java');
+
+    	//Delegado Aplicacion  	
+		var tDelegadoApp:Template:= TemplateFactory.load('./web/delegado.egl');
+		tDelegadoApp.populate('Modulo', modulo);
+		tDelegadoApp.generate('../../generated/'+nomBuses+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/delegados/negocio/DDelegado' +nomModulo + '.java');
+
+    	//Catalogo de Delegados	
+	  	var tCatalogoDelegado:Template:= TemplateFactory.load('./web/catalogoDelegados.egl');
+		tCatalogoDelegado.populate('Modulo', modulo);
+		tCatalogoDelegado.generate('../../generated/'+nomBuses+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/delegados/DCatalogoDelegados.java');
+  							
+%]

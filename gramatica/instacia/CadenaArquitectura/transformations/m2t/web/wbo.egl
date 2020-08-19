@@ -1,0 +1,271 @@
+[% 
+import "../../utils.eol";
+var nombreWbo=wbo.nombre.firstToUpperCamelCase();
+var atribs = Arq!AttTo.all.select(n | n.nombre = wbo.nombre).first();
+var pkes = Arq!PkTo.all.select(n | n.nombre = wbo.nombre).first();
+ 
+
+var lstAtts=atribs.atributos.select(a|a.isModoCombo());
+var lstPks=pkes.atributos.select(a|a.isModoCombo());
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= wbo.paquete %].[%=nombreModulo.toLowerCase()%].web.wbo;
+
+import co.gov.dian.muisca.arquitectura.general.excepcion.DMuiscaAppException;
+import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DConfirmacionErrorInfo;
+import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DValidacionWebErrorInfo;
+import co.gov.dian.muisca.arquitectura.general.excepcion.mensajes.enums.DMensajesGeneral;
+import co.gov.dian.muisca.arquitectura.general.to.gdto.DGenericoDTO;
+
+import co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].delegados.DCatalogoDelegados;
+import co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].delegados.negocio.DDelegado[%=nombreModulo.firstToUpperCamelCase()%];
+
+import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.log4j.Logger;
+
+
+	private List<SelectItem> [%=wbo.tos.att.nombre%]List;		
+	
+
+
+
+public class D[%=nombreWbo%]WBO extends  D[%=nombreModulo.firstToUpperCamelCase()%]BaseWBO {
+
+	private static Logger logger = Logger.getLogger( D[%=nombreWbo%]WBO.class );
+	private DDelegado[%=nombreModulo.firstToUpperCamelCase()%] delegado[%=nombreModulo.firstToUpperCamelCase()%] ;
+	  
+	 [%		
+	 //todas los atributos  pks
+	for(att in pkes.atributos.asOrderedSet()) 
+	{	
+			var tipo = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	private [%=tipo%] [%=nombre%];		
+	[%
+	}	}	
+	 //todas los atributos excepto pks
+	for(att in atribs.atributos.asOrderedSet()) 
+	{	
+			var tipo = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){
+		
+			
+	%]
+	private [%=tipo%] [%=nombre%];		
+	[%
+	}	}
+	%]
+	 
+	 
+	[%		
+	 //SelectItem - atts
+	for(lstAtt in lstAtts) 
+	{	
+			var tipo = lstAtt.tipo.toType();
+			var nombre = lstAtt.nombre.firstToLowerCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	private List<SelectItem> [%=nombre%]List;		
+	[%
+	}	}	 
+	 %]
+	 
+	 [%		
+	 //SelectItem  - pks
+	for(lstPk in lstPks) 
+	{	
+			var tipo = lstPk.tipo.toType();
+			var nombre = lstPk.nombre.firstToLowerCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	private List<SelectItem> [%=nombre%]List;		
+	[%
+	}	}	 
+	 %]
+	  
+    @PostConstruct
+    public void init( ) {
+    delegado[%=nombreModulo.firstToUpperCamelCase()%]  = ( DDelegadoNegocio[%=nombreModulo.firstToUpperCamelCase()%] )DCatalogoDelegados.DELEGADO_[%=nombreModulo.toUpperCase()%].getInstancia( this.getContextoSeguridad( ), this.getNombreCmdProtector( ), this.getPkSegmentoAplicacion( ) );
+    this.dto = new DGenericoDTO( "D[%=nombreModulo.firstToUpperCamelCase()%]DTO" )
+    }
+    
+    public D[%=nombreWbo%]WBO( ) {
+        super( );
+    }
+    
+    
+    public void buscar[%=nombreWbo%]( ) {
+
+        logger.debug( "************  Buscar [%=nombreWbo%] WBO ***********************" );
+
+        // Datos del Filtro
+        dto.addLong( "idTipoDocumento", this.idTipoDocumento );
+        dto.addLong( "numNit", this.numNit );
+
+        //Se busca el valor seleccionado del Combo - nominal
+        this.tipoDocumento = dtoWeb.obtenerSeleccionadoCombox( "tiposIdentList", Integer.valueOf( this.idTipoDocumento.toString( ) ) );
+        dto.addString( "tipoDocumento", this.tipoDocumento );
+
+        try {
+
+            dto = delegado[%=nombreModulo.firstToUpperCamelCase()%].buscar[%=nombreWbo%]( dto );
+
+            //Datos Base de Datos
+            this.idPersonaRut = dto.getLongValue( "idPersonaRut" );
+            this.idTipoDocumento = dto.getLongValue( "idTipoDocumento" );
+            this.numNit = dto.getLongValue( "numNit" );
+            this.nomRazonSocial = dto.getStringValue( "nomRazonSocial" );
+            logger.debug( "idPersonaRut : " + this.idPersonaRut );
+            logger.debug( "nomRazonSocial : " + this.nomRazonSocial );
+            this.verCardUsuario = Boolean.TRUE;
+        }
+        catch( DMuiscaAppException ex ) {
+
+            this.verCardUsuario = Boolean.FALSE;
+            //Se decide el manejo de la excepcion propagada
+            //Manejo de mensajes de excepcion a nivel de JavaServerFaces
+            this.notificarUsuarios( ex );
+            this.notificarNoUsuarios( ex );
+        }
+
+    }
+    
+    
+    
+    [%		//gets y sets Pk
+		
+		for(pks in pkes.atributos.asOrderedSet()) 
+		{	
+			var type = pks.tipo.toType();
+			var nombre = pks.nombre.firstToLowerCamelCase();
+			var nombreUpper =pks.nombre.firstToUpperCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+		/**
+	 	* Devuelve el valor de [%=nombre%].
+	 	* @return Un objeto [%=type%] 
+	 	*/
+		public [%=type%] get[%=nombreUpper%] (){
+			return [%=nombre%];
+		}
+		/**
+		 * Establece el valor de [%=nombre%].
+		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
+		 */
+		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
+			this.[%=nombre%] = [%=nombre%];
+		}
+		
+	[%
+		}}	
+	%]
+    
+    
+	 [%		//gets y sets Att
+		
+		for(att in atribs.atributos.asOrderedSet()) 
+		{	
+			var type = att.tipo.toType();
+			var nombre = att.nombre.firstToLowerCamelCase();
+			var nombreUpper =att.nombre.firstToUpperCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	   /**
+	 	* Devuelve el valor de [%=nombre%].
+	 	* @return Un objeto [%=type%] 
+	 	*/
+		public [%=type%] get[%=nombreUpper%] (){
+			return [%=nombre%];
+		}
+		/**
+		 * Establece el valor de [%=nombre%].
+		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
+		 */
+		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
+			this.[%=nombre%] = [%=nombre%];
+		}
+		
+	[%
+		}}	
+	%]
+    
+    
+    
+    [%		
+	 //SelectItem - atts
+	for(lstAtt in lstAtts) 
+	{	
+			var tipo = lstAtt.tipo.toType();
+			var nombre = lstAtt.nombre.firstToLowerCamelCase();
+			var nombreUpper =lstAtt.nombre.firstToUpperCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	
+	/**
+	 	* Devuelve el valor de [%=nombre%].
+	 	* @return Un objeto List<SelectItem>
+	 	*/
+		public List<SelectItem> get[%=nombreUpper%]List (){
+			return [%=nombre%]List;
+		}
+		/**
+		 * Establece el valor de [%=nombre%]ist.
+		 * @param [%=nombre%]List El nuevo valor de [%=nombre%]List
+		 */
+		public void set[%=nombreUpper%]List(List<SelectItem> [%=nombre%]List) {
+			this.[%=nombre%]List = [%=nombre%]List;
+		}
+	
+	
+	
+	[%
+	}	}	 
+	 %]
+	 
+	[%		
+	 //SelectItem - lstPk
+	for(lstPk in lstPks) 
+	{	
+			var tipo = lstPk.tipo.toType();
+			var nombre = lstPk.nombre.firstToLowerCamelCase();
+			var nombreUpper =lstPk.nombre.firstToUpperCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
+	%]
+	
+	/**
+	 	* Devuelve el valor de [%=nombre%].
+	 	* @return Un objeto List<SelectItem>
+	 	*/
+		public List<SelectItem> get[%=nombreUpper%]List (){
+			return [%=nombre%]List;
+		}
+		/**
+		 * Establece el valor de [%=nombre%]ist.
+		 * @param [%=nombre%]List El nuevo valor de [%=nombre%]List
+		 */
+		public void set[%=nombreUpper%]List(List<SelectItem> [%=nombre%]List) {
+			this.[%=nombre%]List = [%=nombre%]List;
+		}
+		
+	
+	[%
+	}	}	 
+	 %]
+    
+    
+    
+    
+	
+}

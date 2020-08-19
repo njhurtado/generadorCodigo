@@ -1,0 +1,211 @@
+pre {
+var packete=Sql!Aplication.all.at(0).package;
+var sufijoPkg=Sql!Aplication.all.at(0).sufijoPkg;
+var nomPkg="";
+	if(""<>sufijoPkg and null<>sufijoPkg){
+		nomPkg='.'+sufijoPkg;
+	}
+//var tos
+}
+rule Aplicacion2Modulo 
+	transform a : Sql!Aplication
+	to m : Arq!Modulo {
+		m.nombre=a.name;
+	}
+	
+rule Columna2Atributo 
+	transform c : Sql!Column
+	to a : Arq!Atributo {
+		a.nombre=c.name;
+		a.tipo=c.type.toString();
+		a.anotaciones=c.annotations.equivalent();
+		a.isObligatorio=c.isNotNull;
+		var tabla=c.eContainer();
+		if(tabla.foreignkeys.size()>0 and 
+		tabla.foreignkeys.select(f|f.annotations.size()>0 and f.localColumns.select(c1|c1=c).size()>0).size()>0
+		){
+		 var fk=tabla.foreignkeys.select(f|f.annotations.size()>0 and f.localColumns.select(c1|c1=c).size()>0);
+		var anotacion=new Arq!ModoCombo;
+		
+		anotacion.args=fk.first().foreignTable.name;
+		a.anotaciones.add(anotacion);		
+		}
+		
+	}
+	
+@abstract
+rule Table2Clase 
+	transform t : Sql!Table
+	to c : Arq!Clase {
+		c.nombre=t.name;
+		c.paquete=packete;
+		c.sufijoPkg=sufijoPkg;
+		c.anotaciones=t.annotations.equivalent();
+		//c.anotaciones.println(c.nombre+"-->");
+	}	
+//Maping Tabla a Clase
+rule Tabla2ClaseTo 
+	transform t : Sql!Table 
+	to _to : Arq!`To` ,  pkTo : Arq!PkTo, attTo : Arq!AttTo extends Table2Clase{
+		_to.paquete=packete+'.general.to'+nomPkg;
+		//Conformo Clase PkTo
+		pkTo.nombre=t.name;		
+		pkTo.atributos=t.primarykey.columns.equivalent();	
+		pkTo.paquete=_to.paquete;	
+		//conformo Clase AttTo
+		attTo.paquete=_to.paquete;
+		attTo.nombre=t.name;				
+		attTo.atributos=t.columns.select(c|t.primarykey.columns.select(c1|c1=c).size()=0).equivalent();
+		//Completo TO con pk y att
+		_to.pk=pkTo;
+		_to.att=attTo;
+		
+	}
+
+
+rule Tabla2Servicio 
+	transform t : Sql!Table 
+	to srv : Arq!Servicio extends Table2Clase {			
+	srv.paquete=packete+'.servicios'+nomPkg;	
+	//Agregamos tos	
+	var tos =Arq!`To`.allInstances().select(n | n.nombre = t.name).first();
+	for(t in tos){	
+		var to2=new Arq!`To`;
+		to2.att=t.att;
+		to2.pk=t.pk;
+		to2.nombre=t.nombre;
+		to2.paquete=t.paquete;
+		srv.detalle.add(to2);
+	}
+	
+}	
+rule Tabla2Accion 
+	transform t : Sql!Table 
+	to acc : Arq!Accion extends Table2Clase {	
+		
+	acc.paquete=packete+'.acciones'+nomPkg;
+	//add servcios	
+	acc.servicios=Arq!Servicio.allInstances().select(n | n.nombre = t.name);
+	//Agregamos tos	
+	var tos =Arq!`To`.allInstances().select(n | n.nombre = t.name).first();
+	for(t in tos){	
+		var to2=new Arq!`To`;
+		to2.att=t.att;
+		to2.pk=t.pk;
+		to2.nombre=t.nombre;
+		to2.paquete=t.paquete;
+		acc.detalle.add(to2);
+	}
+	
+}
+
+rule Tabla2Dao 
+	transform t : Sql!Table 
+	to dao : Arq!Dao extends Table2Clase {			
+	dao.paquete=packete+'.dao'+nomPkg;	
+	//Agregamos tos	
+	var tos=Arq!`To`.allInstances().select(n | n.nombre = t.name).first();	
+	
+	for(t in tos){	
+		var to2=new Arq!`To`;
+		to2.att=t.att;
+		to2.pk=t.pk;
+		to2.nombre=t.nombre;
+		to2.paquete=t.paquete;
+		dao.detalle.add(to2);
+	}
+}
+
+rule Tabla2Wbo 
+	transform t : Sql!Table 
+	to w : Arq!Wbo extends Table2Clase {
+	w.delegados = Arq!Delegado.allInstances().select(n | n.nombre = t.name)->first();
+	w.paquete=packete+'.web.wbo'+nomPkg;	
+	var tos=Arq!`To`.allInstances().select(n | n.nombre = t.name).first();	
+	
+	for(t in tos.asSet()){	
+		var to2=new Arq!`To`;
+		to2.att=t.att;
+		to2.pk=t.pk;
+		to2.nombre=t.nombre;
+		to2.paquete=t.paquete;
+		w.tos.add(to2);
+	}
+}
+
+rule Tabla2Xhtml
+	transform t : Sql!Table 
+	to xhtml : Arq!Xhtml extends Table2Clase {			
+	xhtml.paquete=packete+'.webcontent';	
+	//Agregamos tos	
+	var tos=Arq!`To`.allInstances().select(n | n.nombre = t.name).first();	
+	
+	for(t in tos){	
+		var to2=new Arq!`To`;
+		to2.att=t.att;
+		to2.pk=t.pk;
+		to2.nombre=t.nombre;
+		to2.paquete=t.paquete;
+		xhtml.detalle.add(to2);
+	}
+}
+
+rule Aplicacion2Delegado 
+	transform a : Sql!Aplication 
+	to d : Arq!Delegado {
+		d.nombre=a.name;
+		d.paquete=a.package;		
+		d.acciones.addAll(Arq!Accion.allInstances());
+}
+
+
+//anotaciones
+
+@abstract
+rule Annotation2Anotacion
+transform a : Sql!Annotation
+	to m : Arq!Anotacion {
+		m.nombre=a.name;
+		m.args=a.args;
+	}
+	
+rule TableDetail2TablaDetalle
+transform td : Sql!TableDetail
+    to m : Arq!TablaDetalle extends Annotation2Anotacion {
+		m.nombre=td.name;
+		m.args=td.args;
+		
+		var tabla=td.eContainer();
+		var to1=Arq!`To`.allInstances().select(n | n.nombre = tabla.name).first();	//
+		
+		var to2=new Arq!`To`;
+		to2.att=to1.att;
+		to2.pk=to1.pk;
+		to2.nombre=to1.nombre;
+		to2.paquete=to1.paquete;
+				
+		m.clase=to2;
+	}
+
+rule ReferenceMode2ModoReferencia
+transform a : Sql!ReferenceMode
+    to m : Arq!ModoReferencia extends Annotation2Anotacion {
+		m.nombre=a.name;
+		m.args=a.args;
+		m.refs=a.refs;
+	}
+
+
+rule ComboMode2ModoCombo
+transform a : Sql!ComboMode
+    to m : Arq!ModoCombo extends Annotation2Anotacion {
+		m.nombre=a.name;
+		m.args=a.args;
+	}
+	
+rule Filtro2Filtro
+transform a : Sql!Filtro
+    to m : Arq!Filtro extends Annotation2Anotacion {
+		m.nombre=a.name;
+		m.args=a.args;
+	}

@@ -1,0 +1,94 @@
+[% import "../utils.eol"; 
+var nombreClase=clase.nombre.firstToUpperCamelCase();
+var stringServicio=clase.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
+%]
+/**
+ * Republica de Colombia
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
+ *
+ * $Header:$
+ */
+package [%= clase.paquete %].impl;
+
+import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
+import co.gov.dian.muisca.arquitectura.general.excepcion.DValidarExcepcion;
+import [%= clase.paquete.replace("acciones","servicios") %].DCmdSrvConsLst[%=nombreClase%];
+import [%= clase.paquete %].DCmdAccConsLst[%=nombreClase%];
+
+/**
+ * <p>Titulo: Proyecto MUISCA</p>
+ * <p>Descripcion: [%=tipoComando%] utilizado para consultar objetos [%=nombreClase%].</p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: DIAN</p>
+ *
+ * @author gencode
+ * @version $Revision:$
+ * <pre>
+ * $Log[10]:$
+ * </pre>
+ */
+public class DCmdAccConsLst[%=nombreClase%]Impl extends DCmdAccConsLst[%=nombreClase%] {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8790414816659457392L;
+
+	/**
+	 * Ejecuta el comando de servicio.
+	 *
+	 * @throws DExcepcion
+	 *           Si ocurre algn error al realizar la consulta de objetos
+	 *           [%=nombreClase%]
+	 */
+	protected void ejecutarComando() {
+			
+		try {
+			DCmdSrvConsLst[%=nombreClase%] servicio = (DCmdSrvConsLst[%=nombreClase%]) getServicio("[%=stringServicio.toLowerCase()%].DCmdSrvConsLst[%=nombreClase%]");
+
+			switch (tipoOperacion) {
+			case CONSULTA_GENERICA:
+				servicio.inicializarConsultaGenerica(to[%=nombreClase%]);;
+				break;
+				
+			[%		//tipo operacion por fks
+		
+			var cont=1;
+			for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
+			{		
+			//Arq!ModoCombo	
+			var lst=to.att.atributos.select(a|a.isModoCombo()and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
+			var strLst=lst.collect(a|text+a.getNomClaseRefModoCombo()+'='+(cont++));	
+			
+			for(a in lst){
+				var nameUpperCamelCase=a.getNomClaseRefModoComboCamelCase();
+				if(nameUpperCamelCase=""){
+				continue;
+				}
+				 //case para swich
+				strLst="case CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+":\n"
+						+"\t\t\t servicio.inicializarConsultarPor"+nameUpperCamelCase+"(pk"+nameUpperCamelCase+");\n"
+						+"\t\t\t break;";		
+				}
+				%]		
+			[%=strLst.concat(" \n \t \t")%]				
+			[%
+			}	
+			%]			
+			default:
+			
+				throw new DValidarExcepcion(getMensajeGeneral("la consulta", "de objetos [%=nombreClase%]"),
+						getMensajeOperInvalida());
+			}
+			servicio.ejecutar();
+			objetos[%=nombreClase%] = servicio.getColeccion[%=nombreClase%]();
+			isOk = true;
+		} catch (DExcepcion ex) {
+			mensajeError = ex.getMessage();
+			mensajeErrorDetallado = ex.getMensajeDetallado();
+			isOk = false;
+		}
+	}
+
+}
