@@ -283,10 +283,17 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	private void asignarValoresGenericos(DSentenciaSQL unaSentencia) throws SQLException {
 		if (pk[%=nombreClase%] != null) {
 			[%
-			for(att in pks) {				
+			for(att in pkes.atributos.asOrderedSet()) {				
 			%]
-			if (pk[%=nombreClase%].get[%=att.firstToUpperCamelCase()%]() != null) {
-				unaSentencia.setBigInteger("[%=att%]", pk[%=nombreClase%].get[%=att.firstToUpperCamelCase()%]());
+			if (pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]() != null) {
+				//unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());				
+				[% if (att.tipo.toType() = "java.lang.String") {%]
+				unaSentencia.setString("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+				unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+				unaSentencia.setTimestamp("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%}%]
 			}[%}%]
 		}
 
@@ -430,9 +437,16 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	 */
 	private void asignarValoresPK(DSentenciaSQL unaSentencia) throws SQLException {
 		[%
-		for(att in pks) {				
+		for(att in pkes.atributos.asOrderedSet()) {				
 		%]
-		unaSentencia.setBigInteger("[%=att%]", pk[%=nombreClase%].get[%=att.firstToUpperCamelCase()%]());			
+		//unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());	
+			[% if (att.tipo.toType() = "java.lang.String") {%]
+				unaSentencia.setString("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+				unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+				unaSentencia.setTimestamp("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%}%]		
 		[%}%]		
 	}
 
@@ -498,10 +512,19 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		// Conformar el objeto PK
 		D[%=nombreClase%]PKTO pk = new D[%=nombreClase%]PKTO();
 		[%
-		for(att in pks) {				
+		for(att in pkes.atributos.asOrderedSet()) {				
 		%]
 		//java.lang.Integer
-		pk.set[%=att.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att%]")));			
+		//pk.set[%=att.nombre.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att.nombre%]")));	
+		//[%=att.tipo.toType()%]
+				[% if (att.tipo.toType() = "java.lang.String") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getString("[%=att.nombre%]"));
+				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att.nombre%]")));
+				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%]((Timestamp)resultado.getDate("[%=att.nombre%]"));
+				[%}%]
+				
 		[%}%]					
 		// Conformar el objeto Att
 		D[%=nombreClase%]AttTO att = new D[%=nombreClase%]AttTO();

@@ -14,13 +14,15 @@
 		<echo>Borrando el contenido de la carpeta generated</echo>
 		<delete dir="${generated.location}" failonerror="true" />
 		<antcall target="m2m" />
+
 	</target>
 
 	<target name="m2m">
-		<echo>Realizar transformación ETL</echo>
-		<epsilon.emf.register file="${destinoarq.metamodel.location}" />
+	<echo>Realizar transformación ETL</echo>		
+		<epsilon.emf.register file="${destinoarq.metamodel.location}" />		
 		<epsilon.emf.loadModel name="Arq" modelfile="${models.location}/arqdestino-generado.xmi" metamodeluri="${destinoarq.metamodel.uri}" read="false" store="true" />
 		<epsilon.emf.loadModel name="Sql" modelfile="${models.location}/modeloContribuyentes.xmi" metamodeluri="${sql.metamodel.uri}" read="true" store="false" />
+		
 
 		<epsilon.etl src="${transformations.location}/m2m/Aplication2Modulo.etl" >
 			<model ref="Arq" alias="Arq"/>
@@ -28,7 +30,7 @@
 		</epsilon.etl>
 
 		<antcall target="m2t" />
-		<antcall target="copyFiles" />
+		
 	</target>
 
 	<target name="m2t">
@@ -42,20 +44,21 @@
 
 		<epsilon.disposeModels/>
 	</target>
-
-	<target name="copyFiles">
-
-		<delete>
-			<fileset dir="${basedir}/generated/AUTBuses/src/main/java/co/gov/dian/muisca/automatizacion" includes="*.java" />
-		</delete>
-
-		<copy todir="C:/Users/Usuario/Documents/MISO_AUTOMATIZACION/ArquitecturaDian/ARQDIANBuses/" overwrite="false">
-			<fileset dir="${basedir}/generated/AUTBuses/"/>
+	
+<target name="copyFiles">
+	<delete file="C:/Users/enunezt/Downloads/ArquitecturaDian/ARQDIANBuses/src/main/java/co/gov/dian/muisca/automatizacion/**.java"/>  
+	
+	<delete>  
+	            <fileset dir="${basedir}/generated/AUTBuses/src/main/java/co/gov/dian/muisca/automatizacion" includes="*.java"/>  
+	        </delete>  
+	
+	<copy todir = "C:/Users/enunezt/Downloads/ArquitecturaDian/ARQDIANBuses/" overwrite="false">
+	  <fileset dir="${basedir}/generated/AUTBuses/"/>
+	</copy>
+	
+	<copy todir = "C:/Users/enunezt/Downloads/ArquitecturaDian/WebArquitecturaDian/src/main/java/co/gov/dian/muisca/automatizacion/web/servlets" overwrite="true">
+		  <fileset dir="${basedir}/generated/WebAutomatizacion/src/main/java/co/gov/dian/muisca/automatizacion/web/servlets"/>
 		</copy>
-
-		<copy todir = "C:/Users/Usuario/Documents/MISO_AUTOMATIZACION/ArquitecturaDian/WebArquitecturaDian/src/main/java/" overwrite="true">
-			<fileset dir="${basedir}/generated/WebAutomatizacion/src/main/java/"/>
-		</copy>
-	</target>
+</target>
 
 </project>

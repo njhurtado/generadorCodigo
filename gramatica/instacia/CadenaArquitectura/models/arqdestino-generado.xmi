@@ -1,214 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arqdestino="http://www.uniandes/arquitecturadian/destinoarq">
-  <arqdestino:Modulo nombre="Automatizacion"/>
-  <arqdestino:To nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/2" att="/3"/>
-  <arqdestino:PkTo nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_CONTRIBUYENTE" tipo="NUMBER" isObligatorio="true"/>
+  <arqdestino:Modulo nombre="Exportacion"/>
+  <arqdestino:To nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" sufijoPkg="alianzapacifico" pk="/2" att="/3"/>
+  <arqdestino:PkTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
+    <atributos nombre="IDE_TIPO_PROCESO" tipo="NUMBER" isObligatorio="true"/>
+    <atributos nombre="IDE_DOCUMENTO_PROCESADO" tipo="NUMBER" isObligatorio="true"/>
   </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="NOM_PRIMER_NOMBRE" tipo="VARCHAR2"/>
-    <atributos nombre="NOM_OTROS_NOMBRES" tipo="VARCHAR2"/>
-    <atributos nombre="NOM_PRIMER_APELLIDO" tipo="VARCHAR2"/>
-    <atributos nombre="NOM_SEGUNDO_APELLIDO" tipo="VARCHAR2"/>
-    <atributos nombre="NOM_RAZON_SOCIAL" tipo="VARCHAR2"/>
-    <atributos nombre="IDE_TIPO_DOCUMENTO" tipo="NUMBER" isObligatorio="true">
-      <anotaciones xsi:type="arqdestino:Filtro"/>
-      <anotaciones xsi:type="arqdestino:ModoReferencia">
-        <refs>DOMINIO=123</refs>
-      </anotaciones>
-      <anotaciones xsi:type="arqdestino:ModoCombo" args="TIPO_DOCUMENTO"/>
-    </atributos>
-    <atributos nombre="NUM_IDENTIDAD" tipo="VARCHAR2">
-      <anotaciones xsi:type="arqdestino:Filtro"/>
-    </atributos>
-    <atributos nombre="NUM_NIT" tipo="NUMBER"/>
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
+  <arqdestino:AttTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
+    <atributos nombre="COD_ESTADO" tipo="CHAR" isObligatorio="true"/>
+    <atributos nombre="VAL_LOG_ERROR" tipo="VARCHAR2"/>
+    <atributos nombre="FEC_PRIMERA_EJECUCION" tipo="TIMESTAMP"/>
+    <atributos nombre="FEC_ULTIMA_EJECUCION" tipo="TIMESTAMP" isObligatorio="true"/>
+    <atributos nombre="NUM_INTENTOS" tipo="NUMBER" isObligatorio="true"/>
   </arqdestino:AttTo>
-  <arqdestino:To nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/5" att="/6"/>
-  <arqdestino:PkTo nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_CONTRIBUYENTE" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_DIRECCION" tipo="NUMBER" isObligatorio="true"/>
-  </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
-  </arqdestino:AttTo>
-  <arqdestino:To nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/8" att="/9"/>
-  <arqdestino:PkTo nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_DIRECCION" tipo="NUMBER" isObligatorio="true"/>
-  </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_PAIS" tipo="NUMBER" isObligatorio="true">
-      <anotaciones xsi:type="arqdestino:ModoCombo"/>
-    </atributos>
-    <atributos nombre="IDE_DEPARTAMENTO" tipo="NUMBER" isObligatorio="true">
-      <anotaciones xsi:type="arqdestino:ModoCombo"/>
-      <anotaciones xsi:type="arqdestino:ModoReferencia">
-        <refs>LUGAR=108</refs>
-      </anotaciones>
-      <anotaciones xsi:type="arqdestino:ModoCombo" args="LUGAR"/>
-    </atributos>
-    <atributos nombre="IDE_MUNICIPIO" tipo="NUMBER" isObligatorio="true">
-      <anotaciones xsi:type="arqdestino:ModoCombo"/>
-      <anotaciones xsi:type="arqdestino:ModoReferencia">
-        <refs>LUGAR=109</refs>
-      </anotaciones>
-      <anotaciones xsi:type="arqdestino:ModoCombo" args="LUGAR"/>
-    </atributos>
-    <atributos nombre="VAL_DIRECCION" tipo="VARCHAR2" isObligatorio="true"/>
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
-  </arqdestino:AttTo>
-  <arqdestino:To nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/11" att="/12"/>
-  <arqdestino:PkTo nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_LUGAR" tipo="NUMBER" isObligatorio="true"/>
-  </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_TIPO_LUGAR" tipo="NUMBER" isObligatorio="true">
-      <anotaciones xsi:type="arqdestino:ModoCombo"/>
-      <anotaciones xsi:type="arqdestino:ModoCombo" args="TIPO_LUGAR"/>
-    </atributos>
-    <atributos nombre="IDE_LUGAR_PADRE" tipo="NUMBER">
-      <anotaciones xsi:type="arqdestino:ModoCombo" args="LUGAR"/>
-    </atributos>
-    <atributos nombre="NOM_TIPO_LUGAR" tipo="VARCHAR2" isObligatorio="true"/>
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
-  </arqdestino:AttTo>
-  <arqdestino:To nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/14" att="/15"/>
-  <arqdestino:PkTo nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_TIPO_DOCUMENTO" tipo="NUMBER" isObligatorio="true"/>
-  </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="NOM_TIPO_DOCUMENTO" tipo="VARCHAR2" isObligatorio="true"/>
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
-  </arqdestino:AttTo>
-  <arqdestino:To nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" sufijoPkg="contribuyentes" pk="/17" att="/18"/>
-  <arqdestino:PkTo nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="IDE_TIPO_LUGAR" tipo="NUMBER" isObligatorio="true"/>
-  </arqdestino:PkTo>
-  <arqdestino:AttTo nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes">
-    <atributos nombre="NOM_TIPO_LUGAR" tipo="VARCHAR2" isObligatorio="true"/>
-    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_UUID" tipo="CHAR" isObligatorio="true"/>
-  </arqdestino:AttTo>
-  <arqdestino:Dao nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/2" att="/3"/>
+  <arqdestino:Dao nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.dao.alianzapacifico" sufijoPkg="alianzapacifico">
+    <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
   </arqdestino:Dao>
-  <arqdestino:Dao nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/5" att="/6"/>
-  </arqdestino:Dao>
-  <arqdestino:Dao nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/8" att="/9"/>
-  </arqdestino:Dao>
-  <arqdestino:Dao nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/11" att="/12"/>
-  </arqdestino:Dao>
-  <arqdestino:Dao nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/14" att="/15"/>
-  </arqdestino:Dao>
-  <arqdestino:Dao nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.dao.contribuyentes" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/17" att="/18"/>
-  </arqdestino:Dao>
-  <arqdestino:Wbo nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/2" att="/3"/>
+  <arqdestino:Wbo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.web.wbo.alianzapacifico" sufijoPkg="alianzapacifico">
+    <tos nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
   </arqdestino:Wbo>
-  <arqdestino:Wbo nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/5" att="/6"/>
-  </arqdestino:Wbo>
-  <arqdestino:Wbo nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/8" att="/9"/>
-  </arqdestino:Wbo>
-  <arqdestino:Wbo nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/11" att="/12"/>
-  </arqdestino:Wbo>
-  <arqdestino:Wbo nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/14" att="/15"/>
-  </arqdestino:Wbo>
-  <arqdestino:Wbo nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.web.wbo.contribuyentes" sufijoPkg="contribuyentes">
-    <tos nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/17" att="/18"/>
-  </arqdestino:Wbo>
-  <arqdestino:Xhtml nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <anotaciones xsi:type="arqdestino:TablaDetalle" clase="/43"/>
-    <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/2" att="/3"/>
+  <arqdestino:Xhtml nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.webcontent" sufijoPkg="alianzapacifico">
+    <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
   </arqdestino:Xhtml>
-  <arqdestino:Xhtml nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/5" att="/6"/>
-  </arqdestino:Xhtml>
-  <arqdestino:Xhtml nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/8" att="/9"/>
-  </arqdestino:Xhtml>
-  <arqdestino:Xhtml nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/11" att="/12"/>
-  </arqdestino:Xhtml>
-  <arqdestino:Xhtml nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/14" att="/15"/>
-  </arqdestino:Xhtml>
-  <arqdestino:Xhtml nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.webcontent" sufijoPkg="contribuyentes">
-    <detalle xsi:type="arqdestino:To" nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/17" att="/18"/>
-  </arqdestino:Xhtml>
-  <arqdestino:Delegado nombre="Automatizacion" paquete="co.gov.dian.muisca.automatizacion">
-    <acciones nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/2" att="/3"/>
-      <servicios nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/2" att="/3"/>
-      </servicios>
-    </acciones>
-    <acciones nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/5" att="/6"/>
-      <servicios nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="CONTRIBUYENTE_DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/5" att="/6"/>
-      </servicios>
-    </acciones>
-    <acciones nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/8" att="/9"/>
-      <servicios nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="DIRECCION" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/8" att="/9"/>
-      </servicios>
-    </acciones>
-    <acciones nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/11" att="/12"/>
-      <servicios nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/11" att="/12"/>
-      </servicios>
-    </acciones>
-    <acciones nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/14" att="/15"/>
-      <servicios nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="TIPO_DOCUMENTO" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/14" att="/15"/>
-      </servicios>
-    </acciones>
-    <acciones nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.acciones.contribuyentes" sufijoPkg="contribuyentes">
-      <detalle xsi:type="arqdestino:To" nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/17" att="/18"/>
-      <servicios nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.servicios.contribuyentes" sufijoPkg="contribuyentes">
-        <detalle xsi:type="arqdestino:To" nombre="TIPO_LUGAR" paquete="co.gov.dian.muisca.automatizacion.general.to.contribuyentes" pk="/17" att="/18"/>
+  <arqdestino:Delegado nombre="Exportacion" paquete="co.gov.dian.muisca.exportacion">
+    <acciones nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.acciones.alianzapacifico" sufijoPkg="alianzapacifico">
+      <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+      <servicios nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.servicios.alianzapacifico" sufijoPkg="alianzapacifico">
+        <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
       </servicios>
     </acciones>
   </arqdestino:Delegado>
-  <arqdestino:ModoCombo/>
-  <arqdestino:ModoCombo/>
-  <arqdestino:ModoCombo/>
-  <arqdestino:ModoCombo/>
-  <arqdestino:ModoCombo/>
-  <arqdestino:To nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.automatizacion"/>
 </xmi:XMI>

@@ -1,116 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
-<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" name="Automatizacion" package="co.gov.dian.muisca.automatizacion" sufijoPkg="contribuyentes">
+<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sql="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" name="Exportacion" package="co.gov.dian.muisca.exportacion" sufijoPkg="alianzapacifico">
   <database>
-    <tables name="CONTRIBUYENTE">
-      <annotations xsi:type="sql:TableDetail" tableRelation="//@database/@tables.1"/>
-      <columns name="IDE_CONTRIBUYENTE" type="NUMBER" size="8" isNotNull="true"/>
-      <columns name="NOM_PRIMER_NOMBRE" size="64"/>
-      <columns name="NOM_OTROS_NOMBRES" size="64"/>
-      <columns name="NOM_PRIMER_APELLIDO" size="64"/>
-      <columns name="NOM_SEGUNDO_APELLIDO" size="64"/>
-      <columns name="NOM_RAZON_SOCIAL" size="512"/>
-      <columns name="IDE_TIPO_DOCUMENTO" type="NUMBER" size="8" isNotNull="true">
-        <annotations xsi:type="sql:Filtro"/>
-        <annotations xsi:type="sql:ReferenceMode">
-          <refs>DOMINIO=123</refs>
-        </annotations>
-      </columns>
-      <columns name="NUM_IDENTIDAD" size="50">
-        <annotations xsi:type="sql:Filtro"/>
-      </columns>
-      <columns name="NUM_NIT" type="NUMBER" size="14"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="14" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="32" isNotNull="true"/>
-      <primarykey name="PK_CONTRIBUYENTE" columns="//@database/@tables.0/@columns.0"/>
-      <foreignkeys name="FK_CONTRIBUYENTE__DIRECCION_01" localColumns="//@database/@tables.0/@columns.6" foreignTable="//@database/@tables.4" foreignColumns="//@database/@tables.4/@columns.0">
-        <annotations xsi:type="sql:ComboMode"/>
-      </foreignkeys>
-    </tables>
-    <tables name="CONTRIBUYENTE_DIRECCION">
-      <columns name="IDE_CONTRIBUYENTE" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="IDE_DIRECCION" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="50" isNotNull="true"/>
-      <primarykey name="PK_CONTRIBUYENT_01" columns="//@database/@tables.1/@columns.0 //@database/@tables.1/@columns.1"/>
-      <foreignkeys name="FK_CONTRIBUYENT_CONTRIBUYEN_01" localColumns="//@database/@tables.1/@columns.0" foreignTable="//@database/@tables.0" foreignColumns="//@database/@tables.0/@columns.0"/>
-      <foreignkeys name="FK_CONTRIBUYENTE__DIRECCION_01" localColumns="//@database/@tables.1/@columns.1" foreignTable="//@database/@tables.2" foreignColumns="//@database/@tables.2/@columns.0"/>
-    </tables>
-    <tables name="DIRECCION">
-      <columns name="IDE_DIRECCION" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="IDE_PAIS" type="NUMBER" size="8" isNotNull="true">
-        <annotations xsi:type="sql:ComboMode"/>
-      </columns>
-      <columns name="IDE_DEPARTAMENTO" type="NUMBER" size="8" isNotNull="true">
-        <annotations xsi:type="sql:ComboMode"/>
-        <annotations xsi:type="sql:ReferenceMode">
-          <refs>LUGAR=108</refs>
-        </annotations>
-      </columns>
-      <columns name="IDE_MUNICIPIO" type="NUMBER" size="8" isNotNull="true">
-        <annotations xsi:type="sql:ComboMode"/>
-        <annotations xsi:type="sql:ReferenceMode">
-          <refs>LUGAR=109</refs>
-        </annotations>
-      </columns>
-      <columns name="VAL_DIRECCION" size="256" isNotNull="true"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="32" isNotNull="true"/>
-      <primarykey name="PK_DIRECCION" columns="//@database/@tables.2/@columns.0"/>
-      <foreignkeys name="FK_LUG_MUN" localColumns="//@database/@tables.2/@columns.3" foreignTable="//@database/@tables.3" foreignColumns="//@database/@tables.3/@columns.0">
-        <annotations xsi:type="sql:ComboMode"/>
-      </foreignkeys>
-      <foreignkeys name="FK_LUGAR_DEPTO" localColumns="//@database/@tables.2/@columns.2" foreignTable="//@database/@tables.3" foreignColumns="//@database/@tables.3/@columns.0">
-        <annotations xsi:type="sql:ComboMode"/>
-      </foreignkeys>
-    </tables>
-    <tables name="LUGAR">
-      <columns name="IDE_LUGAR" type="NUMBER" size="8" isNotNull="true"/>
-      <columns name="IDE_TIPO_LUGAR" type="NUMBER" size="8" isNotNull="true">
-        <annotations xsi:type="sql:ComboMode"/>
-      </columns>
-      <columns name="IDE_LUGAR_PADRE" type="NUMBER" size="8"/>
-      <columns name="NOM_TIPO_LUGAR" size="256" isNotNull="true"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="32" isNotNull="true"/>
-      <primarykey name="PK_LUGAR" columns="//@database/@tables.3/@columns.0"/>
-      <foreignkeys name="FK_LUGAR_TIPO_LUGAR" localColumns="//@database/@tables.3/@columns.1" foreignTable="//@database/@tables.5" foreignColumns="//@database/@tables.5/@columns.0">
-        <annotations xsi:type="sql:ComboMode"/>
-      </foreignkeys>
-      <foreignkeys name="FK_LUG_PADRE" localColumns="//@database/@tables.3/@columns.2" foreignTable="//@database/@tables.3" foreignColumns="//@database/@tables.3/@columns.0">
-        <annotations xsi:type="sql:ComboMode"/>
-      </foreignkeys>
-    </tables>
-    <tables name="TIPO_DOCUMENTO">
-      <columns name="IDE_TIPO_DOCUMENTO" type="NUMBER" size="8" isNotNull="true"/>
-      <columns name="NOM_TIPO_DOCUMENTO" size="64" isNotNull="true"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="14" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="32" isNotNull="true"/>
-      <primarykey name="PK_TIPO_DOCUMEN_01" columns="//@database/@tables.4/@columns.0"/>
-    </tables>
-    <tables name="TIPO_LUGAR">
-      <columns name="IDE_TIPO_LUGAR" type="NUMBER" size="8" isNotNull="true"/>
-      <columns name="NOM_TIPO_LUGAR" size="256" isNotNull="true"/>
-      <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="10" isNotNull="true"/>
-      <columns name="FEC_CAMBIO" type="TIMESTAMP" size="6" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
-      <columns name="IDE_UUID" type="CHAR" size="32" isNotNull="true"/>
-      <primarykey name="PK_Table1" columns="//@database/@tables.5/@columns.0"/>
+    <tables name="PROCESO_DOCUMENTOS">
+      <columns name="IDE_DOCUMENTO_PROCESADO" type="NUMBER" size="16" isNotNull="true"/>
+      <columns name="IDE_TIPO_PROCESO" type="NUMBER" size="8" isNotNull="true"/>
+      <columns name="COD_ESTADO" type="CHAR" size="1" isNotNull="true"/>
+      <columns name="VAL_LOG_ERROR" size="2000"/>
+      <columns name="FEC_PRIMERA_EJECUCION" type="TIMESTAMP"/>
+      <columns name="FEC_ULTIMA_EJECUCION" type="TIMESTAMP" isNotNull="true"/>
+      <columns name="NUM_INTENTOS" type="NUMBER" size="2" isNotNull="true"/>
+      <primarykey name="PRDO_PK" columns="//@database/@tables.0/@columns.1 //@database/@tables.0/@columns.0"/>
     </tables>
   </database>
 </sql:Aplication>

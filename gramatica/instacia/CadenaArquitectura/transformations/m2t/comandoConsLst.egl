@@ -1,5 +1,6 @@
 [% import "../utils.eol"; 
 var nombreClase=clase.nombre.firstToUpperCamelCase();
+var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 %]
 /**
  * Republica de Colombia

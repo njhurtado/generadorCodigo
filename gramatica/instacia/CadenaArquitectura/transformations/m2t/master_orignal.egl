@@ -197,12 +197,12 @@ import "../utils.eol";
 		var tIdFactoryDao:Template:= TemplateFactory.load('iddaofactory.egl');
 		tIdFactoryDao.populate('Modulo', m);
 		tIdFactoryDao.populate('Paquete', paqueteFactory);
-		tIdFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/IDDAOFactory" +m.nombre.firstToUpperCase() + '.java');
+		tIdFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/IDDAOFactory" +m.nombre.firstToUpperCamelCase() + '.java');
 				
 		var tFactoryDao:Template:= TemplateFactory.load('ddaofactory.egl');
 		tFactoryDao.populate('Modulo', m);
 		tFactoryDao.populate('Paquete', paqueteFactory);
-		tFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/impl/oracle/DDAOFactory" +m.nombre.firstToUpperCase() + '.java');
+		tFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/impl/oracle/DDAOFactory" +m.nombre.firstToUpperCamelCase() + '.java');
 				
 	}
 	

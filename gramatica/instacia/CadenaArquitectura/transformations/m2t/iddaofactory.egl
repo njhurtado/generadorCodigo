@@ -48,15 +48,15 @@ import [%=paquete%].*;
  
  [%
  operation Arq!Modulo getNombreClase() : String {
-     var retorno = self.nombre.substring(0,1).toUpperCase();
+     var retorno = self.nombre.firstToUpperCase();
   	 if (self.nombre.indexOf("_") > 0) {
   	 	retorno = "";
 	  	for (t in self.nombre.toLowerCase.split("_")) {
 	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
 	  	}
-  	 } else {
+  	 } /*else {
   	 	retorno += self.nombre.substring(1).toLowerCase();
-  	 }
+  	 }*/
     return retorno;
   }	
   
