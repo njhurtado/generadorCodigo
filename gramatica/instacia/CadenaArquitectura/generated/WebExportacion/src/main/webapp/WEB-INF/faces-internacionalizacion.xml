@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>co.gov.dian.muisca.exportacion.web.recursos.exp_imagenes</base-name>
+            <var>exp_imagenes</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>es</default-locale>
+        </locale-config>
+    </application>
+    <application>
+        <resource-bundle>
+            <base-name>co.gov.dian.muisca.exportacion.web.recursos.exp_mensajes</base-name>
+            <var>exp_mensajes</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>es</default-locale>
+        </locale-config>
+    </application>
+
+    <application>
+        <message-bundle>
+            co.gov.dian.muisca.exportacion.web.recursos.exp_mensajes
+        </message-bundle>
+    </application>
+</faces-config>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sql="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" name="Exportacion" package="co.gov.dian.muisca.exportacion" sufijoPkg="alianzapacifico">
+<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="Exportacion" package="co.gov.dian.muisca.exportacion" sufijoPkg="alianzapacifico">
   <database>
     <tables name="PROCESO_DOCUMENTOS">
       <columns name="IDE_DOCUMENTO_PROCESADO" type="NUMBER" size="16" isNotNull="true"/>

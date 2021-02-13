@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/esquema/Esquema.xhtml">
+        <ui:define name="contenido">
+            <f:subview id="viewCrearProcesoDocumentos">
+                <div id="areaDeTrabajo">
+                    <div id="tituloDePlantilla">
+                        <h:outputText value="#{arq_aud_mensajes['lbl_datos_contribuyente']}"/>
+                    </div>
+                    <hr/>
+                    <div id="areaMediaPlantilla">
+                        <h:form id="formProcesoDocumentos">
+                            <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+                           
+                           
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" width="300">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes GreenButton" icon="ui-icon-check"/>
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no RedButton" icon="ui-icon-close"/>
+                            </p:confirmDialog>
+                       <p:panel id="basicProcesoDocumentos" header="#{arq_aud_mensajes['label_ProcesoDocumentos']}" style="margin-bottom:20px">
+                                <h:panelGrid columns="2" styleClass="td-text two-col-medium">  
+                      		<h:outputLabel value="#{arq_aud_mensajes['CodEstado']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtCodEstado"
+                                                     required="true"
+                                                     label="#{arq_aud_mensajes['lbl_CodEstado']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.codEstado}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['ValLogError']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtValLogError"
+                                                     required="false"
+                                                     label="#{arq_aud_mensajes['lbl_ValLogError']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.valLogError}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['FecPrimeraEjecucion']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtFecPrimeraEjecucion"
+                                                     required="false"
+                                                     label="#{arq_aud_mensajes['lbl_FecPrimeraEjecucion']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.fecPrimeraEjecucion}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['FecUltimaEjecucion']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtFecUltimaEjecucion"
+                                                     required="true"
+                                                     label="#{arq_aud_mensajes['lbl_FecUltimaEjecucion']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.fecUltimaEjecucion}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['NumIntentos']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtNumIntentos"
+                                                     required="true"
+                                                     label="#{arq_aud_mensajes['lbl_NumIntentos']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.numIntentos}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['IdeTipoProceso']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtIdeTipoProceso"
+                                                     required="true"
+                                                     label="#{arq_aud_mensajes['lbl_IdeTipoProceso']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.ideTipoProceso}"/>
+                             </h:outputLabel>
+                      
+                      		<h:outputLabel value="#{arq_aud_mensajes['IdeDocumentoProcesado']}" styleClass="ui-outputlabel  pf_required_field">
+                                        <p:inputText id="txtIdeDocumentoProcesado"
+                                                     required="true"
+                                                     label="#{arq_aud_mensajes['lbl_IdeDocumentoProcesado']}"
+                                                     style="width:100%!important;#{ component.valid ? '' : 'border-color:red;'}"
+                                                     value="#{dcrearProcesoDocumentosWBO.toProcesoDocumentos.ideDocumentoProcesado}"/>
+                             </h:outputLabel>
+                      
+ 
+                       
+                       
+                                   </h:panelGrid>
+                            </p:panel>
+                         <h:panelGrid columns="1" styleClass="td-commandbt one-col">
+                            <h:panelGroup>
+                                <p:commandButton id="idBtnDireccionEditar" update="viewCrearProcesoDocumentos:formProcesoDocumentos:basicProcesoDocumentos"
+                                                 actionListener="#{dcrearProcesoDocumentosWBO.crearProcesoDocumentos()}"
+                                                 styleClass="btnd icon_crear" value="Crear ProcesoDocumentos" 
+                                                 ajax="true">
+                                </p:commandButton>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </f:subview>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arqdestino="http://www.uniandes/arquitecturadian/destinoarq" xsi:schemaLocation="http://www.uniandes/arquitecturadian/destinoarq ../metamodels/destinoarq.ecore">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:arqdestino="http://www.dian.gov.co/arquitecturadian/destinoarq" xsi:schemaLocation="http://www.dian.gov.co/arquitecturadian/destinoarq ../metamodels/destinoarq.ecore">
   <arqdestino:Modulo nombre="Automatizacion"/>
   <arqdestino:To nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.general.to" pk="/2" att="/3"/>
   <arqdestino:PkTo nombre="CONTRIBUYENTE" paquete="co.gov.dian.muisca.general.to">

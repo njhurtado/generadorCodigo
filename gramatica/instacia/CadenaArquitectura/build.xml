@@ -7,8 +7,8 @@
 	<property name="models.location" location="${basedir}/models" />
 	<property name="metamodels.location" location="${basedir}/metamodels" />
 	<property name="destinoarq.metamodel.location" location="${metamodels.location}/destinoarq.ecore" />
-	<property name="destinoarq.metamodel.uri" value="http://www.uniandes/arquitecturadian/destinoarq" />
-	<property name="sql.metamodel.uri" value="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" />
+	<property name="destinoarq.metamodel.uri" value="http://www.dian.gov.co/arquitecturadian/destinoarq" />
+	<property name="sql.metamodel.uri" value="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" />
 
 	<target name="build">
 		<echo>Borrando el contenido de la carpeta generated</echo>

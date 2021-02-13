@@ -1,0 +1,109 @@
+grammar co.gov.dian.xtext.arquitecturadian.dsl.Sql with org.eclipse.xtext.common.Terminals
+
+
+generate sql 'http://www.xtext.dia.gov.co/arquitecturadian/dsl/Sql'
+
+Aplication :
+	'Aplication' name= ID
+	
+		('package' package=STRING)?
+		('sufijoPkg' sufijoPkg=STRING)?
+		('comments' O_SQUARE_BRACKET comments+=Comment (COMMA comments+=Comment)* C_SQUARE_BRACKET )?
+		'database' database=Database
+	;
+
+Database returns Database:
+	tables+=Table*
+;
+	
+Table returns Table:
+	'CREATE' 'TABLE' name=ID  (annotations+=Annotation ( COMMA annotations+=Annotation)*  )?  O_BRACKET
+		columns+=(Column) (COMMA columns+=(Column))*
+	 primarykey=(PrimaryKey)?
+	 foreignkeys+=(ForeignKey)?(COMMA foreignkeys+=(ForeignKey))?
+	 
+	 
+	C_BRACKET SEMICOLON
+;
+
+Column returns Column: 
+	
+	name=ID (type=DataType) (O_BRACKET size=INT (COMMA presicion=INT)? C_BRACKET)? (isNotNull?='NOT NULL')?
+	(annotations+=Annotation ( COMMA annotations+=Annotation)*  )? 
+		('comments'  comments+=Comment ( COMMA comments+=Comment)*  )?
+		
+	;
+
+
+PrimaryKey returns PrimaryKey:
+	COMMA? 'CONSTRAINT' name=ID 'PRIMARY' 'KEY' O_BRACKET
+		columns+=[Column] (COMMA columns+=[Column])* 
+	C_BRACKET COMMA?
+;
+
+ForeignKey returns ForeignKey:
+	'CONSTRAINT' name=ID 'FOREIGN' 'KEY' O_BRACKET
+		localColumns+=[Column] (COMMA localColumns+=[Column])* 
+	C_BRACKET 
+	'REFERENCES' foreignTable=[Table] O_BRACKET
+		foreignColumns+=[Column] (COMMA foreignColumns+=[Column])* 
+	C_BRACKET
+	(annotations+=Annotation ( COMMA annotations+=Annotation)*  )? 	
+;
+
+Comment returns Comment:
+	{Comment}
+	'Comment'
+	O_BRACKET
+		('text' text=STRING)?
+	C_BRACKET;
+
+Annotation returns Annotation:
+	ReferenceMode | ComboMode | TableDetail | Filtro; 
+	
+ReferenceMode returns ReferenceMode:
+	{ReferenceMode}
+	'@ReferenceMode'
+	name='@ReferenceMode'?
+	(O_BRACKET
+		('args' args=STRING)?
+		('refs' refs+=STRING (COMMA refs+=STRING )*  )?
+	C_BRACKET)?;
+
+ComboMode returns ComboMode:
+	{ComboMode}
+	'@ComboMode'
+	name='@ComboMode'?
+	(O_BRACKET
+		('args' args=STRING)?
+	C_BRACKET)?;
+
+TableDetail returns TableDetail:
+	'@TableDetail'
+	name='@TableDetail'?
+	(O_BRACKET
+		('args' args=STRING)?
+		'tableRelation' tableRelation=[Table|STRING]
+	C_BRACKET)?;
+
+Filtro returns Filtro:
+	{Filtro}
+	'@Filtro'
+	name='@Filtro'?
+	(O_BRACKET
+		('args' args=STRING)?
+	C_BRACKET)?;
+	
+enum DataType returns DataType:
+				VARCHAR2 = 'VARCHAR2' | NUMBER = 'NUMBER' | TIMESTAMP = 'TIMESTAMP' | CHAR = 'CHAR';
+
+				
+terminal O_SQUARE_BRACKET:'{';
+
+terminal C_SQUARE_BRACKET:'}';
+
+terminal O_BRACKET:'(';
+terminal COMMA:',';
+
+terminal C_BRACKET:')';
+terminal SEMICOLON:';';

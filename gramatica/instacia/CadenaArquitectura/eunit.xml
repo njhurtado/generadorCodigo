@@ -8,9 +8,9 @@
 <property name="metamodels.location" location="${basedir}/metamodels" />
 <property name="arqdestino.metamodel.location" location="${metamodels.location}/destinoarq.ecore" />
 <property name="dsql.metamodel.location" location="${metamodels.location}/Sql.ecore" />
-<property name="arqdestino.metamodel.uri" value="http://www.uniandes/arquitecturadian/destinoarq" />
+<property name="arqdestino.metamodel.uri" value="http://www.dian.gov.co/arquitecturadian/destinoarq" />
 
-<property name="dsql.metamodel.uri" value="http://www.xtext.uniandes/arquitecturadian/dsl/Sql" />
+<property name="dsql.metamodel.uri" value="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" />
 
 <!-- Estas propiedades definen la ubicación de los tests (archivos eunit)  -->
 <property name="tests.location" location="${basedir}/tests"/>
