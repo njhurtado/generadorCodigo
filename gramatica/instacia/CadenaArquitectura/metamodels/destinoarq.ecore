@@ -78,6 +78,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="anotaciones" upperBound="-1"
         eType="#//Anotacion" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isObligatorio" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="longitud" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precision" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PkTo" eSuperTypes="#//Clase"/>
   <eClassifiers xsi:type="ecore:EClass" name="AttTo" eSuperTypes="#//Clase"/>

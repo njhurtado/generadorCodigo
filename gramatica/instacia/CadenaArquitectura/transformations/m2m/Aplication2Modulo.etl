@@ -20,6 +20,8 @@ rule Columna2Atributo
 		a.tipo=c.type.toString();
 		a.anotaciones=c.annotations.equivalent();
 		a.isObligatorio=c.isNotNull;
+		a.longitud=c.size;
+		a.precision=c.presicion;
 		var tabla=c.eContainer();
 		if(tabla.foreignkeys.size()>0 and 
 		tabla.foreignkeys.select(f|f.annotations.size()>0 and f.localColumns.select(c1|c1=c).size()>0).size()>0

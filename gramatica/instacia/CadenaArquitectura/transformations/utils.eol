@@ -75,9 +75,34 @@ operation String toType () : String {
 	return 'java.sql.Timestamp';
 	else 
 	return self;
-	
-
 }
 
+//retorna el tipo de dato java
+operation Atributo getType () : String {
+	if(self.tipo='VARCHAR2' or self.tipo='CHAR')
+		return 'java.lang.String';
+	else if(self.tipo='NUMBER') {
+		if(self.precision <= 0) {
+			if(self.longitud <= 8) {
+				return 'java.lang.Integer';
+			} else if(self.longitud <= 17) {
+				return 'java.lang.Long';
+			} else {
+				return 'java.math.BigInteger';
+			}
+		} else {
+			if(self.longitud <= 17) {
+				return 'java.lang.Double';
+			} else {
+				return 'java.math.BigDecimal';
+			}
+		}
+	} else if(self.tipo='TIMESTAMP')
+		return 'java.sql.Timestamp';
+	else if(self.tipo='DATE')
+		return 'java.sql.Date';
+	else 
+	return self;
+}
 
 

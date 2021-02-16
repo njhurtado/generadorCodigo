@@ -3,15 +3,38 @@
   <arqdestino:Modulo nombre="Exportacion"/>
   <arqdestino:To nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" sufijoPkg="alianzapacifico" pk="/2" att="/3"/>
   <arqdestino:PkTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
-    <atributos nombre="IDE_TIPO_PROCESO" tipo="NUMBER" isObligatorio="true"/>
-    <atributos nombre="IDE_DOCUMENTO_PROCESADO" tipo="NUMBER" isObligatorio="true"/>
+    <atributos nombre="IDE_TIPO_PROCESO" tipo="NUMBER" isObligatorio="true" longitud="8" precision="4"/>
+    <atributos nombre="IDE_DOCUMENTO_PROCESADO" tipo="NUMBER" isObligatorio="true" longitud="16" precision="4"/>
   </arqdestino:PkTo>
   <arqdestino:AttTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
-    <atributos nombre="COD_ESTADO" tipo="CHAR" isObligatorio="true"/>
-    <atributos nombre="VAL_LOG_ERROR" tipo="VARCHAR2"/>
+    <atributos nombre="COD_ESTADO" tipo="CHAR" isObligatorio="true" longitud="1"/>
+    <atributos nombre="VAL_LOG_ERROR" tipo="VARCHAR2" longitud="2000"/>
     <atributos nombre="FEC_PRIMERA_EJECUCION" tipo="TIMESTAMP"/>
     <atributos nombre="FEC_ULTIMA_EJECUCION" tipo="TIMESTAMP" isObligatorio="true"/>
-    <atributos nombre="NUM_INTENTOS" tipo="NUMBER" isObligatorio="true"/>
+    <atributos nombre="NUM_INTENTOS" tipo="NUMBER" isObligatorio="true" longitud="2" precision="4"/>
+  </arqdestino:AttTo>
+  <arqdestino:Dao nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.dao.alianzapacifico" sufijoPkg="alianzapacifico">
+    <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+  </arqdestino:Dao>
+  <arqdestino:Wbo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.web.wbo.alianzapacifico" sufijoPkg="alianzapacifico">
+    <tos nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+  </arqdestino:Wbo>
+  <arqdestino:Xhtml nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.webcontent" sufijoPkg="alianzapacifico">
+    <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+  </arqdestino:Xhtml>
+  <arqdestino:Delegado nombre="Exportacion" paquete="co.gov.dian.muisca.exportacion"/>
+  <arqdestino:Modulo nombre="Exportacion"/>
+  <arqdestino:To nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" sufijoPkg="alianzapacifico" pk="/10" att="/11"/>
+  <arqdestino:PkTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
+    <atributos nombre="IDE_TIPO_PROCESO" tipo="NUMBER" isObligatorio="true" longitud="8" precision="4"/>
+    <atributos nombre="IDE_DOCUMENTO_PROCESADO" tipo="NUMBER" isObligatorio="true" longitud="16" precision="4"/>
+  </arqdestino:PkTo>
+  <arqdestino:AttTo nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico">
+    <atributos nombre="COD_ESTADO" tipo="CHAR" isObligatorio="true" longitud="1"/>
+    <atributos nombre="VAL_LOG_ERROR" tipo="VARCHAR2" longitud="2000"/>
+    <atributos nombre="FEC_PRIMERA_EJECUCION" tipo="TIMESTAMP"/>
+    <atributos nombre="FEC_ULTIMA_EJECUCION" tipo="TIMESTAMP" isObligatorio="true"/>
+    <atributos nombre="NUM_INTENTOS" tipo="NUMBER" isObligatorio="true" longitud="2" precision="4"/>
   </arqdestino:AttTo>
   <arqdestino:Dao nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.dao.alianzapacifico" sufijoPkg="alianzapacifico">
     <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
@@ -25,6 +48,12 @@
   <arqdestino:Delegado nombre="Exportacion" paquete="co.gov.dian.muisca.exportacion">
     <acciones nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.acciones.alianzapacifico" sufijoPkg="alianzapacifico">
       <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+    </acciones>
+    <acciones nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.acciones.alianzapacifico" sufijoPkg="alianzapacifico">
+      <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+      <servicios nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.servicios.alianzapacifico" sufijoPkg="alianzapacifico">
+        <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
+      </servicios>
       <servicios nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.servicios.alianzapacifico" sufijoPkg="alianzapacifico">
         <detalle xsi:type="arqdestino:To" nombre="PROCESO_DOCUMENTOS" paquete="co.gov.dian.muisca.exportacion.general.to.alianzapacifico" pk="/2" att="/3"/>
       </servicios>

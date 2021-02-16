@@ -8,7 +8,7 @@
 	<property name="metamodels.location" location="${basedir}/metamodels" />
 	<property name="destinoarq.metamodel.location" location="${metamodels.location}/destinoarq.ecore" />
 	<property name="destinoarq.metamodel.uri" value="http://www.dian.gov.co/arquitecturadian/destinoarq" />
-	<property name="sql.metamodel.uri" value="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" />
+	<property name=".metamodel.uri" value="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" />
 
 	<target name="build">
 		<echo>Borrando el contenido de la carpeta generated</echo>
@@ -20,9 +20,9 @@
 	<target name="m2m">
 	<echo>Realizar transformación ETL</echo>		
 		<epsilon.emf.register file="${destinoarq.metamodel.location}" />		
+		<epsilon.emf.loadModel name="Sql" modelfile="${models.location}/modeloContribuyentes.xmi" metamodeluri="${.metamodel.uri}" read="true" store="false" />
 		<epsilon.emf.loadModel name="Arq" modelfile="${models.location}/arqdestino-generado.xmi" metamodeluri="${destinoarq.metamodel.uri}" read="false" store="true" />
-		<epsilon.emf.loadModel name="Sql" modelfile="${models.location}/modeloContribuyentes.xmi" metamodeluri="${sql.metamodel.uri}" read="true" store="false" />
-		
+				
 
 		<epsilon.etl src="${transformations.location}/m2m/Aplication2Modulo.etl" >
 			<model ref="Arq" alias="Arq"/>
