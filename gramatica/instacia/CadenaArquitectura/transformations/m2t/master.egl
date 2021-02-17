@@ -21,26 +21,26 @@ import "../utils.eol";
 	for(att in atts) {
 		var attSrc:Template:= TemplateFactory.load('attTo.egl');
 		attSrc.populate('clase', att);
-		attSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+att.paquete.getUrlCarpeta()+ '/D'+att.nombre.firstToUpperCamelCase() + 'AttTO.java');
+		attSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+att.paquete.getUrlCarpeta()+ '/D'+att.nombre.firstToUpperCamelCaseClase() + 'AttTO.java');
 	}
 	//Recorre clase PkTo	
 	for(pk in pkTos) {
 		var pkSrc:Template:= TemplateFactory.load('pkTo.egl');
 		pkSrc.populate('clase', pk);
-		pkSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+pk.paquete.getUrlCarpeta()+ '/D'+pk.nombre.firstToUpperCamelCase() + 'PKTO.java');
+		pkSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+pk.paquete.getUrlCarpeta()+ '/D'+pk.nombre.firstToUpperCamelCaseClase() + 'PKTO.java');
 	}
 	
 	//Recorre clase to
 	for(to in tos) {	
 		var toSrc:Template:= TemplateFactory.load('to.egl');
 		toSrc.populate('clase', to);
-		toSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+to.paquete.getUrlCarpeta()+ '/D'+to.nombre.firstToUpperCamelCase() + 'TO.java');
+		toSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+to.paquete.getUrlCarpeta()+ '/D'+to.nombre.firstToUpperCamelCaseClase() + 'TO.java');
 	}
 	
 	
 	//Recorre clase servicio
 	for(srv in servicios) {
-	var nomServcio=srv.nombre.firstToUpperCamelCase() ;
+	var nomServcio=srv.nombre.firstToUpperCamelCaseClase() ;
 		var srvSrc:Template:= TemplateFactory.load('comando.egl');
 		srvSrc.populate('clase', srv);
 		srvSrc.populate('nombremodulo', modulo.nombre);
@@ -109,7 +109,7 @@ import "../utils.eol";
 	
 	//Recorre clase servicio
 	for(acc in acciones) {
-	var nomServcio=acc.nombre.firstToUpperCamelCase() ;
+	var nomServcio=acc.nombre.firstToUpperCamelCaseClase() ;
 		var accSrc:Template:= TemplateFactory.load('comando.egl');
 		accSrc.populate('clase', acc);
 		accSrc.populate('nombremodulo', modulo.nombre);
@@ -184,11 +184,11 @@ import "../utils.eol";
 		paqueteFactory = d.paquete;
 		var tIdDao:Template:= TemplateFactory.load('iddao.egl');
 		tIdDao.populate('Dao', d);
-		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+d.paquete.replace("\\.", "/") + "/IDDAO" +d.nombre.firstToUpperCamelCase() + '.java');
+		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+d.paquete.replace("\\.", "/") + "/IDDAO" +d.nombre.firstToUpperCamelCaseClase() + '.java');
 		
 		var tDao:Template:= TemplateFactory.load('dao.egl');
 		tDao.populate('Dao', d);
-		tDao.generate('../../generated/'+nomBuses+'/src/main/java/'+ d.paquete.replace("\\.", "/") + "/impl/oracle/DDAO" +d.nombre.firstToUpperCamelCase() + '.java');
+		tDao.generate('../../generated/'+nomBuses+'/src/main/java/'+ d.paquete.replace("\\.", "/") + "/impl/oracle/DDAO" +d.nombre.firstToUpperCamelCaseClase() + '.java');
 
 	}
 
@@ -218,7 +218,7 @@ import "../utils.eol";
 		paqueteFactory = paqueteFactory.replace("dao", "test");
 		var tIdDao:Template:= TemplateFactory.load('test.egl');
 		tIdDao.populate('Clase', d);
-		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/D" +d.nombre.firstToUpperCamelCase() + 'Test.java');		
+		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/D" +d.nombre.firstToUpperCamelCaseClase() + 'Test.java');		
 	}
 
   	
@@ -247,14 +247,14 @@ import "../utils.eol";
 	
 	//Recorre clase xhtml
 	for (xhtml in xhtmls) {
-		var nomXhtml = xhtml.nombre.firstToUpperCamelCase() ;
+		var nomXhtml = xhtml.nombre.firstToUpperCamelCaseClase() ;
 			//Operacion: Listar
 			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlCrear.egl');
 			xhtmlSrc.populate('xhtml', xhtml);
 			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/Crear' + nomXhtml + '.xhtml');
 	}
 	for (wbo in wbos){
-		var nomWbo = wbo.nombre.firstToUpperCamelCase() ;
+		var nomWbo = wbo.nombre.firstToUpperCamelCaseClase() ;
 			var wboSrc:Template:= TemplateFactory.load('./web/wboCrear.egl');
 			wboSrc.populate('wbo', wbo);
 			wboSrc.populate('nombreModulo', modulo.nombre);

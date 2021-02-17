@@ -1,13 +1,13 @@
 [%
 import "../utils.eol";
-	var nombreClase = Dao.getNombreClase();
+	var nombreClase = Dao.nombre.firstToUpperCamelCaseClase();
 	var paqueteTO=Dao.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
   
 %]
 
 /**
  * Republica de Colombia
- * Copyright (c) 2019 Direcci贸n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Direcci髇 de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -85,26 +85,26 @@ import [%=paqueteTO%].*;
 	void inicializarConsultarPorPK(D[%=nombreClase%]PKTO pk[%=nombreClase%]);
 
 	/**
-	 * Inicializa la creaci贸n de [%=nombreClase%].
+	 * Inicializa la creaci髇 de [%=nombreClase%].
 	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
 	 */
 	void inicializarCrear(D[%=nombreClase%]TO to[%=nombreClase%]);
 
 	/**
-	 * Inicializa la actualizaci贸n de [%=nombreClase%].
+	 * Inicializa la actualizaci髇 de [%=nombreClase%].
 	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
 	 */
 	void inicializarActualizar(D[%=nombreClase%]TO to[%=nombreClase%]);
 
 	/**
-	 * Inicializa la eliminaci贸n de [%=nombreClase%].
+	 * Inicializa la eliminaci髇 de [%=nombreClase%].
 	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
 	 */
 	void inicializarEliminar(D[%=nombreClase%]PKTO pk[%=nombreClase%]);
  
  
  	/**
-	 * Inicializa la consulta gen茅rica de [%=nombreClase%].
+	 * Inicializa la consulta gen閞ica de [%=nombreClase%].
 	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
 	 */
 	void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]);
@@ -118,7 +118,7 @@ import [%=paqueteTO%].*;
 	D[%=nombreClase%]TO get[%=nombreClase%]();
 
 	/**
-	 * Devuelve la colecci贸n de objetos [%=nombreClase%] que se hayan consultado.
+	 * Devuelve la colecci髇 de objetos [%=nombreClase%] que se hayan consultado.
 	 * @return Un Collection con objetos D[%=nombreClase%]TO
 	 */
 	Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]();

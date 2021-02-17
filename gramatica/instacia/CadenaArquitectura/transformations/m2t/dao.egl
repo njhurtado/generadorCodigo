@@ -2,7 +2,7 @@
 
 import "../utils.eol";
 
-	var nombreClase = Dao.getNombreClase();	
+	var nombreClase = Dao.nombre.firstToUpperCamelCaseClase();	
 	var atribs = Arq!AttTo.all.select(n | n.nombre = Dao.nombre).first();
 	var pkes = Arq!PkTo.all.select(n | n.nombre = Dao.nombre).first();
 	
@@ -93,7 +93,7 @@ import "../utils.eol";
 
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Direcci�n de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -128,7 +128,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
  
  public class  DDAO[%=nombreClase%] extends DDAO implements IDDAO[%=nombreClase%] {
  
- /** colecciÃ³n de objetos D[%=nombreClase%]TO */
+ /** colecci�n de objetos D[%=nombreClase%]TO */
 	private Collection<D[%=nombreClase%]TO> objetos[%=nombreClase%];
 	/** Objeto de transporte de [%=nombreClase%] */
 	private D[%=nombreClase%]TO to[%=nombreClase%];
@@ -149,7 +149,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Inicializa la creaciÃ³nn de [%=nombreClase%].
+	 * Inicializa la creaci�nn de [%=nombreClase%].
 	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
 	 */
 	public void inicializarCrear(D[%=nombreClase%]TO to[%=nombreClase%]) {
@@ -162,7 +162,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Inicializa la actualizaciÃ³n de [%=nombreClase%].
+	 * Inicializa la actualizaci�n de [%=nombreClase%].
 	 * @param to[%=nombreClase%] Objeto de Transporte de [%=nombreClase%]
 	 */
 	public void inicializarActualizar(D[%=nombreClase%]TO to[%=nombreClase%]) {
@@ -175,7 +175,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Inicializa la eliminaciÃ³n de [%=nombreClase%].
+	 * Inicializa la eliminaci�n de [%=nombreClase%].
 	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
 	 */
 	public void inicializarEliminar(D[%=nombreClase%]PKTO pk[%=nombreClase%]) {
@@ -184,7 +184,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Inicializa la consulta genÃ©rica de [%=nombreClase%].
+	 * Inicializa la consulta gen�rica de [%=nombreClase%].
 	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
 	 */
 	public void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]) {
@@ -199,8 +199,8 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	[%=lstMetodosPTKTos.concat("; \n \t \t")%]
  
  	/**
-	 * Devuelve las sentencias sql a ejecutar, dependiendo del tipo de operaciÃ³n a realizar.
-	 * @return Un Map de Strings con la relaciÃ³n de sentencias sql
+	 * Devuelve las sentencias sql a ejecutar, dependiendo del tipo de operaci�n a realizar.
+	 * @return Un Map de Strings con la relaci�n de sentencias sql
 	 */
 	public Map<String, String> getSentenciasSQL() {
 		Map<String, String> m = new HashMap<String, String>();
@@ -277,7 +277,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Asigna los valores no nulos de un objeto.
-	 * @param unaSentencia Sentencia para asignaciÃ³n
+	 * @param unaSentencia Sentencia para asignaci�n
 	 * @throws SQLException Si ocurre un error al asignar los valores
 	 */
 	private void asignarValoresGenericos(DSentenciaSQL unaSentencia) throws SQLException {
@@ -319,7 +319,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Guarda los datos de [%=nombreClase%].
-	 * @return @return Un int con el nÃºmero de registros guardados
+	 * @return @return Un int con el n�mero de registros guardados
 	 * @throws SQLException Si ocurre un error de base de datos al guardar
 	 */
 	public int guardar() throws SQLException {
@@ -334,7 +334,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Elimina registros de [%=nombreClase%].
-	 * @return Un int con el nÃºmero de registros eliminados
+	 * @return Un int con el n�mero de registros eliminados
 	 * @throws SQLException Si ocurre un error de base de datos al eliminar
 	 */
 	public int eliminar() throws SQLException {
@@ -346,7 +346,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Consulta los datos de [%=nombreClase%].
-	 * @return Un IDDataSet con la colecciÃ³n de registros encontrados
+	 * @return Un IDDataSet con la colecci�n de registros encontrados
 	 * @throws SQLException Si ocurre un error de base de datos al consultar
 	 */
 	public IDDataSet consultar() throws SQLException {
@@ -362,7 +362,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Crea un registro de [%=nombreClase%].
-	 * @return Un int con el nÃºmero de registros creados
+	 * @return Un int con el n�mero de registros creados
 	 * @throws SQLException Si ocurre un error de base de datos al crear
 	 */
 	private int crear() throws SQLException {
@@ -372,17 +372,17 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		sentencia.ejecutar();
 		int resultado = sentencia.getRegistrosAfectados();
 		if (resultado <= 0) {
-			throw new SQLException("No se ha creado ningÃºn registro");
+			throw new SQLException("No se ha creado ning�n registro");
 		}
 		if (resultado > 1) {
-			throw new SQLException("Se intentÃ³ crear mÃ¡s de un registro");
+			throw new SQLException("Se intent� crear m�s de un registro");
 		}
 		return resultado;
 	}
 
 	/**
 	 * Actualiza los datos de [%=nombreClase%].
-	 * @return Un int con el nÃºmero de registros actualizados
+	 * @return Un int con el n�mero de registros actualizados
 	 * @throws SQLException Si ocurre un error de base de datos al actualizar
 	 */
 	private int actualizar() throws SQLException {
@@ -392,17 +392,17 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		sentencia.ejecutar();
 		int resultado = sentencia.getRegistrosAfectados();
 		if (resultado <= 0) {
-			throw new SQLException("No se ha actualizado ningÃºn registro");
+			throw new SQLException("No se ha actualizado ning�n registro");
 		}
 		if (resultado > 1) {
-			throw new SQLException("Se intentÃ³ actualizar mÃ¡s de un registro");
+			throw new SQLException("Se intent� actualizar m�s de un registro");
 		}
 		return resultado;
 	}
 
 	/**
 	 * Actualiza los datos de [%=nombreClase%].
-	 * @return Un IDDataSet con la colecciÃ³n de registros encontrados
+	 * @return Un IDDataSet con la colecci�n de registros encontrados
 	 * @throws SQLException Si ocurre un error de base de datos al consultar
 	 */
 	private IDDataSet consultarPorPK() throws SQLException {
@@ -415,8 +415,8 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Consulta genÃ©rica de los datos de [%=nombreClase%].
-	 * @return Un IDDataSet con la colecciÃ³n de registros encontrados
+	 * Consulta gen�rica de los datos de [%=nombreClase%].
+	 * @return Un IDDataSet con la colecci�n de registros encontrados
 	 * @throws SQLException Si ocurre un error de base de datos al consultar
 	 */
 	private IDDataSet consultaGenerica() throws SQLException {
@@ -432,7 +432,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Asigna los valores para pk en una sentencia SQL.
-	 * @param unaSentencia Sentencia para asignaciÃ³n
+	 * @param unaSentencia Sentencia para asignaci�n
 	 * @throws SQLException Si ocurre un error al asignar los valores
 	 */
 	private void asignarValoresPK(DSentenciaSQL unaSentencia) throws SQLException {
@@ -452,7 +452,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Asigna todos los valores de un objeto.
-	 * @param unaSentencia Sentencia para asignaciÃ³n
+	 * @param unaSentencia Sentencia para asignaci�n
 	 * @throws SQLException Si ocurre un error al asignar los valores
 	 */
 	private void asignarValoresObjeto(DSentenciaSQL unaSentencia) throws SQLException {
@@ -503,7 +503,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 
 	/**
 	 * Construye un objeto [%=nombreClase%] con base en el data set.
-	 * El data set debe contener datos en la posiciÃ³n actual.
+	 * El data set debe contener datos en la posici�n actual.
 	 * @param resultado Contenedor de los datos
 	 * @return Un [%=nombreClase%]
 	 * @throws SQLException Si ocurre un error de base de datos al cargar el objeto
@@ -557,7 +557,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Devuelve la colecciÃ³n de objetos [%=nombreClase%] que se hayan consultado.
+	 * Devuelve la colecci�n de objetos [%=nombreClase%] que se hayan consultado.
 	 * @return Un Collection con objetos D[%=nombreClase%]TO
 	 */
 	public Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]() {
@@ -565,17 +565,17 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 
 	/**
-	 * Indica si el DAO es de ejecuciÃ³n libre.
-	 * @return true si es de ejecuciÃ³n libre; false de lo contrario
+	 * Indica si el DAO es de ejecuci�n libre.
+	 * @return true si es de ejecuci�n libre; false de lo contrario
 	 */
 	public boolean isEjecucionLibre() {
 		return false;
 	}
 
 	/**
-	 * MÃ©todo para validar los parÃ¡metros inicializados, invocado por el administrador de persistencia.
-	 * @return true si los parÃ¡metros son vÃ¡lidos; false de lo contrario
-	 * @throws DValidarExcepcion Si los parÃ¡metros no son vÃ¡lidos
+	 * M�todo para validar los par�metros inicializados, invocado por el administrador de persistencia.
+	 * @return true si los par�metros son v�lidos; false de lo contrario
+	 * @throws DValidarExcepcion Si los par�metros no son v�lidos
 	 * @todo COMPLEMENTAR
 	 */
 	public boolean validar() throws DValidarExcepcion {
@@ -583,9 +583,9 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		String operacion = null;
 		Map<String, Object> parametros=new HashMap<String, Object>();
 		switch (getTipoOperacion()) {
-			case CREAR: operacion = "la creaciÃ³n"; break;
-			case ACTUALIZAR: operacion = "la actualizaciÃ³n"; break;
-			case ELIMINAR: operacion = "la eliminaciÃ³n"; break;
+			case CREAR: operacion = "la creaci�n"; break;
+			case ACTUALIZAR: operacion = "la actualizaci�n"; break;
+			case ELIMINAR: operacion = "la eliminaci�n"; break;
 			case CONSULTAR_POR_PK: operacion = "la consulta"; break;
 			case CONSULTA_GENERICA: operacion = "la consulta"; break;
 		}
@@ -640,19 +640,4 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	}
 }
  
- 
- [%
- operation Arq!Dao getNombreClase() : String {
-     var retorno = self.nombre.substring(0,1).toUpperCase();
-  	 if (self.nombre.indexOf("_") > 0) {
-  	 	retorno = "";
-	  	for (t in self.nombre.toLowerCase.split("_")) {
-	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
-	  	}
-  	 } else {
-  	 	retorno += self.nombre.substring(1).toLowerCase();
-  	 }
-    return retorno;
-  }	
- %]
- 
+  

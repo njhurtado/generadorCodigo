@@ -1,10 +1,10 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 Direcci贸n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Direcci髇 de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -56,7 +56,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 
 	/**
 	 * Ejecuta el comando de [%=tipoComando%].
-	 * @throws DExcepcion Si ocurre alg煤n error al realizar la operaci贸n
+	 * @throws DExcepcion Si ocurre alg鷑 error al realizar la operaci髇
 	 * [%=operacion%]  de [%=nombreClase%]
 	 */
 	[%
@@ -92,18 +92,18 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Obtiene la descripci贸n del comando.
-	 * @return Un String con la descripci贸n del comando
+	 * Obtiene la descripci髇 del comando.
+	 * @return Un String con la descripci髇 del comando
 	 */
 	public String getDescripcion() {
 		return "Permite [%=operacion%] un objeto [%=nombreClase%]";
 	}
 
 	/**
-	 * M茅todo para validar los par谩metros inicializados, invocado
-	 * previamente a la ejecuci贸n del comando.
-	 * @return true si los par谩metros son v谩lidos; false de lo contrario
-	 * @throws DValidarExcepcion Si los par谩metros no son v谩lidos
+	 * M閠odo para validar los par醡etros inicializados, invocado
+	 * previamente a la ejecuci髇 del comando.
+	 * @return true si los par醡etros son v醠idos; false de lo contrario
+	 * @throws DValidarExcepcion Si los par醡etros no son v醠idos
 	 */
 	public boolean validar() throws DValidarExcepcion {
 		Map<String, Object> parametros=new HashMap<String, Object>();
@@ -133,7 +133,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Para copiar el contenido del comando actual al comando enviado como par谩metro.
+	 * Para copiar el contenido del comando actual al comando enviado como par醡etro.
 	 * @param comando Comando sobre el cual copiar
 	 */
 	public void asignar(IDComando comando) {

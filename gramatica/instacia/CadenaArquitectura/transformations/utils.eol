@@ -1,11 +1,26 @@
 //Convierte un text AAA_BBB_CC  a AaaBbbCc
 operation String firstToUpperCamelCase() : String {
-var arr=self.split('_');
-var result="";
-for(p in arr){
-result+=p.toLowerCase().firstToUpperCase();
+	var arr=self.split('_');
+	var result="";
+	for(p in arr){
+		result+=p.toLowerCase().firstToUpperCase();
+	}
+	return result;	
 }
-return result;	
+
+operation String firstToUpperCamelCaseClase() : String {
+	var arr=self.split('_');
+	var result="";
+	for(p in arr){
+	    //Se suprime la primera parte antes del caracter _ para quitar el prefijo del nombre de la tabla
+	    // ejm. IEX_ARCHIVOS_CRS_ANULADOS se quita el valor IEX	    
+	    if(loopCount > 1) {
+			result+=p.toLowerCase().firstToUpperCase();
+			//result.println();
+		}
+		
+	}
+	return result;	
 }
 
 

@@ -1,5 +1,5 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 
 var stringServicio=clase.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
@@ -35,7 +35,7 @@ public class DCmdAccElim[%=nombreClase%]Impl extends DCmdAccElim[%=nombreClase%]
 
 
   /**
-   * Ejecuta el comando de acciï¿½.
+   * Ejecuta el comando de acción
    */
   protected void ejecutarComando() {
     try {

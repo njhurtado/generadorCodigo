@@ -1,5 +1,5 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 %]
 /**
  * Republica de Colombia
@@ -37,7 +37,7 @@ public class DCmdSrvElim[%=nombreClase%]Impl extends DCmdSrvElim[%=nombreClase%]
     /**
      * Ejecuta el comando de servicio.
      *
-     * @throws DExcepcion Si ocurre algn error al realizar la
+     * @throws DExcepcion Si ocurre algún error al realizar la
      * consulta de [%=nombreClase%] o si el objeto no existe
      */
     protected void ejecutarComando( ) throws DExcepcion {

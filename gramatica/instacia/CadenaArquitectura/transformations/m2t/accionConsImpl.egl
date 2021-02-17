@@ -1,10 +1,10 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var stringServicio=clase.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$

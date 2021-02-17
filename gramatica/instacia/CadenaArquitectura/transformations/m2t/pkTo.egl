@@ -1,7 +1,7 @@
 [% import "../utils.eol"; %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.*;
 
 /**
  * <p>Titulo: Proyecto MUISCA</p>
- * <p>Descripcion: Objeto de transporte para la PK de [%= clase.nombre.firstToUpperCamelCase() %].</p>
+ * <p>Descripcion: Objeto de transporte para la PK de [%= clase.nombre.firstToUpperCamelCaseClase() %].</p>
  * <p>Copyright: Copyright (c) 2019</p>
  * <p>Company: DIAN</p>
  *
@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.*;
  * $Log[10]:$
  * </pre>
  */
-public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
+public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO implements IDTO {
 		private static final long serialVersionUID = -1231029143L; 
 
 	// Atributos PK
@@ -45,12 +45,12 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
 	%]
 	
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]PKTO por defecto.
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO por defecto.
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCase() %]PKTO() { }
+	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO() { }
 
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]PKTO con los atributos.
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO con los atributos.
 	 [%		//todas los atributos excepto pks
 		
 		for(att in clase.atributos.asOrderedSet()) 
@@ -63,7 +63,7 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
 		}	
 	%]
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCase() %]PKTO([%=atts.concat(",")%]) {
+	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO([%=atts.concat(",")%]) {
 		[%=setAtts.concat(";\n \t \t")%];
 	}
 	
@@ -97,7 +97,7 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
 	%]
 	
 	/**
-	 * Devuelve una representaciÃ³n en String del objeto.
+	 * Devuelve una representación en String del objeto.
 	 * @return String
 	 */
 	public String toString() {
@@ -128,10 +128,10 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]PKTO implements IDTO {
            if (this == objeto) {
                  return true;
            }
-           if (!(objeto instanceof D[%= clase.nombre.firstToUpperCamelCase() %]PKTO)) {
+           if (!(objeto instanceof D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO)) {
                  return false;
            }
-           D[%= clase.nombre.firstToUpperCamelCase() %]PKTO otro = (D[%= clase.nombre.firstToUpperCamelCase() %]PKTO) objeto;
+           D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO otro = (D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO) objeto;
            EqualsBuilder builder = new EqualsBuilder();       
            
            

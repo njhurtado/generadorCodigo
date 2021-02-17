@@ -1,10 +1,10 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2004 Direcci贸n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2004 Direcci髇 de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -84,16 +84,16 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 
 	protected D[%=nombreClase%]TO to[%=nombreClase%];
 
-	/** Tipo de operaci贸n de consulta */
+	/** Tipo de operaci髇 de consulta */
 	protected int tipoOperacion = -1;
-	/** Colecci贸n de objetos D[%=nombreClase%]TO */
+	/** Colecci髇 de objetos D[%=nombreClase%]TO */
 	protected Collection<D[%=nombreClase%]TO> objetos[%=nombreClase%];
 		
 	[%=lstMetodosPTKTos.concat("; \n \t \t")%]
 	
 
 	/**
-	 * Inicializa la consulta gen茅rica de [%=nombreClase%].
+	 * Inicializa la consulta gen閞ica de [%=nombreClase%].
 	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
 	 */
 	public void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]) {
@@ -102,7 +102,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Devuelve la colecci贸n de objetos [%=nombreClase%] que se hayan consultado.
+	 * Devuelve la colecci髇 de objetos [%=nombreClase%] que se hayan consultado.
 	 * @return Un Collection con objetos D[%=nombreClase%]TO
 	 */
 	public Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]() {
@@ -111,7 +111,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 
 	/**
 	 * Ejecuta el comando de [%=tipoComando%].
-	 * @throws DExcepcion Si ocurre alg煤n error al realizar la
+	 * @throws DExcepcion Si ocurre alg鷑 error al realizar la
 	 * la consulta de [%=nombreClase%]
 	 */
 	[%
@@ -147,18 +147,18 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Obtiene la descripci贸n del comando.
-	 * @return Un String con la descripci贸n del comando
+	 * Obtiene la descripci髇 del comando.
+	 * @return Un String con la descripci髇 del comando
 	 */
 	public String getDescripcion() {
 		return "Permite consultar objetos [%=nombreClase%]";
 	}
 
 	/**
-	 * M茅todo para validar los par谩metros inicializados, invocado
-	 * previamente a la ejecuci贸n del comando.
-	 * @return true si los paretros son v谩idos; false de lo contrario
-	 * @throws DValidarExcepcion Si los par谩metros no son v谩idos
+	 * M閠odo para validar los par醡etros inicializados, invocado
+	 * previamente a la ejecuci髇 del comando.
+	 * @return true si los paretros son v醝dos; false de lo contrario
+	 * @throws DValidarExcepcion Si los par醡etros no son v醠idos
 	 */
 	public boolean validar() throws DValidarExcepcion {
 		Map<String, Object> parametros=new HashMap<String, Object>();
@@ -176,7 +176,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Para copiar el contenido del comando actual al comando enviado como par谩metro.
+	 * Para copiar el contenido del comando actual al comando enviado como par醡etro.
 	 * @param comando Comando sobre el cual copiar
 	 */
 	public void asignar(IDComando comando) {

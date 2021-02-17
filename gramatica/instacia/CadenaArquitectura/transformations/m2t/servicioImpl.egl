@@ -1,10 +1,10 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var nomPkgDao=Arq!Dao.all.get(0).paquete;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2004 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -36,8 +36,8 @@ public class [%=nomPrefijo%][%=nombreClase%]Impl extends [%=nomPrefijo%][%=nombr
   /**
    * Ejecuta el comando de servicio.
    *
-   * @throws DExcepcion Si ocurre algn error al realizar la
-   * actualizaciÃ¯Â¿Â½ de [%=nombreClase%]
+   * @throws DExcepcion Si ocurre algún error al realizar la
+   * actualización de [%=nombreClase%]
    */
   protected void ejecutarComando() throws DExcepcion {
     IDAdminPersistencia admin = getAdministradorPersistencia();

@@ -1,7 +1,7 @@
 [% import "../utils.eol"; %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.*;
 
 /**
  * <p>Titulo: Proyecto MUISCA</p>
- * <p>Descripcion: Objeto de transporte para los atributos de [%= clase.nombre.firstToUpperCamelCase() %].</p>
+ * <p>Descripcion: Objeto de transporte para los atributos de [%= clase.nombre.firstToUpperCamelCaseClase() %].</p>
  * <p>Copyright: Copyright (c) 2019</p>
  * <p>Company: DIAN</p>
  *
@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.*;
  * $Log[10]:$
  * </pre>
  */
-public class D[%= clase.nombre.firstToUpperCamelCase() %]AttTO implements IDTO {
+public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO implements IDTO {
 		private static final long serialVersionUID = -1231029142L; 
 
 	// Atributos
@@ -36,22 +36,23 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]AttTO implements IDTO {
 			var tipo = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){
-			atts.add(tipo +' '+nombre);
-			setAtts.add('set'+att.nombre.firstToUpperCamelCase()+'('+nombre+')');
-			}
-	%]
+				atts.add(tipo +' '+nombre);
+				setAtts.add('set'+att.nombre.firstToUpperCamelCase()+'('+nombre+')');
+				%]
 		private [%=tipo%] [%=nombre%];		
-	[%
+				[%
+			}
+	
 		}	
 	%]
 	
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]AttTO por defecto.
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO por defecto.
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCase() %]AttTO() { }
+	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO() { }
 
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCase() %]AttTO con los atributos.
+	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO con los atributos.
 	 [%		//todas los atributos excepto pks
 		
 		for(att in clase.atributos.asOrderedSet()) 
@@ -64,7 +65,7 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]AttTO implements IDTO {
 		}	
 	%]
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCase() %]AttTO([%=atts.concat(",")%]) {
+	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO([%=atts.concat(",")%]) {
 		[%=setAtts.concat(";\n \t \t")%];
 	}
 	
@@ -77,6 +78,7 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]AttTO implements IDTO {
 			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
+			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){
 	%]
 		/**
 	 	* Devuelve el valor de [%=nombre%].
@@ -94,11 +96,12 @@ public class D[%= clase.nombre.firstToUpperCamelCase() %]AttTO implements IDTO {
 		}
 		
 	[%
+			}
 		}	
 	%]
 	
 	/**
-	 * Devuelve una representaciÃ³n en String del objeto.
+	 * Devuelve una representación en String del objeto.
 	 * @return String
 	 */
 	public String toString() {

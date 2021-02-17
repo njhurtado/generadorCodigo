@@ -1,10 +1,10 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 var nomPkgDao=Arq!Dao.all.get(0).paquete;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2004 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -35,7 +35,7 @@ public class DCmdSrvCons[%=nombreClase%]Impl extends DCmdSrvCons[%=nombreClase%]
   /**
    * Ejecuta el comando de servicio.
    *
-   * @throws DExcepcion Si ocurre algn error al realizar la
+   * @throws DExcepcion Si ocurre algún error al realizar la
    * consulta de [%=nombreClase%]
    */
   protected void ejecutarComando() throws DExcepcion {

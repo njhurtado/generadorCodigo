@@ -2,7 +2,7 @@
 
 import "../utils.eol";
 
-	var nombreClase = Clase.getNombreClase();	
+	var nombreClase = Clase.nombre.firstToUpperCamelCaseClase();	
 	var atribs = Arq!AttTo.all.select(n | n.nombre = Clase.nombre).first();
 	var pkes = Arq!PkTo.all.select(n | n.nombre = Clase.nombre).first();
 	
@@ -13,7 +13,7 @@ import "../utils.eol";
 
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃƒÂ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Direcci�n de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -65,7 +65,7 @@ import [%=paqueteTo%].*;
  	
  	/** url para apuntar al servlet de pruebas*/
  	private static URL url;
- 	/** factory para la librería de mockups*/
+ 	/** factory para la librer�a de mockups*/
 	private static PodamFactory factory;
  	/** Objeto de transporte de [%=nombreClase%] */
 	private static D[%=nombreClase%]TO to[%=nombreClase%];

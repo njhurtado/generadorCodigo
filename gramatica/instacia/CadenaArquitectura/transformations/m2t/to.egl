@@ -1,9 +1,9 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCase();
+var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -119,7 +119,7 @@ public class D[%= nombreClase %]TO implements IDTO {
 	}
 
 	/**
-	 * Devuelve una representaciÃ³n en String del objeto.
+	 * Devuelve una representación en String del objeto.
 	 * @return String
 	 */
 	public String toString() {

@@ -12,7 +12,7 @@ import "../utils.eol";
 
 /**
  * Republica de Colombia
- * Copyright (c) 2019 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -48,7 +48,7 @@ import co.gov.dian.muisca.automatizacion.buses.DBusAccionesDelegateAUTTxNueva;
 
 /**
  * <p>Titulo: Proyecto MUISCA</p>
- * <p>Descripcion: Cervlet para pruebas de [%=nombreClase%].</p>
+ * <p>Descripcion: Servlet para pruebas de [%=nombreClase%].</p>
  * <p>Copyright: Copyright (c) 2019</p>
  * <p>Company: DIAN</p>
  *
@@ -84,7 +84,7 @@ import co.gov.dian.muisca.automatizacion.buses.DBusAccionesDelegateAUTTxNueva;
             ObjectInputStream ois = new ObjectInputStream(in);
             
            
-            // Leer la acciÃ³n
+            // Leer la acción
             String oper = (String) ois.readObject();
             
             
@@ -100,28 +100,28 @@ import co.gov.dian.muisca.automatizacion.buses.DBusAccionesDelegateAUTTxNueva;
 		
 		%]
 		
-			if ("crear[%=d.nombre.firstToUpperCamelCase()%]".equalsIgnoreCase(operacion)) {
-	        	D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%] = (D[%=d.nombre.firstToUpperCamelCase()%]TO)ois.readObject();
-	            crear[%=d.nombre.firstToUpperCamelCase()%](to[%=d.nombre.firstToUpperCamelCase()%]);
-	            D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCase()%](to[%=d.nombre.firstToUpperCamelCase()%].getPK());
-	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCase()%]Consultado);	            
+			if ("crear[%=d.nombre.firstToUpperCamelCaseClase()%]".equalsIgnoreCase(operacion)) {
+	        	D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%] = (D[%=d.nombre.firstToUpperCamelCaseClase()%]TO)ois.readObject();
+	            crear[%=d.nombre.firstToUpperCamelCaseClase()%](to[%=d.nombre.firstToUpperCamelCaseClase()%]);
+	            D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCaseClase()%](to[%=d.nombre.firstToUpperCamelCaseClase()%].getPK());
+	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado);	            
 	        } 
-	        if ("consultar[%=d.nombre.firstToUpperCamelCase()%]".equalsIgnoreCase(operacion)) {
-	        	D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%] = (D[%=d.nombre.firstToUpperCamelCase()%]TO)ois.readObject();
-	            D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCase()%](to[%=d.nombre.firstToUpperCamelCase()%].getPK());
-	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCase()%]Consultado);	            
+	        if ("consultar[%=d.nombre.firstToUpperCamelCaseClase()%]".equalsIgnoreCase(operacion)) {
+	        	D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%] = (D[%=d.nombre.firstToUpperCamelCaseClase()%]TO)ois.readObject();
+	            D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCaseClase()%](to[%=d.nombre.firstToUpperCamelCaseClase()%].getPK());
+	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado);	            
 	        } 
-	        if ("actualizar[%=d.nombre.firstToUpperCamelCase()%]".equalsIgnoreCase(operacion)) {
-	        	D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%] = (D[%=d.nombre.firstToUpperCamelCase()%]TO)ois.readObject();
-	        	actualizar[%=d.nombre.firstToUpperCamelCase()%](to[%=d.nombre.firstToUpperCamelCase()%]);
-	            D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCase()%](to[%=d.nombre.firstToUpperCamelCase()%].getPK());
-	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCase()%]Consultado);	            
+	        if ("actualizar[%=d.nombre.firstToUpperCamelCaseClase()%]".equalsIgnoreCase(operacion)) {
+	        	D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%] = (D[%=d.nombre.firstToUpperCamelCaseClase()%]TO)ois.readObject();
+	        	actualizar[%=d.nombre.firstToUpperCamelCaseClase()%](to[%=d.nombre.firstToUpperCamelCaseClase()%]);
+	            D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCaseClase()%](to[%=d.nombre.firstToUpperCamelCaseClase()%].getPK());
+	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado);	            
 	        } 
-	        if ("eliminar[%=d.nombre.firstToUpperCamelCase()%]".equalsIgnoreCase(operacion)) {
-	        	D[%=d.nombre.firstToUpperCamelCase()%]PKTO pk[%=d.nombre.firstToUpperCamelCase()%] = (D[%=d.nombre.firstToUpperCamelCase()%]PKTO)ois.readObject();
-	        	eliminar[%=d.nombre.firstToUpperCamelCase()%](pk[%=d.nombre.firstToUpperCamelCase()%]);
-	            D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCase()%](pk[%=d.nombre.firstToUpperCamelCase()%]);
-	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCase()%]Consultado);	            
+	        if ("eliminar[%=d.nombre.firstToUpperCamelCaseClase()%]".equalsIgnoreCase(operacion)) {
+	        	D[%=d.nombre.firstToUpperCamelCaseClase()%]PKTO pk[%=d.nombre.firstToUpperCamelCaseClase()%] = (D[%=d.nombre.firstToUpperCamelCaseClase()%]PKTO)ois.readObject();
+	        	eliminar[%=d.nombre.firstToUpperCamelCaseClase()%](pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
+	            D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado = consultar[%=d.nombre.firstToUpperCamelCaseClase()%](pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
+	            miOut.writeObject(to[%=d.nombre.firstToUpperCamelCaseClase()%]Consultado);	            
 	        }
 		[%
 	}
@@ -148,35 +148,35 @@ import co.gov.dian.muisca.automatizacion.buses.DBusAccionesDelegateAUTTxNueva;
 		
 		%]
 		       
-    private D[%=d.nombre.firstToUpperCamelCase()%]TO crear[%=d.nombre.firstToUpperCamelCase()%](D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]) throws DExcepcion {
-    	DCmdAccCrear[%=d.nombre.firstToUpperCamelCase()%] accion = (DCmdAccCrear[%=d.nombre.firstToUpperCamelCase()%])getAccion("[%=stringServicio%].DCmdAccCrear[%=d.nombre.firstToUpperCamelCase()%]", getAccesoSeguridad(), true);
-    	System.out.println("to[%=d.nombre.firstToUpperCamelCase()%]-->"+to[%=d.nombre.firstToUpperCamelCase()%]);
-    	accion.inicializar(to[%=d.nombre.firstToUpperCamelCase()%]);
+    private D[%=d.nombre.firstToUpperCamelCaseClase()%]TO crear[%=d.nombre.firstToUpperCamelCaseClase()%](D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]) throws DExcepcion {
+    	DCmdAccCrear[%=d.nombre.firstToUpperCamelCaseClase()%] accion = (DCmdAccCrear[%=d.nombre.firstToUpperCamelCaseClase()%])getAccion("[%=stringServicio%].DCmdAccCrear[%=d.nombre.firstToUpperCamelCaseClase()%]", getAccesoSeguridad(), true);
+    	System.out.println("to[%=d.nombre.firstToUpperCamelCaseClase()%]-->"+to[%=d.nombre.firstToUpperCamelCaseClase()%]);
+    	accion.inicializar(to[%=d.nombre.firstToUpperCamelCaseClase()%]);
     	accion.ejecutar();
     	return null;
     }
    
-    private D[%=d.nombre.firstToUpperCamelCase()%]TO consultar[%=d.nombre.firstToUpperCamelCase()%](D[%=d.nombre.firstToUpperCamelCase()%]PKTO pk[%=d.nombre.firstToUpperCamelCase()%]) throws DExcepcion {
-    	DCmdAccCons[%=d.nombre.firstToUpperCamelCase()%] accion = (DCmdAccCons[%=d.nombre.firstToUpperCamelCase()%])getAccion("[%=stringServicio%].DCmdAccCons[%=d.nombre.firstToUpperCamelCase()%]", getAccesoSeguridad(), true);
-    	System.out.println("pk[%=d.nombre.firstToUpperCamelCase()%]-->"+pk[%=d.nombre.firstToUpperCamelCase()%]);
-    	accion.inicializar(pk[%=d.nombre.firstToUpperCamelCase()%]);
+    private D[%=d.nombre.firstToUpperCamelCaseClase()%]TO consultar[%=d.nombre.firstToUpperCamelCaseClase()%](D[%=d.nombre.firstToUpperCamelCaseClase()%]PKTO pk[%=d.nombre.firstToUpperCamelCaseClase()%]) throws DExcepcion {
+    	DCmdAccCons[%=d.nombre.firstToUpperCamelCaseClase()%] accion = (DCmdAccCons[%=d.nombre.firstToUpperCamelCaseClase()%])getAccion("[%=stringServicio%].DCmdAccCons[%=d.nombre.firstToUpperCamelCaseClase()%]", getAccesoSeguridad(), true);
+    	System.out.println("pk[%=d.nombre.firstToUpperCamelCaseClase()%]-->"+pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
+    	accion.inicializar(pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
     	accion.ejecutar();
-    	return accion.get[%=d.nombre.firstToUpperCamelCase()%]();    	
+    	return accion.get[%=d.nombre.firstToUpperCamelCaseClase()%]();    	
     	
     }
     
-    private D[%=d.nombre.firstToUpperCamelCase()%]TO actualizar[%=d.nombre.firstToUpperCamelCase()%](D[%=d.nombre.firstToUpperCamelCase()%]TO to[%=d.nombre.firstToUpperCamelCase()%]) throws DExcepcion {
-    	DCmdAccAct[%=d.nombre.firstToUpperCamelCase()%] accion = (DCmdAccAct[%=d.nombre.firstToUpperCamelCase()%])getAccion("[%=stringServicio%].DCmdAccAct[%=d.nombre.firstToUpperCamelCase()%]", getAccesoSeguridad(), true);
-    	    	System.out.println("to[%=d.nombre.firstToUpperCamelCase()%]-->"+to[%=d.nombre.firstToUpperCamelCase()%]);
-    	accion.inicializar(to[%=d.nombre.firstToUpperCamelCase()%]);
+    private D[%=d.nombre.firstToUpperCamelCaseClase()%]TO actualizar[%=d.nombre.firstToUpperCamelCaseClase()%](D[%=d.nombre.firstToUpperCamelCaseClase()%]TO to[%=d.nombre.firstToUpperCamelCaseClase()%]) throws DExcepcion {
+    	DCmdAccAct[%=d.nombre.firstToUpperCamelCaseClase()%] accion = (DCmdAccAct[%=d.nombre.firstToUpperCamelCaseClase()%])getAccion("[%=stringServicio%].DCmdAccAct[%=d.nombre.firstToUpperCamelCaseClase()%]", getAccesoSeguridad(), true);
+    	    	System.out.println("to[%=d.nombre.firstToUpperCamelCaseClase()%]-->"+to[%=d.nombre.firstToUpperCamelCaseClase()%]);
+    	accion.inicializar(to[%=d.nombre.firstToUpperCamelCaseClase()%]);
     	accion.ejecutar();
     	return null;
     }
     
-    private D[%=d.nombre.firstToUpperCamelCase()%]TO eliminar[%=d.nombre.firstToUpperCamelCase()%](D[%=d.nombre.firstToUpperCamelCase()%]PKTO pk[%=d.nombre.firstToUpperCamelCase()%]) throws DExcepcion {
-    	DCmdAccElim[%=d.nombre.firstToUpperCamelCase()%] accion = (DCmdAccElim[%=d.nombre.firstToUpperCamelCase()%])getAccion("[%=stringServicio%].DCmdAccElim[%=d.nombre.firstToUpperCamelCase()%]", getAccesoSeguridad(), true);
-    	System.out.println("pk[%=d.nombre.firstToUpperCamelCase()%]-->"+pk[%=d.nombre.firstToUpperCamelCase()%]);
-    	accion.inicializar(pk[%=d.nombre.firstToUpperCamelCase()%]);
+    private D[%=d.nombre.firstToUpperCamelCaseClase()%]TO eliminar[%=d.nombre.firstToUpperCamelCaseClase()%](D[%=d.nombre.firstToUpperCamelCaseClase()%]PKTO pk[%=d.nombre.firstToUpperCamelCaseClase()%]) throws DExcepcion {
+    	DCmdAccElim[%=d.nombre.firstToUpperCamelCaseClase()%] accion = (DCmdAccElim[%=d.nombre.firstToUpperCamelCaseClase()%])getAccion("[%=stringServicio%].DCmdAccElim[%=d.nombre.firstToUpperCamelCaseClase()%]", getAccesoSeguridad(), true);
+    	System.out.println("pk[%=d.nombre.firstToUpperCamelCaseClase()%]-->"+pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
+    	accion.inicializar(pk[%=d.nombre.firstToUpperCamelCaseClase()%]);
     	accion.ejecutar();
     	return null;
     }
