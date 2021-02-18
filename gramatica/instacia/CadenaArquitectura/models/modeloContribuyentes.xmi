@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ASCII"?>
-<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera" sufijoPkg="crs">
+<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera" sufijoPkg="crs">
   <database>
     <tables name="IEX_ARCHIVOS_CRS_ANULADOS">
+      <annotations xsi:type="sql:TableDetail" nombreClase="ArchivoCrsAnulado"/>
       <columns name="IDE_PERSONA_RUT" type="NUMBER" size="10" isNotNull="true"/>
       <columns name="IDE_ARCHIVO" type="NUMBER" size="10" isNotNull="true"/>
       <columns name="NUM_ANIO" type="NUMBER" size="4" isNotNull="true"/>
@@ -16,6 +17,7 @@
       <columns name="NIV_ESCRITURA" type="NUMBER" size="8" presicion="5" isNotNull="true"/>
       <columns name="NIV_LECTURA" type="NUMBER" size="3" presicion="4" isNotNull="true"/>
       <columns name="IDE_UUID" size="32" isNotNull="true"/>
+      <primarykey name="ARAN_PK" columns="//@database/@tables.0/@columns.0 //@database/@tables.0/@columns.1 //@database/@tables.0/@columns.2"/>
     </tables>
   </database>
 </sql:Aplication>

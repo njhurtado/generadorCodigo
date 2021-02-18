@@ -66,6 +66,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ComboMode" eSuperTypes="#//Annotation"/>
   <eClassifiers xsi:type="ecore:EClass" name="TableDetail" eSuperTypes="#//Annotation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="tableRelation" eType="#//Table"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombreClase" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Filtro" eSuperTypes="#//Annotation"/>
   <eClassifiers xsi:type="ecore:EEnum" name="DataType">

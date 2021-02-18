@@ -1,6 +1,6 @@
 [%
 import "../utils.eol";
-	var nombreClase = Dao.nombre.firstToUpperCamelCaseClase();
+	var nombreClase = Dao.nombreClase;
 	var paqueteTO=Dao.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
   
 %]

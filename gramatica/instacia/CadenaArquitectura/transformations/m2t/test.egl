@@ -2,7 +2,7 @@
 
 import "../utils.eol";
 
-	var nombreClase = Clase.nombre.firstToUpperCamelCaseClase();	
+	var nombreClase = Clase.nombreClase;	
 	var atribs = Arq!AttTo.all.select(n | n.nombre = Clase.nombre).first();
 	var pkes = Arq!PkTo.all.select(n | n.nombre = Clase.nombre).first();
 	

@@ -1,7 +1,7 @@
 grammar co.gov.dian.xtext.arquitecturadian.dsl.Sql with org.eclipse.xtext.common.Terminals
 
 
-generate sql 'http://www.xtext.dia.gov.co/arquitecturadian/dsl/Sql'
+generate sql 'http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql'
 
 Aplication :
 	'Aplication' name= ID
@@ -28,7 +28,7 @@ Table returns Table:
 
 Column returns Column: 
 	
-	name=ID (type=DataType) (O_BRACKET size=INT (COMMA presicion=INT)? C_BRACKET)? (isNotNull?='NOT NULL')?
+	name=ID (type=DataType) (O_BRACKET size=INT (COMMA)? (presicion=INT)? C_BRACKET)? (isNotNull?= 'NOT NULL')?
 	(annotations+=Annotation ( COMMA annotations+=Annotation)*  )? 
 		('comments'  comments+=Comment ( COMMA comments+=Comment)*  )?
 		
@@ -83,7 +83,8 @@ TableDetail returns TableDetail:
 	name='@TableDetail'?
 	(O_BRACKET
 		('args' args=STRING)?
-		'tableRelation' tableRelation=[Table|STRING]
+		COMMA? ('tableRelation' tableRelation=[Table|STRING])?
+		COMMA? ('nombreClase' nombreClase=STRING)?
 	C_BRACKET)?;
 
 Filtro returns Filtro:

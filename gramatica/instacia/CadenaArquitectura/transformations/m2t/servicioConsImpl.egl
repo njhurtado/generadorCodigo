@@ -1,5 +1,5 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
+var nombreClase=clase.nombreClase;
 var nomPkgDao=Arq!Dao.all.get(0).paquete;
 %]
 /**

@@ -1,8 +1,11 @@
 [% 
 import "../../utils.eol";
-var nombreWbo=wbo.nombre.firstToUpperCamelCase();
+var nombreWbo=wbo.nombreClase;
 var atribs = Arq!AttTo.all.select(n | n.nombre = wbo.nombre).first();
 var pkes = Arq!PkTo.all.select(n | n.nombre = wbo.nombre).first();
+var to = Arq!To.all.select(n | n.nombre = wbo.nombre).first();
+var accion = Arq!Accion.all.select(n | n.nombre = wbo.nombre).first();
+var stringServicio=accion.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
  
 
 var lstAtts=atribs.atributos.select(a|a.isModoCombo());
@@ -10,21 +13,22 @@ var lstPks=pkes.atributos.select(a|a.isModoCombo());
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2004 DirecciÃ³n de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
  */
-package [%= wbo.paquete %].[%=nombreModulo.toLowerCase()%].web.wbo;
+package [%= wbo.paquete %];
 
-import co.gov.dian.muisca.arquitectura.general.excepcion.DMuiscaAppException;
-import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DConfirmacionErrorInfo;
-import co.gov.dian.muisca.arquitectura.general.excepcion.errores.tipos.DValidacionWebErrorInfo;
-import co.gov.dian.muisca.arquitectura.general.excepcion.mensajes.enums.DMensajesGeneral;
-import co.gov.dian.muisca.arquitectura.general.to.gdto.DGenericoDTO;
+import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
+import co.gov.dian.muisca.arquitectura.general.web.DWbo;
+import co.gov.dian.muisca.arquitectura.web.jsf.componentes.DMensajeFaces;
+import co.gov.dian.muisca.arquitectura.web.jsf.util.DResolutorBinding;
 
-import co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].delegados.DCatalogoDelegados;
-import co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].delegados.negocio.DDelegado[%=nombreModulo.firstToUpperCamelCase()%];
+import [%=accion.paquete%].DCmdAccCrear[%=accion.nombreClase%];
+import [%=accion.paquete%].DCmdAccAct[%=accion.nombreClase%];
+import [%=accion.paquete%].DCmdAccElim[%=accion.nombreClase%];
+import [%=accion.paquete%].DCmdAccConsLst[%=accion.nombreClase%];
 
 import javax.annotation.PostConstruct;
 import javax.faces.model.SelectItem;
@@ -32,42 +36,27 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
+/**
+ * <p>Title: D[%=nombreWbo%]WBO</p>
+ *
+ * <p>Description: Define los campos requeridos para crear, consultar, eliminar o actualizar [%=nombreWbo%]</p>
+ *
+ * <p>Copyright: Copyright (c) 2021</p>
+ *
+ * <p>Company: Direccion de Impuestos y Aduanas Nacionales</p>
+ *
+ * @author 
+ * @version 1.0
+ */
 
-	private List<SelectItem> [%=wbo.tos.att.nombre%]List;		
-	
-
-
-
-public class D[%=nombreWbo%]WBO extends  D[%=nombreModulo.firstToUpperCamelCase()%]BaseWBO {
+public class D[%=nombreWbo%]WBO extends  DWbo {
 
 	private static Logger logger = Logger.getLogger( D[%=nombreWbo%]WBO.class );
-	private DDelegado[%=nombreModulo.firstToUpperCamelCase()%] delegado[%=nombreModulo.firstToUpperCamelCase()%] ;
-	  
-	 [%		
-	 //todas los atributos  pks
-	for(att in pkes.atributos.asOrderedSet()) 
-	{	
-			var tipo = att.tipo.toType();
-			var nombre = att.nombre.firstToLowerCamelCase();
-			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
-	%]
-	private [%=tipo%] [%=nombre%];		
-	[%
-	}	}	
-	 //todas los atributos excepto pks
-	for(att in atribs.atributos.asOrderedSet()) 
-	{	
-			var tipo = att.tipo.toType();
-			var nombre = att.nombre.firstToLowerCamelCase();
-			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){
-		
-			
-	%]
-	private [%=tipo%] [%=nombre%];		
-	[%
-	}	}
-	%]
-	 
+	private D[%=nombreWbo%]TO to[%=nombreWbo%];
+	
+	private Collection<D[%=nombreWbo%]TO> col[%=nombreWbo%];
+    private Collection<D[%=nombreWbo%]PKTO> col[%=nombreWbo%]Seleccionados;
+      
 	 
 	[%		
 	 //SelectItem - atts
@@ -97,110 +86,118 @@ public class D[%=nombreWbo%]WBO extends  D[%=nombreModulo.firstToUpperCamelCase(
 	  
     @PostConstruct
     public void init( ) {
-    delegado[%=nombreModulo.firstToUpperCamelCase()%]  = ( DDelegadoNegocio[%=nombreModulo.firstToUpperCamelCase()%] )DCatalogoDelegados.DELEGADO_[%=nombreModulo.toUpperCase()%].getInstancia( this.getContextoSeguridad( ), this.getNombreCmdProtector( ), this.getPkSegmentoAplicacion( ) );
-    this.dto = new DGenericoDTO( "D[%=nombreModulo.firstToUpperCamelCase()%]DTO" )
+    	this.to[%=nombreWbo%] = new D[%=nombreWbo%]TO();
     }
     
+    /**
+	 * Constructor
+	 */
     public D[%=nombreWbo%]WBO( ) {
-        super( );
+        
     }
     
-    
-    public void buscar[%=nombreWbo%]( ) {
+    /**
+	 * Método que crea objetos de tipo [%=nombreWbo%]
+	 */
+    public void crear[%=nombreWbo%]( ) {
 
-        logger.debug( "************  Buscar [%=nombreWbo%] WBO ***********************" );
-
-        // Datos del Filtro
-        dto.addLong( "idTipoDocumento", this.idTipoDocumento );
-        dto.addLong( "numNit", this.numNit );
-
-        //Se busca el valor seleccionado del Combo - nominal
-        this.tipoDocumento = dtoWeb.obtenerSeleccionadoCombox( "tiposIdentList", Integer.valueOf( this.idTipoDocumento.toString( ) ) );
-        dto.addString( "tipoDocumento", this.tipoDocumento );
-
+        logger.debug( "************  Crear [%=nombreWbo%] WBO ***********************" );
         try {
-
-            dto = delegado[%=nombreModulo.firstToUpperCamelCase()%].buscar[%=nombreWbo%]( dto );
-
-            //Datos Base de Datos
-            this.idPersonaRut = dto.getLongValue( "idPersonaRut" );
-            this.idTipoDocumento = dto.getLongValue( "idTipoDocumento" );
-            this.numNit = dto.getLongValue( "numNit" );
-            this.nomRazonSocial = dto.getStringValue( "nomRazonSocial" );
-            logger.debug( "idPersonaRut : " + this.idPersonaRut );
-            logger.debug( "nomRazonSocial : " + this.nomRazonSocial );
-            this.verCardUsuario = Boolean.TRUE;
+        	DCmdAccCrear[%=nombreWbo%] accCrear[%=nombreWbo%] = (DCmdAccCrear[%=nombreWbo%])getAccion("[%=stringServicio%].DCmdAccCrear[%=nombreWbo%]"); 
+            accCrear[%=nombreWbo%].inicializar(this.to[%=nombreWbo%]);
+            accCrear[%=nombreWbo%].ejecutar();
+	
+			administrarMensaje(logger,
+            		MSG_BUNDLE,
+                               "mensaje_creado_con_exito", null,
+                               DMensajeFaces.COD_TIPO_CORRECTO);
         }
-        catch( DMuiscaAppException ex ) {
+        catch( DExcepcion unaExcepcion) {
 
-            this.verCardUsuario = Boolean.FALSE;
-            //Se decide el manejo de la excepcion propagada
-            //Manejo de mensajes de excepcion a nivel de JavaServerFaces
-            this.notificarUsuarios( ex );
-            this.notificarNoUsuarios( ex );
+            unaExcepcion.printStackTrace();
+            administrarMensaje(logger, unaExcepcion.getCodigo(),
+                               DMensajeFaces.COD_TIPO_ERROR,
+                               unaExcepcion.getMessage(),
+                               unaExcepcion.getMensajeDetallado());
         }
 
     }
     
+    /**
+	 * Método que actualiza objetos de tipo [%=nombreWbo%]
+	 */
+	public void actualizar[%=nombreWbo%]( ) {
+
+        logger.debug( "************  Actualizar [%=nombreWbo%] WBO ***********************" );
+        try {
+        	DCmdAccAct[%=nombreWbo%] accAct[%=nombreWbo%] = (DCmdAccAct[%=nombreWbo%])getAccion("[%=stringServicio%].DCmdAccAct[%=nombreWbo%]"); 
+            accAct[%=nombreWbo%].inicializar(this.to[%=nombreWbo%]);
+            accAct[%=nombreWbo%].ejecutar();
+	
+			administrarMensaje(logger,
+            		MSG_BUNDLE,
+                               "mensaje_actualizado_con_exito", null,
+                               DMensajeFaces.COD_TIPO_CORRECTO);
+        }
+        catch( DExcepcion unaExcepcion) {
+
+            unaExcepcion.printStackTrace();
+            administrarMensaje(logger, unaExcepcion.getCodigo(),
+                               DMensajeFaces.COD_TIPO_ERROR,
+                               unaExcepcion.getMessage(),
+                               unaExcepcion.getMensajeDetallado());
+        }
+
+    }
     
+    /**
+	 * Método que elimina objetos de tipo [%=nombreWbo%]
+	 */
+	public void eliminar[%=nombreWbo%]( ) {
+
+        logger.debug( "************  Eliminar [%=nombreWbo%] WBO ***********************" );
+        try {
+        	DCmdAccElim[%=nombreWbo%] accElim[%=nombreWbo%] = (DCmdAccElim[%=nombreWbo%])getAccion("[%=stringServicio%].DCmdAccElim[%=nombreWbo%]"); 
+            accElim[%=nombreWbo%].inicializar(this.to[%=nombreWbo%]);
+            accElim[%=nombreWbo%].ejecutar();
+	
+			administrarMensaje(logger,
+            		MSG_BUNDLE,
+                               "mensaje_eliminado_con_exito", null,
+                               DMensajeFaces.COD_TIPO_CORRECTO);
+        }
+        catch( DExcepcion unaExcepcion) {
+
+            unaExcepcion.printStackTrace();
+            administrarMensaje(logger, unaExcepcion.getCodigo(),
+                               DMensajeFaces.COD_TIPO_ERROR,
+                               unaExcepcion.getMessage(),
+                               unaExcepcion.getMensajeDetallado());
+        }
+    }
     
-    [%		//gets y sets Pk
-		
-		for(pks in pkes.atributos.asOrderedSet()) 
-		{	
-			var type = pks.tipo.toType();
-			var nombre = pks.nombre.firstToLowerCamelCase();
-			var nombreUpper =pks.nombre.firstToUpperCamelCase();
-			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
-	%]
-		/**
-	 	* Devuelve el valor de [%=nombre%].
-	 	* @return Un objeto [%=type%] 
-	 	*/
-		public [%=type%] get[%=nombreUpper%] (){
-			return [%=nombre%];
-		}
-		/**
-		 * Establece el valor de [%=nombre%].
-		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
-		 */
-		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
-			this.[%=nombre%] = [%=nombre%];
-		}
-		
-	[%
-		}}	
-	%]
-    
-    
-	 [%		//gets y sets Att
-		
-		for(att in atribs.atributos.asOrderedSet()) 
-		{	
-			var type = att.tipo.toType();
-			var nombre = att.nombre.firstToLowerCamelCase();
-			var nombreUpper =att.nombre.firstToUpperCamelCase();
-			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
-	%]
-	   /**
-	 	* Devuelve el valor de [%=nombre%].
-	 	* @return Un objeto [%=type%] 
-	 	*/
-		public [%=type%] get[%=nombreUpper%] (){
-			return [%=nombre%];
-		}
-		/**
-		 * Establece el valor de [%=nombre%].
-		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
-		 */
-		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
-			this.[%=nombre%] = [%=nombre%];
-		}
-		
-	[%
-		}}	
-	%]
-    
+    /**
+	 * Método que consulta objetos de tipo [%=nombreWbo%]
+	 */
+	public void consultar[%=nombreWbo%]( ) {
+
+        logger.debug( "************  Consultar [%=nombreWbo%] WBO ***********************" );
+        try {
+        	DCmdAccConsLst[%=nombreWbo%] accConsLst[%=nombreWbo%] = (DCmdAccConsLst[%=nombreWbo%])getAccion("[%=stringServicio%].DCmdAccConsLst[%=nombreWbo%]"); 
+            accConsLst[%=nombreWbo%].inicializarConsultaGenerica(this.to[%=nombreWbo%]);
+            accConsLst[%=nombreWbo%].ejecutar();
+    		this.col[%=nombreWbo%] = accConsLst[%=nombreWbo%].getColeccion[%=nombreWbo%]();			
+        }
+        catch( DExcepcion unaExcepcion) {
+
+            unaExcepcion.printStackTrace();
+            administrarMensaje(logger, unaExcepcion.getCodigo(),
+                               DMensajeFaces.COD_TIPO_ERROR,
+                               unaExcepcion.getMessage(),
+                               unaExcepcion.getMensajeDetallado());
+        }
+
+    }
     
     
     [%		
@@ -263,9 +260,50 @@ public class D[%=nombreWbo%]WBO extends  D[%=nombreModulo.firstToUpperCamelCase(
 	[%
 	}	}	 
 	 %]
+	 
+    /**
+    *Retorna obejto D[%=nombreWbo%]TO
+    **/
+    public [%=nombreWbo%]TO get[%=nombreWbo%]TO(){
+    	if(this.to[%=nombreWbo%] == null) {
+    		this.to[%=nombreWbo%] = new D[%=nombreWbo%]TO();
+    	}
+    	return this.to[%=nombreWbo%];
+    }
     
-    
-    
+    /**
+     *	Retorna una coleccion de objetos D[%=nombreWbo%]TO
+     **/
+    public Collection<D[%=nombreWbo%]TO> getCol[%=nombreWbo%]() {
+		
+		return col[%=nombreWbo%];
+	}
+	
+	/**
+     *	Fija el valor de col[%=nombreWbo%]
+     **/
+	public void setCol[%=nombreWbo%](
+			Collection<D[%=nombreWbo%]TO> col[%=nombreWbo%]) {
+		this.col[%=nombreWbo%] = col[%=nombreWbo%];
+	}
+	
+	/**
+     *	Retorna una coleccion de objetos D[%=nombreWbo%]PKTO
+     **/
+	public Collection<D[%=nombreWbo%]PKTO> getCol[%=nombreWbo%]Seleccionados() {
+		if(col[%=nombreWbo%]Seleccionados == null) {
+			col[%=nombreWbo%]Seleccionados = new ArrayList<D[%=nombreWbo%]PKTO>();
+		}
+		return col[%=nombreWbo%]Seleccionados;
+	}
+	
+	/**
+     *	Fija el valor de col[%=nombreWbo%]Seleccionados
+     **/
+	public void setCol[%=nombreWbo%]Seleccionados(
+			Collection<D[%=nombreWbo%]PKTO> col[%=nombreWbo%]Seleccionados) {
+		this.col[%=nombreWbo%]Seleccionados = col[%=nombreWbo%]Seleccionados;
+	}
     
 	
 }

@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.*;
 
 /**
  * <p>Titulo: Proyecto MUISCA</p>
- * <p>Descripcion: Objeto de transporte para los atributos de [%= clase.nombre.firstToUpperCamelCaseClase() %].</p>
+ * <p>Descripcion: Objeto de transporte para los atributos de [%= clase.nombreClase %].</p>
  * <p>Copyright: Copyright (c) 2019</p>
  * <p>Company: DIAN</p>
  *
@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.*;
  * $Log[10]:$
  * </pre>
  */
-public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO implements IDTO {
+public class D[%= clase.nombreClase %]AttTO implements IDTO {
 		private static final long serialVersionUID = -1231029142L; 
 
 	// Atributos
@@ -47,12 +47,12 @@ public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO implements I
 	%]
 	
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO por defecto.
+	 * Construye un nuevo D[%= clase.nombreClase %]AttTO por defecto.
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO() { }
+	public D[%= clase.nombreClase %]AttTO() { }
 
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO con los atributos.
+	 * Construye un nuevo D[%= clase.nombreClase %]AttTO con los atributos.
 	 [%		//todas los atributos excepto pks
 		
 		for(att in clase.atributos.asOrderedSet()) 
@@ -65,7 +65,7 @@ public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO implements I
 		}	
 	%]
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]AttTO([%=atts.concat(",")%]) {
+	public D[%= clase.nombreClase %]AttTO([%=atts.concat(",")%]) {
 		[%=setAtts.concat(";\n \t \t")%];
 	}
 	

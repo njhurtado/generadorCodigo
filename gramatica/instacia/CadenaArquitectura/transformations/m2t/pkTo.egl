@@ -14,7 +14,7 @@ import org.apache.commons.lang.builder.*;
 
 /**
  * <p>Titulo: Proyecto MUISCA</p>
- * <p>Descripcion: Objeto de transporte para la PK de [%= clase.nombre.firstToUpperCamelCaseClase() %].</p>
+ * <p>Descripcion: Objeto de transporte para la PK de [%= clase.nombreClase %].</p>
  * <p>Copyright: Copyright (c) 2019</p>
  * <p>Company: DIAN</p>
  *
@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.*;
  * $Log[10]:$
  * </pre>
  */
-public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO implements IDTO {
+public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		private static final long serialVersionUID = -1231029143L; 
 
 	// Atributos PK
@@ -45,12 +45,12 @@ public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO implements ID
 	%]
 	
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO por defecto.
+	 * Construye un nuevo D[%= clase.nombreClase %]PKTO por defecto.
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO() { }
+	public D[%= clase.nombreClase %]PKTO() { }
 
 	/**
-	 * Construye un nuevo D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO con los atributos.
+	 * Construye un nuevo D[%= clase.nombreClase %]PKTO con los atributos.
 	 [%		//todas los atributos excepto pks
 		
 		for(att in clase.atributos.asOrderedSet()) 
@@ -63,7 +63,7 @@ public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO implements ID
 		}	
 	%]
 	 */
-	public D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO([%=atts.concat(",")%]) {
+	public D[%= clase.nombreClase %]PKTO([%=atts.concat(",")%]) {
 		[%=setAtts.concat(";\n \t \t")%];
 	}
 	
@@ -128,10 +128,10 @@ public class D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO implements ID
            if (this == objeto) {
                  return true;
            }
-           if (!(objeto instanceof D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO)) {
+           if (!(objeto instanceof D[%= clase.nombreClase %]PKTO)) {
                  return false;
            }
-           D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO otro = (D[%= clase.nombre.firstToUpperCamelCaseClase() %]PKTO) objeto;
+           D[%= clase.nombreClase %]PKTO otro = (D[%= clase.nombreClase %]PKTO) objeto;
            EqualsBuilder builder = new EqualsBuilder();       
            
            

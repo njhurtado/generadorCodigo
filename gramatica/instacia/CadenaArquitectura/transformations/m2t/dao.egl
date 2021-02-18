@@ -2,7 +2,7 @@
 
 import "../utils.eol";
 
-	var nombreClase = Dao.nombre.firstToUpperCamelCaseClase();	
+	var nombreClase = Dao.nombreClase;	
 	var atribs = Arq!AttTo.all.select(n | n.nombre = Dao.nombre).first();
 	var pkes = Arq!PkTo.all.select(n | n.nombre = Dao.nombre).first();
 	

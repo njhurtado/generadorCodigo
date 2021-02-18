@@ -76,7 +76,7 @@ operation Atributo isAttAuditoria() : Boolean {
 
 //replace("\\.", "/")
 operation String getUrlCarpeta() : String {
-return self.replace("\\.", "/");	
+	return self.replace("\\.", "/");	
 }
 
 

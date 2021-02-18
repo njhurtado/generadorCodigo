@@ -18,7 +18,7 @@ import "../utils.eol";
 	var t:Template:= TemplateFactory.load('generadorTO.egl');
 	//generacion de to, pk y att
 	//Recorre clase AttTo
-	/*for(att in atts) {
+	for(att in atts) {
 		var attSrc:Template:= TemplateFactory.load('attTo.egl');
 		attSrc.populate('clase', att);
 		attSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+att.paquete.getUrlCarpeta()+ '/D'+att.nombreClase + 'AttTO.java');
@@ -221,7 +221,7 @@ import "../utils.eol";
 		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/D" +d.nombreClase + 'Test.java');		
 	}
 
-  	*/
+  	
 	// ----- PARTE WEB ------------------------
 	
 	//Recorre clase wbo
@@ -246,19 +246,19 @@ import "../utils.eol";
 	}*/
 	
 	//Recorre clase xhtml
-	/*for (xhtml in xhtmls) {
+	for (xhtml in xhtmls) {
 		var nomXhtml = xhtml.nombreClase ;
 			//Operacion: Listar
 			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlCrear.egl');
 			xhtmlSrc.populate('xhtml', xhtml);
 			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/Crear' + nomXhtml + '.xhtml');
-	}*/
+	}
 	for (wbo in wbos){
 		var nomWbo = wbo.nombreClase ;
-			var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
+			var wboSrc:Template:= TemplateFactory.load('./web/wboCrear.egl');
 			wboSrc.populate('wbo', wbo);
 			wboSrc.populate('nombreModulo', modulo.nombre);
-			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'D'+nomWbo + 'WBO.java');
+			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'DCrear'+nomWbo + 'WBO.java');
 	}
 	
 	//Archivos Unicos
@@ -267,7 +267,12 @@ import "../utils.eol";
   		var tWebDTO:Template:= TemplateFactory.load('./web/webDTO.egl');
 		tWebDTO.populate('Modulo', modulo);
 		tWebDTO.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/general/to/generico/D'+nomModulo+'WebDTO.java');
-    	
+
+    	//WboBase  		
+  		var tWboBase:Template:= TemplateFactory.load('./web/wboBase.egl');
+		tWboBase.populate('Modulo', modulo);
+		tWboBase.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/wbo/D'+nomModulo+'BaseWBO.java');
+	
 	//faces-config-beans.xml
 	var tfacesConfBean:Template:= TemplateFactory.load('./web/webConfigBean.egl');
 		tfacesConfBean.populate('nombreModulo', modulo.nombre);

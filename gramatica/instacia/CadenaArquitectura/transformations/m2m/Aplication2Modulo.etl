@@ -1,3 +1,5 @@
+import "../utils.eol";
+
 pre {
 var packete=Sql!Aplication.all.at(0).package;
 var sufijoPkg=Sql!Aplication.all.at(0).sufijoPkg;
@@ -43,20 +45,49 @@ rule Table2Clase
 		c.paquete=packete;
 		c.sufijoPkg=sufijoPkg;
 		c.anotaciones=t.annotations.equivalent();
-		//c.anotaciones.println(c.nombre+"-->");
+		var tableDet=t.annotations.select(an|an.isTypeOf(Sql!TableDetail)).first();
+		if(tableDet.isDefined()) {
+			var nombreClase=tableDet.nombreClase;
+			c.nombreClase=nombreClase;
+			//c.nombreClase.println(c.nombre+"-->");
+			if(c.nombreClase = null or c.nombreClase = "") {
+				c.nombreClase = c.nombre.firstToUpperCamelCaseClase();
+			}
+		} else {
+			c.nombreClase = c.nombre.firstToUpperCamelCaseClase();
+		}
+		
 	}	
+	
 //Maping Tabla a Clase
 rule Tabla2ClaseTo 
 	transform t : Sql!Table 
-	to _to : Arq!`To` ,  pkTo : Arq!PkTo, attTo : Arq!AttTo extends Table2Clase{
+	to _to : Arq!`To` ,  pkTo : Arq!PkTo, attTo : Arq!AttTo {
 		_to.paquete=packete+'.general.to'+nomPkg;
+		_to.nombre=t.name;		
+		_to.sufijoPkg=sufijoPkg;
+		_to.anotaciones=t.annotations.equivalent();
+		var tableDet=t.annotations.select(an|an.isTypeOf(Sql!TableDetail)).first();
+		if(tableDet.isDefined()) {
+			var nombreClase=tableDet.nombreClase;
+			_to.nombreClase=nombreClase;
+			//c.nombreClase.println(c.nombre+"-->");
+			if(_to.nombreClase = null or _to.nombreClase = "") {
+				_to.nombreClase = _to.nombre.firstToUpperCamelCaseClase();
+			}
+		} else {
+			_to.nombreClase = _to.nombre.firstToUpperCamelCaseClase();
+		}
+		"crea el to ".println(_to.nombreClase);
 		//Conformo Clase PkTo
 		pkTo.nombre=t.name;		
 		pkTo.atributos=t.primarykey.columns.equivalent();	
-		pkTo.paquete=_to.paquete;	
+		pkTo.paquete=_to.paquete;
+		pkTo.nombreClase=_to.nombreClase;
 		//conformo Clase AttTo
 		attTo.paquete=_to.paquete;
-		attTo.nombre=t.name;				
+		attTo.nombre=t.name;
+		attTo.nombreClase=_to.nombreClase;				
 		attTo.atributos=t.columns.select(c|t.primarykey.columns.select(c1|c1=c).size()=0).equivalent();
 		//Completo TO con pk y att
 		_to.pk=pkTo;
@@ -77,6 +108,7 @@ rule Tabla2Servicio
 		to2.pk=t.pk;
 		to2.nombre=t.nombre;
 		to2.paquete=t.paquete;
+		to2.nombreClase = t.nombreClase;
 		srv.detalle.add(to2);
 	}
 	
@@ -96,6 +128,7 @@ rule Tabla2Accion
 		to2.pk=t.pk;
 		to2.nombre=t.nombre;
 		to2.paquete=t.paquete;
+		to2.nombreClase = t.nombreClase;
 		acc.detalle.add(to2);
 	}
 	
@@ -114,6 +147,7 @@ rule Tabla2Dao
 		to2.pk=t.pk;
 		to2.nombre=t.nombre;
 		to2.paquete=t.paquete;
+		to2.nombreClase = t.nombreClase;
 		dao.detalle.add(to2);
 	}
 }
@@ -131,6 +165,7 @@ rule Tabla2Wbo
 		to2.pk=t.pk;
 		to2.nombre=t.nombre;
 		to2.paquete=t.paquete;
+		to2.nombreClase = t.nombreClase;
 		w.tos.add(to2);
 	}
 }
@@ -148,6 +183,7 @@ rule Tabla2Xhtml
 		to2.pk=t.pk;
 		to2.nombre=t.nombre;
 		to2.paquete=t.paquete;
+		to2.nombreClase = t.nombreClase;
 		xhtml.detalle.add(to2);
 	}
 }
@@ -185,8 +221,12 @@ transform td : Sql!TableDetail
 		to2.pk=to1.pk;
 		to2.nombre=to1.nombre;
 		to2.paquete=to1.paquete;
+		
+		to2.nombreClase=to1.nombreClase;		
+		
 				
 		m.clase=to2;
+		
 	}
 
 rule ReferenceMode2ModoReferencia
@@ -211,3 +251,5 @@ transform a : Sql!Filtro
 		m.nombre=a.name;
 		m.args=a.args;
 	}
+
+	

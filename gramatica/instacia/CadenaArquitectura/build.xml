@@ -18,7 +18,9 @@
 	</target>
 
 	<target name="m2m">
-	<echo>Realizar transformación ETL</echo>		
+	<echo>Realizar transformación ETL</echo>	
+		<delete file="${generated.location}/arqdestino-generado.xmi" failonerror="true" />
+				
 		<epsilon.emf.register file="${destinoarq.metamodel.location}" />		
 		<epsilon.emf.loadModel name="Sql" modelfile="${models.location}/modeloContribuyentes.xmi" metamodeluri="${.metamodel.uri}" read="true" store="false" />
 		<epsilon.emf.loadModel name="Arq" modelfile="${models.location}/arqdestino-generado.xmi" metamodeluri="${destinoarq.metamodel.uri}" read="false" store="true" />

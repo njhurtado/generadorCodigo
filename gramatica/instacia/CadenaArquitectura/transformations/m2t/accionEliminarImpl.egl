@@ -1,5 +1,5 @@
 [% import "../utils.eol"; 
-var nombreClase=clase.nombre.firstToUpperCamelCaseClase();
+var nombreClase=clase.nombreClase;
 var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 
 var stringServicio=clase.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
