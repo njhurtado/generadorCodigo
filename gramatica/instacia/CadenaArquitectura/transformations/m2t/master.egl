@@ -237,29 +237,62 @@ import "../utils.eol";
 	
 	//Recorre clase xhtml
 	var xhtmls : Set:= Arq!Xhtml.allInstances().asSet();
-	/*for (xhtml in xhtmls) {
-		var nomXhtml = xhtml.nombre.firstToUpperCamelCase() ;
-			//Operacion: Listar
-			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtml.egl');
-			xhtmlSrc.populate('xhtml', xhtml);
-			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/' + nomXhtml + '.xhtml');
-	}*/
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlListar.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/'+xhtml.sufijoPkg+'/Consultar' + nomXhtml + '.xhtml');
+	}
 	
-	//Recorre clase xhtml
-	/*for (xhtml in xhtmls) {
+	//Recorre clase xhtml para generacion de jsps
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/jspListar.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/FacesMuisca/'+nomWeb+"/"+xhtml.sufijoPkg+'/Consultar' + nomXhtml + '.jsp');
+	}
+	for (xhtml in xhtmls) {
 		var nomXhtml = xhtml.nombreClase ;
-			//Operacion: Listar
-			var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlCrear.egl');
-			xhtmlSrc.populate('xhtml', xhtml);
-			xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/Crear' + nomXhtml + '.xhtml');
-	}*/
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/jspCrear.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/FacesMuisca/'+nomWeb+"/"+xhtml.sufijoPkg+'/Crear' + nomXhtml + '.jsp');
+	}
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase ;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/jspActualizar.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/FacesMuisca/'+nomWeb+"/"+xhtml.sufijoPkg+'/Actualizar' + nomXhtml + '.jsp');
+	}
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase ;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/recursos.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/FacesMuisca/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/recursos/'+ modulo.nombre.toLowerCase().substring(0,3) + '_mensajes.properties');
+	}
 	for (wbo in wbos){
+		var nomWbo = wbo.nombreClase ;
+		var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
+		wboSrc.populate('wbo', wbo);
+		wboSrc.populate('nombreModulo', modulo.nombre);
+		wboSrc.generate('../../generated/FacesMuisca'+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/'+wbo.sufijoPkg + '/D'+nomWbo + 'WBO.java');
+	}
+	/*for (wbo in wbos){
 		var nomWbo = wbo.nombreClase ;
 			var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
 			wboSrc.populate('wbo', wbo);
 			wboSrc.populate('nombreModulo', modulo.nombre);
 			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'D'+nomWbo + 'WBO.java');
-	}
+	}*/
 	
 	//Archivos Unicos
   	

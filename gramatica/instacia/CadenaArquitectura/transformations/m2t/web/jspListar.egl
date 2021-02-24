@@ -1,0 +1,206 @@
+[% 
+import "../../utils.eol";
+var nombreJsp=xhtml.nombreClase;
+var nombreJspLower=nombreJsp.firstToLowerCase();
+var attTo = Arq!AttTo.all.select(n | n.nombre = xhtml.nombre).first();
+var pkes = Arq!PkTo.all.select(n | n.nombre = xhtml.nombre).first();
+var to = Arq!To.all.select(n | n.nombre = xhtml.nombre).first();
+var accion = Arq!Accion.all.select(n | n.nombre = xhtml.nombre).first();
+var stringNomAccion=accion.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
+var prefixModulo = nombreModulo.toLowerCase().substring(0,3);
+var atribs = attTo.atributos;
+var atribsPk = pkes.atributos;
+%]
+
+<%@page contentType="text/html; charset=ISO-8859-1"%>
+<%@taglib uri="/WEB-INF/a4j.tld" prefix="a4j"%>
+<%@ taglib uri="/WEB-INF/rich.tld" prefix="rich"%>
+<%@ taglib uri="/WEB-INF/cmp_core_muisca_jsf" prefix="cmpcore"%>
+<%@ taglib uri="/WEB-INF/cmp_muisca_jsf" prefix="cmp"%>
+
+<cmpcore:subview id="vistaConsultar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]">
+    <cmp:panelGrid>
+        <cmpcore:verbatim>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery-ui-1.7.2.custom.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/colorbox/jquery.colorbox.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/overlib.js"> </script>
+        <script type="text/javaScript">
+        <!--
+
+        function confirmacionEliminar[%=nombreJsp%](){
+            var unaFabricaMensajes = new DFabricaMensajes();
+            var titulo = "Advertencia";
+            var texto = 'Esta opción eliminará el [%=nombreJsp%] seleccionado de la base de datos. ¿Está seguro que desea continuar?';
+            unMensaje = unaFabricaMensajes.getMensaje(0,COD_TIPO_CONFIRMACION,titulo,texto,"","");
+            miGestorMensajes.limpiarMensajes();
+            miGestorMensajes.agregarMensaje(unMensaje);
+            miGestorMensajes.mostrarMensaje();
+            return false;
+          }
+
+          function confirmarSI() {
+            document.getElementById("vistaConsultar[%=nombreJsp%]:frmConsultar[%=nombreJsp%]:lnkEliminar[%=nombreJsp%]").onclick();
+            cerrarLayer();
+            return false;
+          }
+
+          function confirmarNO() {
+            cerrarLayer();
+            return false;
+          }
+          
+          function consultar[%=nombreJsp%](){
+              jQuery('[id$=lnkConsultarLst[%=nombreJsp%]]').click();
+              return false;
+           }
+
+          function actualizar[%=nombreJsp%](){
+              jQuery('[id$=lnkActualiar[%=nombreJsp%]]').click();
+              return false;
+           }
+          
+        //-->
+        </script>
+        </cmpcore:verbatim>
+    </cmp:panelGrid>
+
+    <cmp:form id="frmConsultar[%=nombreJsp%]">
+
+        <cmp:panelGrid id="messageGrid">
+            <cmp:mensajes globalOnly="true" showDetail="true" showSummary="true" />
+        </cmp:panelGrid>
+
+        <cmp:commandLink id="lnkEliminar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]"  action="#{[%=nombreJspLower%].eliminar[%=nombreJsp%]}"/>
+		<cmp:commandLink id="lnkConsultarLst[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]" action="#{[%=nombreJspLower%].consultarLst[%=nombreJsp%]}" />
+		<cmp:commandLink id="lnkActualiar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]" action="#{[%=nombreJspLower%].irActualizar[%=nombreJsp%]}" />
+
+        <cmp:inputHidden id="modoPresentacionSeleccionBO" value="#{[%=nombreJspLower%].modoPresentacionSeleccionBO}" />
+        <cmp:inputHidden id="siguienteURL" value="#{[%=nombreJspLower%].siguienteURL}" />
+        <cmp:inputHidden id="modoPresentacionFormBO" value="#{[%=nombreJspLower%].modoPresentacionFormBO}" />
+        <cmp:inputHidden id="modoOperacionFormBO" value="#{[%=nombreJspLower%].modoOperacionFormBO}" />
+
+        <cmp:salvarEstado value="#{[%=nombreJspLower%].col[%=nombreJsp%]}" />
+        
+        
+        <cmp:panelGrid width="100%" columns="1">
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.mensaje_titulo_listar_[%=xhtml.nombre.quitarPrefijoYLowerCase()%]}" styleClass="titulo2" />
+        </cmp:panelGrid>
+
+        <cmp:outputFormat value="<br><hr>" escape="false"/>
+
+	    <cmp:panelGrid columns="2" columnClasses="fondoTituloLeft,tipoFilaNormalVerde">
+         	
+          [%
+	      for(att in atribs) {
+	      	var nombre = att.nombre.firstToLowerCamelCase();
+	      	var nombreLabel = att.nombre.quitarPrefijoYLowerCase();
+	      	var tipo = att.tipo;
+	      	if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid" and nombre<>"ideUsuarioCambio" and nombre<>"fecCambio"){
+	      	if(att.isModoCombo()) {
+	      %]
+      		<cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            	<cmp:selectOneMenu value="#{[%=nombreJspLower%].att.[%=nombre%]}">
+              	<cmpcore:selectItems id="lst[%=nombreJsp%]" value="#{lst[%=nombreJsp%]}"/>
+          	</cmp:selectOneMenu>
+            [% } else if (tipo == "NUMBER" or tipo == "VARCHAR2") { %]
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            <cmp:inputText id="txt[%=nombre%]" value="#{to[%=nombreJspLower%].att.[%=nombre%]}" tipoValidacion="requerido" labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombre%]}"/>
+            [% } else if (tipo == "TIMESTAMP" or tipo == "DATE") {%]
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            <cmp:inputFecha
+            value="#{[%=nombreJspLower%].att.[%=nombre%]}"
+            labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" id="txt[%=nombre%]" tipoValidacion="fecha"
+            size="10" patron="dd-MM-yyyy">
+            <cmpcore:convertDateTime pattern="dd-MM-yyyy"/>
+            </cmp:inputFecha>
+	      [% }  }                     
+	      }                      
+	       %] 
+                 
+           	            
+          	<cmp:commandButton
+          	action="#{[%=nombreJspLower%].consultarLst[%=nombreJsp%]}"
+          	type="button"
+          	nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]"
+          	value="#{[%=prefixModulo%]_mensajes.label_buscar}"
+          	image="#{[%=prefixModulo%]_imagenes.url_absoluta_imagenes}#{[%=prefixModulo%]_imagenes.imagen_boton_buscar}"/>
+
+      	</cmp:panelGrid>
+              
+         
+         <cmp:outputFormat id="salto15" value="<hr>" escape="false"/>
+
+             <cmp:datosTablaSeleccion
+             id="tbl[%=nombreJsp%]"
+             value="#{[%=nombreJspLower%].col[%=nombreJsp%]}"
+             var="registro"
+             idIndice="registroSeleccionado"
+             valorIndice="#{registro.PK}"
+             modoPresentacion="#{[%=nombreJspLower%].modoPresentacionSeleccionBO}"
+             valoresSeleccionados="#{[%=nombreJspLower%].col[%=nombreJspLower%]Seleccionados}"
+             headerClass="fondoTituloTop"
+             styleClass="espaciado"
+             rowClasses="tipoFilaNormalVerde"
+             estiloFilaSeleccionada="tipoFilaNormalVerde"
+             tieneColumnaSeleccion="true"
+             seleccionMultiple="false"
+             width="100%">
+
+		[%
+	      for(pk in atribsPk) {
+	      	var nombre = pk.nombre.firstToLowerCamelCase();
+	      	var nombreLabel = pk.nombre.quitarPrefijoYLowerCase();
+	      	if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){	      	
+	      %]
+      		<cmp:column id="col[%=nombre%]">
+               <cmpcore:facet name="header">
+                 <cmp:outputText id="titCol[%=nombre%]" value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}"/>
+               </cmpcore:facet>
+               <cmp:outputText id="txtCol[%=nombre%]" value="#{registro.att.[%=nombre%]}"/>
+             </cmp:column>                          
+	      [%  }                     
+	      }                      
+	       %]
+	       
+	       [%
+	      for(att in atribs) {
+	      	var nombre = att.nombre.firstToLowerCamelCase();
+	      	var nombreLabel = att.nombre.quitarPrefijoYLowerCase();
+	      	if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){	      	
+	      %]
+      		<cmp:column id="col[%=nombre%]">
+               <cmpcore:facet name="header">
+                 <cmp:outputText id="titCol[%=nombre%]" value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}"/>
+               </cmpcore:facet>
+               <cmp:outputText id="txtCol[%=nombre%]" value="#{registro.att.[%=nombre%]}"/>
+             </cmp:column>                          
+	      [%  }                     
+	      }                      
+	       %]
+	       
+	       <cmp:pag metodoAnteriorPagina="#{[%=nombreJspLower%].anteriorPagina}"
+                  metodoSiguientePagina="#{[%=nombreJspLower%].siguientePagina}"
+                  paginaActual="#{[%=nombreJspLower%].paginaActual}"
+                  totalPaginas="#{[%=nombreJspLower%].totalPaginas}">
+              </cmp:pag>
+             
+           </cmp:datosTablaSeleccion>
+           
+           <cmp:panelGrid width="100%" columns="2" styleClass="center" rendered="#{!empty([%=nombreJspLower%].col[%=nombreJsp%])}">
+	            <cmp:commandButton
+	            action="#{[%=nombreJspLower%].eliminar[%=nombreJsp%]}"
+	            nombreAccion="[%=stringNomAccion%].DCmdAccElim[%=nombreJsp%]"
+	            value="Eliminar"
+	            action="" onclick="return confirmacionEliminar[%=nombreJsp%]();"
+	            image="#{[%=prefixModulo%]_imagenes.url_absoluta_imagenes}#{[%=prefixModulo%]_imagenes.imagen_boton_eliminar}" />
+	            <cmp:commandButton
+	            action="#{[%=nombreJspLower%].irActualizar[%=nombreJsp%]}"
+	            nombreAccion="[%=stringNomAccion%].DCmdAccConsLst[%=nombreJsp%]"
+	            value="Actualizar"
+	            action="" onclick="return actualizar[%=nombreJsp%]();"
+	            image="#{[%=prefixModulo%]_imagenes.url_absoluta_imagenes}#{[%=prefixModulo%]_imagenes.imagen_boton_actualizar}" />
+            </cmp:panelGrid>
+
+    </cmp:form>
+</cmpcore:subview>

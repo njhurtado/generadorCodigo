@@ -23,6 +23,26 @@ operation String firstToUpperCamelCaseClase() : String {
 	return result;	
 }
 
+operation String quitarPrefijoYLowerCase() : String {
+	//var arr=self.split('_');
+	if(self.indexOf('_') > 0) {
+		var result=self.substring(self.indexOf('_')+1,self.length()); 
+		return result.toLowerCase();
+	} else {
+		return self;
+	}
+	
+	/*for(p in arr){
+	    //Se suprime la primera parte antes del caracter _ para quitar el prefijo del nombre de la tabla
+	    // ejm. IEX_ARCHIVOS_CRS_ANULADOS se quita el valor IEX	    
+	    if(loopCount > 1) {
+			result+=p.toLowerCase();
+			//result.println();
+		}
+		
+	}*/
+		
+}
 
 //Convierte un text AAA_BBB_CC  a aaaBbbCc
 operation String firstToLowerCamelCase () : String {

@@ -24,6 +24,7 @@ import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
 import co.gov.dian.muisca.arquitectura.general.web.DWbo;
 import co.gov.dian.muisca.arquitectura.web.jsf.componentes.DMensajeFaces;
 import co.gov.dian.muisca.arquitectura.web.jsf.util.DResolutorBinding;
+import co.gov.dian.muisca.arquitectura.general.persistencia.DInfoPaginacion;
 
 import [%=accion.paquete%].DCmdAccCrear[%=accion.nombreClase%];
 import [%=accion.paquete%].DCmdAccAct[%=accion.nombreClase%];
@@ -54,6 +55,8 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 	private static Logger logger = Logger.getLogger( D[%=nombreWbo%]WBO.class );
 	private D[%=nombreWbo%]TO to[%=nombreWbo%];
 	
+	private DInfoPaginacion infoPag[%=nombreWbo%] = new DInfoPaginacion();
+	
 	private Collection<D[%=nombreWbo%]TO> col[%=nombreWbo%];
     private Collection<D[%=nombreWbo%]PKTO> col[%=nombreWbo%]Seleccionados;
       
@@ -66,7 +69,7 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 			var nombre = lstAtt.nombre.firstToLowerCamelCase();
 			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
 	%]
-	private List<SelectItem> [%=nombre%]List;		
+	private List<SelectItem> lst[%=nombre%];		
 	[%
 	}	}	 
 	 %]
@@ -79,7 +82,7 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 			var nombre = lstPk.nombre.firstToLowerCamelCase();
 			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){		
 	%]
-	private List<SelectItem> [%=nombre%]List;		
+	private List<SelectItem> lst[%=nombre%];		
 	[%
 	}	}	 
 	 %]
@@ -177,15 +180,54 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
     }
     
     /**
+	 * Método que consulta el registro seleccionado y redirige hacia la pantalla de actualización de objetos de tipo [%=nombreWbo%]
+	 */
+    public String irActualizar[%=nombreWbo%]() {
+	    if(col[%=nombreWbo%]Seleccionados == null || col[%=nombreWbo%]Seleccionados.isEmpty()) {
+      		 administrarMensaje(logger,
+      				 MSG_BUNDLE,
+                       "mensaje_elemento_seleccionado_requerido", null,
+                       DMensajeFaces.COD_TIPO_ERROR);
+               return null;
+	    }   	   
+    	D[%=nombreWbo%]PKTO obj[%=nombreWbo%]Pk = col[%=nombreWbo%]Seleccionados.iterator().next();
+    	this.to[%=nombreWbo%] = consultarObj[%=nombreWbo%](obj[%=nombreWbo%]Pk);
+    	
+    	return "DefActualizar[%=nombreWbo%]";
+    }
+    
+    private D[%=nombreWbo%]TO consultar[%=nombreWbo%](D[%=nombreWbo%]PKTO pk) {
+    	DCmdAccConsLst[%=nombreWbo%] miComando;
+		try {
+			miComando = (
+					DCmdAccConsLst[%=nombreWbo%]) getAccion("[%=stringServicio%].DCmdAccConsLst[%=nombreWbo%]");
+			D[%=nombreWbo%]TO to[%=nombreWbo%] = new D[%=nombreWbo%]TO();
+			to[%=nombreWbo%].setPK(pk);
+			miComando.inicializarConsultaGenerica(to[%=nombreWbo%]);
+			miComando.ejecutar();
+			if(miComando.getColeccion[%=nombreWbo%]() != null && !miComando.getColeccion[%=nombreWbo%]().isEmpty()){
+				D[%=nombreWbo%]TO toConsultado = miComando.getColeccion[%=nombreWbo%]().iterator().next();
+				return toConsultado;
+			}
+		} catch (DExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+    }
+    
+    /**
 	 * Método que consulta objetos de tipo [%=nombreWbo%]
 	 */
-	public void consultar[%=nombreWbo%]( ) {
+	public void consultarLst[%=nombreWbo%]( ) {
 
         logger.debug( "************  Consultar [%=nombreWbo%] WBO ***********************" );
         try {
         	DCmdAccConsLst[%=nombreWbo%] accConsLst[%=nombreWbo%] = (DCmdAccConsLst[%=nombreWbo%])getAccion("[%=stringServicio%].DCmdAccConsLst[%=nombreWbo%]"); 
             accConsLst[%=nombreWbo%].inicializarConsultaGenerica(this.to[%=nombreWbo%]);
+            accConsLst[%=nombreWbo%].setInfoPaginacion(infoPag[%=nombreWbo%]);
             accConsLst[%=nombreWbo%].ejecutar();
+            infoPag[%=nombreWbo%] = accConsLst[%=nombreWbo%].getInfoPaginacion();
     		this.col[%=nombreWbo%] = accConsLst[%=nombreWbo%].getColeccion[%=nombreWbo%]();			
         }
         catch( DExcepcion unaExcepcion) {
@@ -211,18 +253,18 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 	%]
 	
 	/**
-	 	* Devuelve el valor de [%=nombre%].
+	 	* Devuelve el valor de lst[%=nombre%].
 	 	* @return Un objeto List<SelectItem>
 	 	*/
-		public List<SelectItem> get[%=nombreUpper%]List (){
-			return [%=nombre%]List;
+		public List<SelectItem> getLst[%=nombreUpper%] (){
+			return lst[%=nombre%];
 		}
 		/**
-		 * Establece el valor de [%=nombre%]ist.
-		 * @param [%=nombre%]List El nuevo valor de [%=nombre%]List
+		 * Establece el valor de lst[%=nombre%].
+		 * @param [%=nombre%]List El nuevo valor de lst[%=nombre%]
 		 */
-		public void set[%=nombreUpper%]List(List<SelectItem> [%=nombre%]List) {
-			this.[%=nombre%]List = [%=nombre%]List;
+		public void setLst[%=nombreUpper%](List<SelectItem> lst[%=nombre%]) {
+			this.lst[%=nombre%] = lst[%=nombre%];
 		}
 	
 	
@@ -245,15 +287,15 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 	 	* Devuelve el valor de [%=nombre%].
 	 	* @return Un objeto List<SelectItem>
 	 	*/
-		public List<SelectItem> get[%=nombreUpper%]List (){
-			return [%=nombre%]List;
+		public List<SelectItem> getLst[%=nombreUpper%] (){
+			return lst[%=nombre%];
 		}
 		/**
-		 * Establece el valor de [%=nombre%]ist.
-		 * @param [%=nombre%]List El nuevo valor de [%=nombre%]List
+		 * Establece el valor de lst[%=nombre%].
+		 * @param lst[%=nombre%] El nuevo valor de lst[%=nombre%]
 		 */
-		public void set[%=nombreUpper%]List(List<SelectItem> [%=nombre%]List) {
-			this.[%=nombre%]List = [%=nombre%]List;
+		public void setLst[%=nombreUpper%](List<SelectItem> lst[%=nombre%]) {
+			this.lst[%=nombre%] = lst[%=nombre%];
 		}
 		
 	
@@ -305,5 +347,65 @@ public class D[%=nombreWbo%]WBO extends  DWbo {
 		this.col[%=nombreWbo%]Seleccionados = col[%=nombreWbo%]Seleccionados;
 	}
     
+	/**
+	 * Métodos del paginador
+	 * */
+    /**
+     * Paginacion de las actas por formalizar
+     * */
+    public void setPaginaActual(Integer unaPaginaActual) {
+        if (unaPaginaActual != null) {
+        	infoPag[%=nombreWbo%].setPaginaActual(unaPaginaActual.intValue());
+        }
+    }
+
+    public Integer getPaginaActual() {
+        return new Integer(infoPag[%=nombreWbo%].getPaginaActual());
+    }
+
+    public void setTotalPaginas(Integer unTotalPaginas) {
+        if (unTotalPaginas != null) {
+        	infoPag[%=nombreWbo%].setTotalPaginas(unTotalPaginas.intValue());
+        }
+    }
+
+    public Integer getTotalPaginas() {
+        return new Integer(infoPag[%=nombreWbo%].getTotalPaginas());
+    }
+
+    /**
+     * Determina la pagina anterior segun el tipoBusqueda
+     */
+    public String anteriorPagina() {
+        int miPaginaActual = infoPag[%=nombreWbo%].getPaginaActual() - 1;
+
+        if (miPaginaActual != 0) {
+        	infoPag[%=nombreWbo%].setPaginaActual(miPaginaActual);
+        }
+        consultar[%=nombreWbo%]();
+        return null;
+    }
+
+    
+    /**
+     * Determina la pagina siguiente segun el tipoBusqueda
+     */
+    public String siguientePagina() {
+        int miPaginaActual = infoPag[%=nombreWbo%].getPaginaActual() + 1;
+
+        if (miPaginaActual <= infoPag[%=nombreWbo%].getTotalPaginas()) {
+        	infoPag[%=nombreWbo%].setPaginaActual(miPaginaActual);
+        }
+        consultar[%=nombreWbo%]();
+        return null;
+    }
+
+	public DInfoPaginacion getInfoPag[%=nombreWbo%]() {
+		return infoPag[%=nombreWbo%];
+	}
+
+	public void setInfoPag[%=nombreWbo%](DInfoPaginacion infoPag[%=nombreWbo%]) {
+		this.infoPag[%=nombreWbo%] = infoPag[%=nombreWbo%];
+	}
 	
 }

@@ -1,0 +1,105 @@
+[% 
+import "../../utils.eol";
+var nombreJsp=xhtml.nombreClase;
+var nombreJspLower=nombreJsp.firstToLowerCase();
+var attTo = Arq!AttTo.all.select(n | n.nombre = xhtml.nombre).first();
+var pkes = Arq!PkTo.all.select(n | n.nombre = xhtml.nombre).first();
+var to = Arq!To.all.select(n | n.nombre = xhtml.nombre).first();
+var accion = Arq!Accion.all.select(n | n.nombre = xhtml.nombre).first();
+var stringNomAccion=accion.paquete.replace('co.gov.dian.muisca.','').replace('acciones.','');
+var prefixModulo = nombreModulo.toLowerCase().substring(0,3);
+var atribs = attTo.atributos;
+var atribsPk = pkes.atributos;
+%]
+
+<%@page contentType="text/html; charset=ISO-8859-1"%>
+<%@taglib uri="/WEB-INF/a4j.tld" prefix="a4j"%>
+<%@ taglib uri="/WEB-INF/rich.tld" prefix="rich"%>
+<%@ taglib uri="/WEB-INF/cmp_core_muisca_jsf" prefix="cmpcore"%>
+<%@ taglib uri="/WEB-INF/cmp_muisca_jsf" prefix="cmp"%>
+
+<cmpcore:subview id="vistaActualizar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccAct[%=nombreJsp%]">
+    <cmp:panelGrid>
+        <cmpcore:verbatim>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery/jquery-ui-1.7.2.custom.min.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/colorbox/jquery.colorbox.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/overlib.js"> </script>
+        <script type="text/javaScript">
+        <!--
+
+     
+          function actualizar[%=nombreJsp%](){
+              jQuery('[id$=lnkActualizar[%=nombreJsp%]]').click();
+              return false;
+           }
+          
+        //-->
+        </script>
+        </cmpcore:verbatim>
+    </cmp:panelGrid>
+
+    <cmp:form id="frmActualizar[%=nombreJsp%]">
+
+        <cmp:panelGrid id="messageGrid">
+            <cmp:mensajes globalOnly="true" showDetail="true" showSummary="true" />
+        </cmp:panelGrid>
+
+        <cmp:commandLink id="lnkActualizar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccAct[%=nombreJsp%]" action="#{[%=nombreJspLower%].consultar[%=nombreJsp%]}" />
+	
+        <cmp:inputHidden id="modoPresentacionSeleccionBO" value="#{[%=nombreJspLower%].modoPresentacionSeleccionBO}" />
+        <cmp:inputHidden id="siguienteURL" value="#{[%=nombreJspLower%].siguienteURL}" />
+        <cmp:inputHidden id="modoPresentacionFormBO" value="#{[%=nombreJspLower%].modoPresentacionFormBO}" />
+        <cmp:inputHidden id="modoOperacionFormBO" value="#{[%=nombreJspLower%].modoOperacionFormBO}" />
+        
+        <cmp:panelGrid width="100%" columns="1">
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.mensaje_titulo_actualizar_[%=xhtml.nombre.quitarPrefijoYLowerCase()%]}" styleClass="titulo2" />
+        </cmp:panelGrid>
+
+        <cmp:outputFormat value="<br><hr>" escape="false"/>
+
+	    <cmp:panelGrid columns="2" columnClasses="fondoTituloLeft,tipoFilaNormalVerde">
+         	
+          [%
+	      for(att in atribs) {
+	      	var nombre = att.nombre.firstToLowerCamelCase();
+	      	var nombreLabel = att.nombre.quitarPrefijoYLowerCase();
+	      	var tipo = att.tipo;
+	      	if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid" and nombre<>"ideUsuarioCambio" and nombre<>"fecCambio"){
+	      	if(att.isModoCombo()) {
+	      %]
+      		<cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            	<cmp:selectOneMenu value="#{[%=nombreJspLower%].att.[%=nombre%]}">
+              	<cmpcore:selectItems id="lst[%=nombreJsp%]" value="#{lst[%=nombreJspLower%].lst[%=nombreJsp%]}"/>
+          	</cmp:selectOneMenu>
+            [% } else if (tipo == "NUMBER" or tipo == "VARCHAR2") { %]
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            <cmp:inputText id="txt[%=nombre%]" value="#{to[%=nombreJspLower%].att.[%=nombre%]}" tipoValidacion="requerido" labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombre%]}"/>
+            [% } else if (tipo == "TIMESTAMP" or tipo == "DATE") {%]
+            <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
+            <cmp:inputFecha
+            value="#{[%=nombreJspLower%].att.[%=nombre%]}"
+            labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" id="txt[%=nombre%]" tipoValidacion="fecha"
+            size="10" patron="dd-MM-yyyy">
+            <cmpcore:convertDateTime pattern="dd-MM-yyyy"/>
+            </cmp:inputFecha>
+	      [% }  }                     
+	      }                      
+	       %] 
+                            	            
+         </cmp:panelGrid>
+              
+        <cmp:panelGrid columns="1" width="100%">
+          <cmpcore:verbatim><hr></cmpcore:verbatim>
+      	</cmp:panelGrid>
+      	
+      	<cmp:commandButton
+          	action="#{[%=nombreJspLower%].actualizar[%=nombreJsp%]}"
+          	type="button"
+          	nombreAccion="[%=stringNomAccion%].DCmdAccAct[%=nombreJsp%]"
+          	 onclick="return actualizar[%=nombreJsp%]();"
+          	value="#{[%=prefixModulo%]_mensajes.label_guardar}"
+          	image="#{[%=prefixModulo%]_imagenes.url_absoluta_imagenes}#{[%=prefixModulo%]_imagenes.imagen_boton_guardar}"/>
+      	
+    </cmp:form>
+</cmpcore:subview>
