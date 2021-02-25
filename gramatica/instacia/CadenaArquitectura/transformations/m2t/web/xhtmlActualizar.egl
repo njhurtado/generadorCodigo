@@ -22,10 +22,10 @@ var atribsPk = pkes.atributos;
 <h:body>
     <ui:composition template="/esquema/Esquema.xhtml">
         <ui:define name="contenido">
-            <f:subview id="viewCrear[%=nombreXhtml%]">
+            <f:subview id="viewActualizar[%=nombreXhtml%]">
                 <div id="areaDeTrabajo">
                     <div id="tituloDePlantilla">
-                        <h:outputText value="#{[%=prefixModulo%]_mensajes['mensaje_titulo_crear_[%=xhtml.nombre.quitarPrefijoYLowerCase()%]']}"/>
+                        <h:outputText value="#{[%=prefixModulo%]_mensajes['mensaje_titulo_actualizar_[%=xhtml.nombre.quitarPrefijoYLowerCase()%]']}"/>
                     </div>
                     <hr/>
                     <div id="areaMediaPlantilla">
@@ -76,9 +76,9 @@ var atribsPk = pkes.atributos;
                             </p:panel>
                          <h:panelGrid columns="1" styleClass="td-commandbt one-col">
                             <h:panelGroup>
-                                <p:commandButton id="idBtnCrear[%=nombreXhtml%]" update="viewCrear[%=nombreXhtml%]:form[%=nombreXhtml%]:basic[%=nombreXhtml%]"
-                                                 actionListener="#{[%=nombreXhtmlLower%].crear[%=nombreXhtml%]}"
-                                                 styleClass="btnd icon_crear" value="Crear [%=nombreXhtml%]" 
+                                <p:commandButton id="idBtnActualizar[%=nombreXhtml%]" update="viewActualizar[%=nombreXhtml%]:form[%=nombreXhtml%]:basic[%=nombreXhtml%]"
+                                                 actionListener="#{[%=nombreXhtmlLower%].actualizar[%=nombreXhtml%]}"
+                                                 styleClass="btnd icon_actualizar" value="Actualizar [%=nombreXhtml%]" 
                                                  ajax="true">
                                 </p:commandButton>
                             </h:panelGroup>

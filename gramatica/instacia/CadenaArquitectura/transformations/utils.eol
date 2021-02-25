@@ -26,10 +26,14 @@ operation String firstToUpperCamelCaseClase() : String {
 operation String quitarPrefijoYLowerCase() : String {
 	//var arr=self.split('_');
 	if(self.indexOf('_') > 0) {
-		var result=self.substring(self.indexOf('_')+1,self.length()); 
-		return result.toLowerCase();
+	    var prefix = self.substring(0, self.indexOf('_'));
+	    if(prefix.toLowerCase() <> 'num' and prefix.toLowerCase() <> 'fec') {
+			var result=self.substring(self.indexOf('_')+1,self.length()); 
+			return result.toLowerCase();
+		}
+		return self.toLowerCase();
 	} else {
-		return self;
+		return self.toLowerCase();
 	}
 	
 	/*for(p in arr){

@@ -69,16 +69,16 @@ var atribsPk = pkes.atributos;
 	      	if(att.isModoCombo()) {
 	      %]
       		<cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
-            	<cmp:selectOneMenu value="#{[%=nombreJspLower%].att.[%=nombre%]}">
+            	<cmp:selectOneMenu value="#{[%=nombreJspLower%].to[%=nombreJsp%].att.[%=nombre%]}">
               	<cmpcore:selectItems id="lst[%=nombreJsp%]" value="#{lst[%=nombreJspLower%].lst[%=nombreJsp%]}"/>
           	</cmp:selectOneMenu>
             [% } else if (tipo == "NUMBER" or tipo == "VARCHAR2") { %]
             <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
-            <cmp:inputText id="txt[%=nombre%]" value="#{to[%=nombreJspLower%].att.[%=nombre%]}" tipoValidacion="requerido" labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombre%]}"/>
+            <cmp:inputText id="txt[%=nombre%]" value="#{[%=nombreJspLower%].to[%=nombreJsp%].att.[%=nombre%]}" tipoValidacion="requerido" labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombre%]}"/>
             [% } else if (tipo == "TIMESTAMP" or tipo == "DATE") {%]
             <cmp:outputText value="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" styleClass="textoNegro"/>
             <cmp:inputFecha
-            value="#{[%=nombreJspLower%].att.[%=nombre%]}"
+            value="#{[%=nombreJspLower%].to[%=nombreJsp%].att.[%=nombre%]}"
             labelDisplay="#{[%=prefixModulo%]_mensajes.label_[%=nombreLabel%]}" id="txt[%=nombre%]" tipoValidacion="fecha"
             size="10" patron="dd-MM-yyyy">
             <cmpcore:convertDateTime pattern="dd-MM-yyyy"/>

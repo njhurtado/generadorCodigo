@@ -22,7 +22,7 @@ var atribsPk = pkes.atributos;
 <h:body>
     <ui:composition template="/esquema/Esquema.xhtml">
         <ui:define name="contenido">
-            <f:subview id="view[%=nombreXhtml%]">
+            <f:subview id="viewListar[%=nombreXhtml%]">
                 <div id="areaDeTrabajo">
 
                     <div id="tituloDePlantilla">
@@ -45,7 +45,7 @@ var atribsPk = pkes.atributos;
 						      %]
 					      		<h:outputLabel value="#{[%=prefixModulo%]_mensajes['label_[%=nombreLabel%]']}" styleClass="ui-outputlabel pf_required_field">
                                     <br/>
-                                    <p:selectOneMenu id="sel[%=nombre%]" value="#{[%=nombreXhtmlLower%].att.[%=nombre%]}" required="true" style="#{ component.valid ? '' : 'border-color:red;'}"
+                                    <p:selectOneMenu id="sel[%=nombre%]" value="#{[%=nombreXhtmlLower%].to[%=nombreXhtml%].att.[%=nombre%]}" required="true" style="#{ component.valid ? '' : 'border-color:red;'}"
                                                      label="#{[%=prefixModulo%]_mensajes['label_[%=nombreLabel%]']}">
                                         <f:selectItem itemLabel="Seleccione" noSelectionOption="true"/>
                                         <f:selectItems value="#{[%=nombreXhtmlLower%].lst[%=nombreXhtml%]}"/>
@@ -54,13 +54,13 @@ var atribsPk = pkes.atributos;
 					            [% } else if (tipo == "NUMBER" or tipo == "VARCHAR2") { %]
 					            <h:outputLabel value="#{[%=prefixModulo%]_mensajes['label_[%=nombreLabel%]']}" styleClass="ui-outputlabel pf_required_field">
                                     <br/>
-                                    <p:inputText value="#{[%=nombreXhtmlLower%].att.[%=nombre%]}" required="true" style="#{ component.valid ? 'width:250px' : 'border-color:red;width:250px'}"
+                                    <p:inputText value="#{[%=nombreXhtmlLower%].to.[%=nombreXhtml%].att.[%=nombre%]}" required="true" style="#{ component.valid ? 'width:250px' : 'border-color:red;width:250px'}"
                                                  label="#{[%=prefixModulo%]_mensajes['label_[%=nombreLabel%]']}"/>
                                 </h:outputLabel>
 					            [% } else if (tipo == "TIMESTAMP" or tipo == "DATE") {%]
 					            <h:outputLabel value="#{[%=prefixModulo%]_mensajes['label_[%=nombreLabel%]']}" styleClass="ui-outputlabel pf_required_field">
 					            	<p:calendar id="cal[%=nombre%]" locale="es"
-													value="#{[%=nombreXhtmlLower%].att.[%=nombre%]}"
+													value="#{[%=nombreXhtmlLower%].to[%=nombreXhtml%].att.[%=nombre%]}"
 													showOn="button" />
 								</h:outputLabel>
 						      [% }  }                     

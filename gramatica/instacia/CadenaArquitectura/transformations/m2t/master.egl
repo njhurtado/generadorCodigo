@@ -226,13 +226,13 @@ import "../utils.eol";
 	
 	//Recorre clase wbo
 	var wbos : Set:= Arq!Wbo.allInstances().asSet();	
-	/*for (wbo in wbos){
-		var nomWbo = wbo.nombre.firstToUpperCamelCase() ;
+	for (wbo in wbos){
+		var nomWbo = wbo.nombreClase ;
 			var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
 			wboSrc.populate('wbo', wbo);
 			wboSrc.populate('nombreModulo', modulo.nombre);
-			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'D'+nomWbo + 'WBO.java');
-	}*/
+			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/'+wbo.sufijoPkg+ '/D'+nomWbo + 'WBO.java');
+	}
 	
 	
 	//Recorre clase xhtml
@@ -243,8 +243,28 @@ import "../utils.eol";
 		var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlListar.egl');
 		xhtmlSrc.populate('xhtml', xhtml);
 		xhtmlSrc.populate('nombreModulo', modulo.nombre);
-		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/vistas/'+xhtml.sufijoPkg+'/Consultar' + nomXhtml + '.xhtml');
+		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/'+xhtml.sufijoPkg+'/Consultar' + nomXhtml + '.xhtml');
 	}
+	
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlCrear.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/'+xhtml.sufijoPkg+'/Crear' + nomXhtml + '.xhtml');
+	}
+	
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/xhtmlActualizar.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/'+xhtml.sufijoPkg+'/Actualizar' + nomXhtml + '.xhtml');
+	}
+		
+	
 	
 	//Recorre clase xhtml para generacion de jsps
 	for (xhtml in xhtmls) {
@@ -284,19 +304,12 @@ import "../utils.eol";
 		var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
 		wboSrc.populate('wbo', wbo);
 		wboSrc.populate('nombreModulo', modulo.nombre);
-		wboSrc.generate('../../generated/FacesMuisca'+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/'+wbo.sufijoPkg + '/D'+nomWbo + 'WBO.java');
+		wboSrc.generate('../../generated/FacesMuisca'+'/src/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/'+wbo.sufijoPkg + '/D'+nomWbo + 'WBO.java');
 	}
-	/*for (wbo in wbos){
-		var nomWbo = wbo.nombreClase ;
-			var wboSrc:Template:= TemplateFactory.load('./web/wbo.egl');
-			wboSrc.populate('wbo', wbo);
-			wboSrc.populate('nombreModulo', modulo.nombre);
-			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/' + 'D'+nomWbo + 'WBO.java');
-	}*/
-	
+		
 	//Archivos Unicos
   	
-    	//WebDTO
+    //WebDTO
   		var tWebDTO:Template:= TemplateFactory.load('./web/webDTO.egl');
 		tWebDTO.populate('Modulo', modulo);
 		tWebDTO.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/general/to/generico/D'+nomModulo+'WebDTO.java');
@@ -306,16 +319,19 @@ import "../utils.eol";
 		tfacesConfBean.populate('nombreModulo', modulo.nombre);
 		tfacesConfBean.generate('../../generated/'+nomWeb+'/src/main/webapp/WEB-INF/faces-config-beans.xml');
 	
-	//faces-internacionalizacion.xml
-	var tfacesConfInt:Template:= TemplateFactory.load('./web/webConfigInter.egl');
-		tfacesConfInt.populate('nombreModulo', modulo.nombre);
-		tfacesConfInt.generate('../../generated/'+nomWeb+'/src/main/webapp/WEB-INF/faces-internacionalizacion.xml');
+	var tfacesConfBean2:Template:= TemplateFactory.load('./web/webConfigBean.egl');	
+		tfacesConfBean2.populate('nombreModulo', modulo.nombre);
+		tfacesConfBean2.generate('../../generated/FacesMuisca/'+nomWeb+'/WEB-INF/faces-config-beans.xml');
 	
+	//faces-internacionalizacion.xml
+	/*var tfacesConfInt:Template:= TemplateFactory.load('./web/webConfigInter.egl');
+		tfacesConfInt.populate('nombreModulo', modulo.nombre);
+		tfacesConfInt.generate('../../generated/FacesMuisca/'+nomWeb+'/WEB-INF/faces-internacionalizacion.xml');*/
 	
 	// ------ PARTE BUSES (EJB)
 
     	//Delegado Negocio		
-	  	var tDelegadoNegocio:Template:= TemplateFactory.load('./web/delegadoNegocio.egl');
+	  	/*var tDelegadoNegocio:Template:= TemplateFactory.load('./web/delegadoNegocio.egl');
 		tDelegadoNegocio.populate('Modulo', modulo);
 		tDelegadoNegocio.generate('../../generated/'+nomBuses+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/delegados/general/DDelegadoNegocio.java');
 
@@ -328,5 +344,5 @@ import "../utils.eol";
 	  	var tCatalogoDelegado:Template:= TemplateFactory.load('./web/catalogoDelegados.egl');
 		tCatalogoDelegado.populate('Modulo', modulo);
 		tCatalogoDelegado.generate('../../generated/'+nomBuses+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/delegados/DCatalogoDelegados.java');
-  							
+  		*/					
 %]

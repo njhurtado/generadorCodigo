@@ -1,33 +1,13 @@
 [% 
 import "../../utils.eol";
 var wbos = Arq!Wbo.all;	
+
 %]
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.2"
     xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-
-    <!--  ************** Beans Negocio - [%=nombreModulo%]  ********************* -->
-	[%
-	   
-		for (wbo in wbos.asOrderedSet()){
-			var nomWbo = wbo.nombre.firstToUpperCamelCase() ;
-		%]	
-		<!--managed-bean>
-	        <managed-bean-name>D[%=nomWbo%]WBO</managed-bean-name>
-	        <managed-bean-class>co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo.D[%=nomWbo%]WBO</managed-bean-class>
-	        <managed-bean-scope>view</managed-bean-scope>
-        </managed-bean-->
-        <managed-bean>
-	        <managed-bean-name>dcrear[%=nomWbo%]WBO</managed-bean-name>
-	        <managed-bean-class>co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo.D[%=nomWbo%]WBO</managed-bean-class>
-	        <managed-bean-scope>view</managed-bean-scope>
-        </managed-bean>
-		
-	[%				
-		}	
-	%]
 
     <!-- **************** Beans Arquitectura *************** -->
 
@@ -63,5 +43,22 @@ var wbos = Arq!Wbo.all;
         <managed-bean-class>co.gov.dian.muisca.arquitectura.web.wbo.tareas.DBandejaTareasNegWBO</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+
+
+    <!--  ************** Beans Negocio - [%=nombreModulo%]  ********************* -->
+	[%
+	   
+		for (wbo in wbos.asOrderedSet()){
+			var nomWbo = wbo.nombreClase; 
+		%]	
+		<managed-bean>
+	        <managed-bean-name>[%=nomWbo.firstToLowerCase()%]</managed-bean-name>
+	        <managed-bean-class>co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo.[%=wbo.sufijoPkg%].D[%=nomWbo%]WBO</managed-bean-class>
+	        <managed-bean-scope>view</managed-bean-scope>
+        </managed-bean>       		
+	[%				
+		}	
+	%]
+
 
 </faces-config>
