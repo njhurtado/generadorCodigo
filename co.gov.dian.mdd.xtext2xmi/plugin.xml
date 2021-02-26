@@ -6,7 +6,7 @@
       <command
             categoryId="co.gov.dian.mdd.xtext2xmi.commands.category"
             id="co.gov.dian.mdd.xtext2xmi.commands.sampleCommand"
-            name="Generar XMI desde XText">
+            name="Generar Modelo desde archivo Sql">
       </command>
    </extension>
    <extension

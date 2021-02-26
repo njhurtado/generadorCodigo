@@ -30,13 +30,89 @@
     <anotaciones xsi:type="arqdestino:TablaDetalle" clase="/8"/>
     <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
   </arqdestino:Xhtml>
+  <arqdestino:Delegado nombre="InformacionExtranjera" paquete="co.gov.dian.muisca.informacionextranjera"/>
+  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs"/>
+  <arqdestino:Modulo nombre="InformacionExtranjera"/>
+  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" sufijoPkg="crs" pk="/11" att="/12"/>
+  <arqdestino:PkTo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs">
+    <atributos nombre="IDE_PERSONA_RUT" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="IDE_ARCHIVO" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="NUM_ANIO" tipo="NUMBER" isObligatorio="true" longitud="4"/>
+  </arqdestino:PkTo>
+  <arqdestino:AttTo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs">
+    <atributos nombre="IDE_DOCUMENTO_REPORTE" tipo="NUMBER" longitud="18"/>
+    <atributos nombre="NUM_REPETICION_DOC_REPORTE" tipo="NUMBER" longitud="4"/>
+    <atributos nombre="FEC_ANULACION" tipo="NUMBER" isObligatorio="true" longitud="8"/>
+    <atributos nombre="COD_PAIS_RECEPTOR" tipo="VARCHAR2" isObligatorio="true" longitud="3"/>
+    <atributos nombre="NUM_CUENTAS" tipo="NUMBER" isObligatorio="true" longitud="8"/>
+    <atributos nombre="DES_MOTIVO" tipo="VARCHAR2" isObligatorio="true" longitud="512"/>
+    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
+    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true" longitud="8" precision="5"/>
+    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true" longitud="3" precision="4"/>
+    <atributos nombre="IDE_UUID" tipo="VARCHAR2" isObligatorio="true" longitud="32"/>
+  </arqdestino:AttTo>
+  <arqdestino:Dao nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.dao.crs" sufijoPkg="crs">
+    <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Dao>
+  <arqdestino:Wbo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.web.wbo.crs" sufijoPkg="crs">
+    <tos nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Wbo>
+  <arqdestino:Xhtml nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.webcontent" sufijoPkg="crs">
+    <anotaciones xsi:type="arqdestino:TablaDetalle" clase="/17"/>
+    <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Xhtml>
+  <arqdestino:Delegado nombre="InformacionExtranjera" paquete="co.gov.dian.muisca.informacionextranjera"/>
+  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  <arqdestino:Modulo nombre="InformacionExtranjera"/>
+  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" sufijoPkg="crs" pk="/20" att="/21"/>
+  <arqdestino:PkTo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs">
+    <atributos nombre="IDE_PERSONA_RUT" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="IDE_ARCHIVO" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="NUM_ANIO" tipo="NUMBER" isObligatorio="true" longitud="4"/>
+  </arqdestino:PkTo>
+  <arqdestino:AttTo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs">
+    <atributos nombre="IDE_DOCUMENTO_REPORTE" tipo="NUMBER" longitud="18"/>
+    <atributos nombre="NUM_REPETICION_DOC_REPORTE" tipo="NUMBER" longitud="4"/>
+    <atributos nombre="FEC_ANULACION" tipo="NUMBER" isObligatorio="true" longitud="8"/>
+    <atributos nombre="COD_PAIS_RECEPTOR" tipo="VARCHAR2" isObligatorio="true" longitud="3"/>
+    <atributos nombre="NUM_CUENTAS" tipo="NUMBER" isObligatorio="true" longitud="8"/>
+    <atributos nombre="DES_MOTIVO" tipo="VARCHAR2" isObligatorio="true" longitud="512"/>
+    <atributos nombre="IDE_USUARIO_CAMBIO" tipo="NUMBER" isObligatorio="true" longitud="10"/>
+    <atributos nombre="FEC_CAMBIO" tipo="TIMESTAMP" isObligatorio="true"/>
+    <atributos nombre="NIV_ESCRITURA" tipo="NUMBER" isObligatorio="true" longitud="8" precision="5"/>
+    <atributos nombre="NIV_LECTURA" tipo="NUMBER" isObligatorio="true" longitud="3" precision="4"/>
+    <atributos nombre="IDE_UUID" tipo="VARCHAR2" isObligatorio="true" longitud="32"/>
+  </arqdestino:AttTo>
+  <arqdestino:Dao nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.dao.crs" sufijoPkg="crs">
+    <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Dao>
+  <arqdestino:Wbo nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.web.wbo.crs" sufijoPkg="crs">
+    <tos nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Wbo>
+  <arqdestino:Xhtml nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.webcontent" sufijoPkg="crs">
+    <anotaciones xsi:type="arqdestino:TablaDetalle" clase="/26"/>
+    <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+  </arqdestino:Xhtml>
   <arqdestino:Delegado nombre="InformacionExtranjera" paquete="co.gov.dian.muisca.informacionextranjera">
+    <acciones nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.acciones.crs" sufijoPkg="crs">
+      <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+    </acciones>
+    <acciones nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.acciones.crs" sufijoPkg="crs">
+      <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+    </acciones>
     <acciones nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.acciones.crs" sufijoPkg="crs">
       <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
       <servicios nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.servicios.crs" sufijoPkg="crs">
         <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
       </servicios>
+      <servicios nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.servicios.crs" sufijoPkg="crs">
+        <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+      </servicios>
+      <servicios nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.servicios.crs" sufijoPkg="crs">
+        <detalle xsi:type="arqdestino:To" nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
+      </servicios>
     </acciones>
   </arqdestino:Delegado>
-  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs"/>
+  <arqdestino:To nombre="IEX_ARCHIVOS_CRS_ANULADOS" nombreClase="ArchivoCrsAnulado" paquete="co.gov.dian.muisca.informacionextranjera.general.to.crs" pk="/2" att="/3"/>
 </xmi:XMI>

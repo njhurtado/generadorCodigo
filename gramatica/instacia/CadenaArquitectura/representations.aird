@@ -8,9 +8,6 @@
   <semanticResources>generated/metamodels/generado.destinoarq</semanticResources>
   <semanticResources>metamodels/Sql.ecore</semanticResources>
   <semanticResources>models/modeloContribuyentesOriginal.sql</semanticResources>
-  <semanticResources>generated/WebDevolucion/src/main/webapp/WEB-INF/faces-config-beans.xml</semanticResources>
-  <semanticResources>generated/WebDevolucion/src/main/webapp/WEB-INF/faces-internacionalizacion.xml</semanticResources>
-  <semanticResources>models/prueba2.sql</semanticResources>
   <semanticResources>models/arqdestino-generado.xmi</semanticResources>
   <semanticResources>models/modeloContribuyentes.xmi</semanticResources>
 </viewpoint:DAnalysis>

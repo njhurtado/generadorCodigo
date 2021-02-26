@@ -18,7 +18,7 @@ import "../utils.eol";
 	var t:Template:= TemplateFactory.load('generadorTO.egl');
 	//generacion de to, pk y att
 	//Recorre clase AttTo
-	/*for(att in atts) {
+	for(att in atts) {
 		var attSrc:Template:= TemplateFactory.load('attTo.egl');
 		attSrc.populate('clase', att);
 		attSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+att.paquete.getUrlCarpeta()+ '/D'+att.nombreClase + 'AttTO.java');
@@ -220,8 +220,7 @@ import "../utils.eol";
 		tIdDao.populate('Clase', d);
 		tIdDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/D" +d.nombreClase + 'Test.java');		
 	}
-
-  	*/
+  	
 	// ----- PARTE WEB ------------------------
 	
 	//Recorre clase wbo
@@ -234,9 +233,17 @@ import "../utils.eol";
 			wboSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/wbo/'+wbo.sufijoPkg+ '/D'+nomWbo + 'WBO.java');
 	}
 	
-	
 	//Recorre clase xhtml
 	var xhtmls : Set:= Arq!Xhtml.allInstances().asSet();
+	for (xhtml in xhtmls) {
+		var nomXhtml = xhtml.nombreClase ;
+		//Operacion: Listar
+		var xhtmlSrc:Template:= TemplateFactory.load('./web/recursos.egl');
+		xhtmlSrc.populate('xhtml', xhtml);
+		xhtmlSrc.populate('nombreModulo', modulo.nombre);
+		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/recursos/'+ modulo.nombre.toLowerCase().substring(0,3) + '_mensajes.properties');
+	}
+	
 	for (xhtml in xhtmls) {
 		var nomXhtml = xhtml.nombreClase;
 		//Operacion: Listar
@@ -262,8 +269,7 @@ import "../utils.eol";
 		xhtmlSrc.populate('xhtml', xhtml);
 		xhtmlSrc.populate('nombreModulo', modulo.nombre);
 		xhtmlSrc.generate('../../generated/'+nomWeb+'/src/main/webapp/'+xhtml.sufijoPkg+'/Actualizar' + nomXhtml + '.xhtml');
-	}
-		
+	}			
 	
 	
 	//Recorre clase xhtml para generacion de jsps
@@ -297,7 +303,7 @@ import "../utils.eol";
 		var xhtmlSrc:Template:= TemplateFactory.load('./web/recursos.egl');
 		xhtmlSrc.populate('xhtml', xhtml);
 		xhtmlSrc.populate('nombreModulo', modulo.nombre);
-		xhtmlSrc.generate('../../generated/FacesMuisca/src/main/java/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/recursos/'+ modulo.nombre.toLowerCase().substring(0,3) + '_mensajes.properties');
+		xhtmlSrc.generate('../../generated/FacesMuisca/src/co/gov/dian/muisca/'+modulo.nombre.toLowerCase()+'/web/recursos/'+ modulo.nombre.toLowerCase().substring(0,3) + '_mensajes.properties');
 	}
 	for (wbo in wbos){
 		var nomWbo = wbo.nombreClase ;
@@ -310,9 +316,10 @@ import "../utils.eol";
 	//Archivos Unicos
   	
     //WebDTO
-  		var tWebDTO:Template:= TemplateFactory.load('./web/webDTO.egl');
+  		/*var tWebDTO:Template:= TemplateFactory.load('./web/webDTO.egl');
 		tWebDTO.populate('Modulo', modulo);
 		tWebDTO.generate('../../generated/'+nomWeb+'/src/main/java/co/gov/dian/muisca/'+nomModulo.toLowerCase()+'/web/general/to/generico/D'+nomModulo+'WebDTO.java');
+		*/
     	
 	//faces-config-beans.xml
 	var tfacesConfBean:Template:= TemplateFactory.load('./web/webConfigBean.egl');
