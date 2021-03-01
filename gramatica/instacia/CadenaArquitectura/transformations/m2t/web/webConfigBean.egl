@@ -50,10 +50,14 @@ var wbos = Arq!Wbo.all;
 	   
 		for (wbo in wbos.asOrderedSet()){
 			var nomWbo = wbo.nombreClase; 
+			var sufijo = '';
+			if(wbo.sufijoPkg.isDefined()) {
+				sufijo = wbo.sufijoPkg + '.';
+			} 
 		%]	
 		<managed-bean>
 	        <managed-bean-name>[%=nomWbo.firstToLowerCase()%]</managed-bean-name>
-	        <managed-bean-class>co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo.[%=wbo.sufijoPkg%].D[%=nomWbo%]WBO</managed-bean-class>
+	        <managed-bean-class>co.gov.dian.muisca.[%=nombreModulo.toLowerCase()%].web.wbo.[%=sufijo%]D[%=nomWbo%]WBO</managed-bean-class>
 	        <managed-bean-scope>view</managed-bean-scope>
         </managed-bean>       		
 	[%				

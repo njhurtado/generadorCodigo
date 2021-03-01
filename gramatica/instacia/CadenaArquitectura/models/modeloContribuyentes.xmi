@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera" sufijoPkg="crs">
+<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera">
   <database>
     <tables name="IEX_ARCHIVOS_CRS_ANULADOS">
       <annotations xsi:type="sql:TableDetail" nombreClase="ArchivoCrsAnulado"/>

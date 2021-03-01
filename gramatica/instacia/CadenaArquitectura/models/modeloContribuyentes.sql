@@ -2,8 +2,6 @@ Aplication InformacionExtranjera
 
 package "co.gov.dian.muisca.informacionextranjera"
 
-sufijoPkg "crs"
-
 database 
 
 CREATE TABLE IEX_ARCHIVOS_CRS_ANULADOS @TableDetail( nombreClase "ArchivoCrsAnulado")
