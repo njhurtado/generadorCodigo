@@ -31,7 +31,8 @@ import co.gov.dian.muisca.arquitectura.interfaces.implgenerica.comandos.*;
  * </pre>
  */
 public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
-	private static final long serialVersionUID = -1235430177L; 
+	private static final long serialVersionUID = -1235430177L;
+	 
 	public static final int CONSULTA_GENERICA = 1;
 	[%		//tipo operacion por fks
 		var text="public static final int CONSULTAR_POR_";

@@ -32,7 +32,11 @@ import [%= clase.paquete.replace('acciones','servicios') %].DCmdSrvElim[%=nombre
  * </pre>
  */
 public class DCmdAccElim[%=nombreClase%]Impl extends DCmdAccElim[%=nombreClase%] {
-
+	
+	/**
+	 * Serial version
+	 */
+	private static final long serialVersionUID = 1L;
 
   /**
    * Ejecuta el comando de acción

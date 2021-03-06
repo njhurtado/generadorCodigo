@@ -27,7 +27,6 @@ import "../utils.eol";
 		
 		for(att in atribs.atributos.asOrderedSet()) 
 		{	
-			//var tipo = to.att.tipo.toType();
 			var nombre = att.nombre;			
 			if(nombre<>"NIV_LECTURA" and nombre<>"NIV_ESCRITURA" and nombre<>"IDE_UUID"){
 				atts.add(nombre);
@@ -286,12 +285,21 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			for(att in pkes.atributos.asOrderedSet()) {				
 			%]
 			if (pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]() != null) {
-				//unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());				
-				[% if (att.tipo.toType() = "java.lang.String") {%]
+				[% if (att.getType() = "java.lang.String") {%]
 				unaSentencia.setString("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+				[%} else if (att.getType() = "java.lang.Integer") {%]
+				unaSentencia.setInt("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.lang.Long") {%]
+				unaSentencia.setLong("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigInteger") {%]
 				unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+				[%} else if (att.getType() = "java.lang.Double") {%]
+				unaSentencia.setDouble("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigDecimal") {%]
+				unaSentencia.setBigDecimal("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Date") {%]
+				unaSentencia.setDate("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Timestamp") {%]
 				unaSentencia.setTimestamp("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
 				[%}%]
 			}[%}%]
@@ -305,11 +313,21 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			%]
 			[% if (att.nombre<>"NIV_LECTURA" and att.nombre<>"NIV_ESCRITURA" and att.nombre<>"IDE_UUID") {%]
 			if (att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]() != null) {							
-				[% if (att.tipo.toType() = "java.lang.String") {%]
+				[% if (att.getType() = "java.lang.String") {%]
 				unaSentencia.setString("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+				[%} else if (att.getType() = "java.lang.Integer") {%]
+				unaSentencia.setInt("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.lang.Long") {%]
+				unaSentencia.setLong("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigInteger") {%]
 				unaSentencia.setBigInteger("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+				[%} else if (att.getType() = "java.lang.Double") {%]
+				unaSentencia.setDouble("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigDecimal") {%]
+				unaSentencia.setBigDecimal("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Date") {%]
+				unaSentencia.setDate("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Timestamp") {%]
 				unaSentencia.setTimestamp("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
 				[%}%]
 			}
@@ -439,14 +457,23 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		[%
 		for(att in pkes.atributos.asOrderedSet()) {				
 		%]
-		//unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());	
-			[% if (att.tipo.toType() = "java.lang.String") {%]
-				unaSentencia.setString("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
-				unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
-				unaSentencia.setTimestamp("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%}%]		
+			[% if (att.getType() = "java.lang.String") {%]
+			unaSentencia.setString("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.lang.Integer") {%]
+			unaSentencia.setInt("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.lang.Long") {%]
+			unaSentencia.setLong("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.math.BigInteger") {%]
+			unaSentencia.setBigInteger("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.lang.Double") {%]
+			unaSentencia.setDouble("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.math.BigDecimal") {%]
+			unaSentencia.setBigDecimal("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.sql.Date") {%]
+			unaSentencia.setDate("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%} else if (att.getType() = "java.sql.Timestamp") {%]
+			unaSentencia.setTimestamp("[%=att.nombre%]", pk[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+			[%}%]		
 		[%}%]		
 	}
 
@@ -460,12 +487,22 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			{	
 			%]
 			[% if (att.nombre<>"NIV_LECTURA" and att.nombre<>"NIV_ESCRITURA" and att.nombre<>"IDE_UUID") {%]
-				[% if (att.tipo.toType() = "java.lang.String") {%]
-		unaSentencia.setString("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
-		unaSentencia.setBigInteger("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
-		unaSentencia.setTimestamp("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[% if (att.getType() = "java.lang.String") {%]
+				unaSentencia.setString("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.lang.Integer") {%]
+				unaSentencia.setInt("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.lang.Long") {%]
+				unaSentencia.setLong("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigInteger") {%]
+				unaSentencia.setBigInteger("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.lang.Double") {%]
+				unaSentencia.setDouble("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.math.BigDecimal") {%]
+				unaSentencia.setBigDecimal("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Date") {%]
+				unaSentencia.setDate("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
+				[%} else if (att.getType() = "java.sql.Timestamp") {%]
+				unaSentencia.setTimestamp("[%=att.nombre%]", att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());				
 			[%}}}%]
 	}
 
@@ -514,16 +551,24 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		[%
 		for(att in pkes.atributos.asOrderedSet()) {				
 		%]
-		//java.lang.Integer
-		//pk.set[%=att.nombre.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att.nombre%]")));	
-		//[%=att.tipo.toType()%]
-				[% if (att.tipo.toType() = "java.lang.String") {%]
+		//[%=att.getType()%]
+		[% if (att.getType() = "java.lang.String") {%]
 		pk.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getString("[%=att.nombre%]"));
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+		[%} else if (att.getType() = "java.lang.Integer") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getIntWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.lang.Long") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getLongWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.lang.Double") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getDoubleWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.math.BigInteger") {%]
 		pk.set[%=att.nombre.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att.nombre%]")));
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+		[%} else if (att.getType() = "java.math.BigDecimal") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%](getBigDecimal(resultado.getDoubleWrapper("[%=att.nombre%]")));
+		[%} else if (att.getType() = "java.sql.Date") {%]
+		pk.set[%=att.nombre.firstToUpperCamelCase()%]((Date)resultado.getDate("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.sql.Timestamp") {%]
 		pk.set[%=att.nombre.firstToUpperCamelCase()%]((Timestamp)resultado.getDate("[%=att.nombre%]"));
-				[%}%]
+		[%}%]
 				
 		[%}%]					
 		// Conformar el objeto Att
@@ -532,14 +577,27 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			{	
 			%]
 			[% if (att.nombre<>"NIV_LECTURA" and att.nombre<>"NIV_ESCRITURA" and att.nombre<>"IDE_UUID") {%]
-		//[%=att.tipo.toType()%]
-				[% if (att.tipo.toType() = "java.lang.String") {%]
+		//[%=att.getType()%]
+				[% if (att.getType() = "java.lang.String") {%]
 		att.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getString("[%=att.nombre%]"));
-				[%} else if (att.tipo.toType() = "java.math.BigInteger") {%]
+		[%} else if (att.getType() = "java.lang.Integer") {%]
+		att.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getIntWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.lang.Long") {%]
+		att.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getLongWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.lang.Double") {%]
+		att.set[%=att.nombre.firstToUpperCamelCase()%](resultado.getDoubleWrapper("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.math.BigInteger") {%]
 		att.set[%=att.nombre.firstToUpperCamelCase()%](getBigInteger(resultado.getLongWrapper("[%=att.nombre%]")));
-				[%} else if (att.tipo.toType() = "java.sql.Timestamp") {%]
+		[%} else if (att.getType() = "java.math.BigDecimal") {%]
+		att.set[%=att.nombre.firstToUpperCamelCase()%](getBigDecimal(resultado.getDoubleWrapper("[%=att.nombre%]")));
+		[%} else if (att.getType() = "java.sql.Date") {%]
+		att.set[%=att.nombre.firstToUpperCamelCase()%]((Date)resultado.getDate("[%=att.nombre%]"));
+		[%} else if (att.getType() = "java.sql.Timestamp") {%]
 		att.set[%=att.nombre.firstToUpperCamelCase()%]((Timestamp)resultado.getDate("[%=att.nombre%]"));
-				[%}%][%}%][%}%]
+		[%}%]
+		
+				[%}%]
+			[%}%]
 				
 		// Conformar el TO
 		D[%=nombreClase%]TO to = new D[%=nombreClase%]TO();
@@ -606,7 +664,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			parametros.put(this.getClass().getName()+":validar:pk[%=nombreClase%].get[%=att.firstToUpperCamelCase()%]()",pk[%=nombreClase%].get[%=att.firstToUpperCamelCase()%]());
 			[%}%]
 			[%for(att in atribs.atributos.asOrderedSet()) 
-			{%][% if (att.nombre<>"NIV_LECTURA" and att.nombre<>"NIV_ESCRITURA" and att.nombre<>"IDE_UUID") {%]
+			{%][% if (att.isObligatorio="true" and att.nombre<>"NIV_LECTURA" and att.nombre<>"NIV_ESCRITURA" and att.nombre<>"IDE_UUID") {%]
 			parametros.put(this.getClass().getName()+":validar:att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]()",att[%=nombreClase%].get[%=att.nombre.firstToUpperCamelCase()%]());
 			[%}%][%}%]			
 		}

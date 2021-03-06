@@ -94,7 +94,7 @@ public class DCmdSrvElim[%=nombreClase%] extends DComandoServicioInterno {
 		{		
 		//att pk		
 		var attPk=to.pk.atributos.collect(a|text+"pk"+to.nombre.firstToUpperCamelCase()+
-		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+to.nombre.firstToUpperCamelCase()+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
+		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+nombreClase+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
 		%]
 		[%=attPk%];		
 		[%

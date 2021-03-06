@@ -33,7 +33,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		var setAtts=new OrderedSet;
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var tipo = att.tipo.toType();
+			var tipo = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			atts.add(tipo +' '+nombre);
 			setAtts.add('set'+att.nombre.firstToUpperCamelCase()+'('+nombre+')');
@@ -55,7 +55,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var type = att.tipo.toType();
+			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 	%]
 		* @param [%=nombre%] [%=type%];
@@ -73,7 +73,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var type = att.tipo.toType();
+			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
 	%]
@@ -107,7 +107,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var type = att.tipo.toType();
+			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
 	%]
@@ -139,7 +139,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var type = att.tipo.toType();
+			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
 	%]
@@ -161,7 +161,7 @@ public class D[%= clase.nombreClase %]PKTO implements IDTO {
 		
 		for(att in clase.atributos.asOrderedSet()) 
 		{	
-			var type = att.tipo.toType();
+			var type = att.getType();
 			var nombre = att.nombre.firstToLowerCamelCase();
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
 	%]

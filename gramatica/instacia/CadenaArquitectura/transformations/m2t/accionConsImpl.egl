@@ -31,7 +31,12 @@ import [%= clase.paquete %].[%=nomPrefijo%][%=nombreClase%];
  * </pre>
  */
 public class DCmdAccCons[%=nombreClase%]Impl extends DCmdAccCons[%=nombreClase%] {
-
+	
+	/**
+	 * Serial version
+	 */
+	private static final long serialVersionUID = 1L;
+	
   /**
    * Ejecuta el [%=tipoComando%]
    */

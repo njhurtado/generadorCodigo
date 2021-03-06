@@ -39,7 +39,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAOFactory;
  
  	 [% var daos = Arq!Dao.all;
 		for(d in daos) {
-		  var nombreDao = d.getNombreClase();
+		  var nombreDao = d.nombreClase;
 	%]
 		/**
 		 * Genera un nuevo objeto DAO de tipo [%=nombreDao%]
@@ -67,16 +67,4 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAOFactory;
     return retorno;
   }	
   
-  operation Arq!Dao getNombreClase() : String {
-     var retorno = self.nombre.substring(0,1).toUpperCase();
-  	 if (self.nombre.indexOf("_") > 0) {
-  	 	retorno = "";
-	  	for (t in self.nombre.toLowerCase.split("_")) {
-	  	  	retorno += t.substring(0,1).toUpperCase() + t.substring(1);
-	  	}
-  	 } else {
-  	 	retorno += self.nombre.substring(1).toLowerCase();
-  	 }
-    return retorno;
-  }	
  %]

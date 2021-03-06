@@ -31,6 +31,12 @@ import co.gov.dian.muisca.arquitectura.interfaces.implgenerica.comandos.DComando
  * </pre>
  */
 public class DCmdAccElim[%=nombreClase%] extends DComandoAccion {
+
+	/**
+	 * Serial version
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected D[%=nombreClase%]PKTO [%=nombreClase.firstToLowerCase()%]PK;
 
 	public void inicializar(D[%=nombreClase%]PKTO [%=nombreClase.firstToLowerCase()%]PK) {
@@ -63,7 +69,7 @@ public class DCmdAccElim[%=nombreClase%] extends DComandoAccion {
 		{		
 		//att pk		
 		var attPk=to.pk.atributos.collect(a|text+to.nombre.firstToUpperCamelCase()+"PK"+
-		".get"+a.nombre.firstToUpperCamelCase()+"()\","+to.nombre.firstToLowerCamelCase()+"PK"+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
+		".get"+a.nombre.firstToUpperCamelCase()+"()\","+nombreClase.firstToLowerCase()+"PK"+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
 		%]
 		[%=attPk%];		
 		[%

@@ -1,5 +1,7 @@
 [% import "../utils.eol"; 
 var nombreClase=clase.nombreClase;
+var nomPkgDao=Arq!Dao.all.get(0).paquete;
+var nomPkgDaoFactory = nomPkgDao.substring(0,nomPkgDao.indexOf('.dao')+4);
 %]
 /**
  * Republica de Colombia
@@ -12,9 +14,9 @@ package [%= clase.paquete %].impl;
 
 import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
 import co.gov.dian.muisca.arquitectura.interfaces.IDAdminPersistencia;
-import [%= clase.paquete.replace('servicios','dao') %].impl.oracle.DDAOFactory[%=modulo.nombre%];
+import [%= nomPkgDaoFactory %].IDDAOFactory[%=nombremodulo%];
+import [%= nomPkgDaoFactory %].impl.DDAOFactory[%=nombremodulo%];
 import [%= clase.paquete.replace('servicios','dao') %].IDDAO[%=nombreClase%];
-import [%= clase.paquete.replace('servicios','dao') %].IDDAOFactory[%=nombremodulo%];
 import [%= clase.paquete %].DCmdSrvElim[%=nombreClase%];
 
 

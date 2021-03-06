@@ -117,9 +117,9 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 		//att pk
 		
 		var attPk=to.pk.atributos.collect(a|text+"pk"+to.nombre.firstToUpperCamelCase()+
-		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+to.nombre.firstToUpperCamelCase()+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
+		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+nombreClase+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
 		//att att
-		var lstAtt=to.att.atributos.select(a|a.nombre <> "NIV_LECTURA" and a.nombre<> "NIV_ESCRITURA" and a.nombre<>"IDE_UUID");
+		var lstAtt=to.att.atributos.select(a|a.isObligatorio="true" and  a.nombre <> "NIV_LECTURA" and a.nombre<> "NIV_ESCRITURA" and a.nombre<>"IDE_UUID");
 		var attAtt=lstAtt.collect(a|text+"att"+to.nombre.firstToUpperCamelCase()+
 		".get"+a.nombre.firstToUpperCamelCase()+"()\",att"+to.nombre.firstToUpperCamelCase()+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
 		%]

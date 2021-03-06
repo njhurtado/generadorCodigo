@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="ASCII"?>
-<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera">
+<sql:Aplication xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sql="http://www.xtext.dian.gov.co/arquitecturadian/dsl/Sql" name="InformacionExtranjera" package="co.gov.dian.muisca.informacionextranjera" sufijoPkg="crs">
   <database>
-    <tables name="IEX_ARCHIVOS_CRS_ANULADOS">
-      <annotations xsi:type="sql:TableDetail" nombreClase="ArchivoCrsAnulado"/>
+    <tables name="IEX_ARCHIVOS_REPORTE_CRS">
+      <annotations xsi:type="sql:TableDetail" nombreClase="ArchivoReporteCrs"/>
       <columns name="IDE_PERSONA_RUT" type="NUMBER" size="10" isNotNull="true"/>
       <columns name="IDE_ARCHIVO" type="NUMBER" size="10" isNotNull="true"/>
       <columns name="NUM_ANIO" type="NUMBER" size="4" isNotNull="true"/>
-      <columns name="IDE_DOCUMENTO_REPORTE" type="NUMBER" size="18"/>
-      <columns name="NUM_REPETICION_DOC_REPORTE" type="NUMBER" size="4"/>
-      <columns name="FEC_ANULACION" type="NUMBER" size="8" isNotNull="true"/>
+      <columns name="IDE_DOCUMENTO_REPORTE" type="NUMBER" size="17" isNotNull="true"/>
+      <columns name="NUM_REPETICION_DOC_REPORTE" type="NUMBER" size="4" isNotNull="true"/>
+      <columns name="FEC_FORMALIZACION" type="NUMBER" size="8"/>
       <columns name="COD_PAIS_RECEPTOR" size="3" isNotNull="true"/>
       <columns name="NUM_CUENTAS" type="NUMBER" size="8" isNotNull="true"/>
-      <columns name="DES_MOTIVO" size="512" isNotNull="true"/>
+      <columns name="IND_ESTADO" size="1" isNotNull="true"/>
       <columns name="IDE_USUARIO_CAMBIO" type="NUMBER" size="10" isNotNull="true"/>
       <columns name="FEC_CAMBIO" type="TIMESTAMP" isNotNull="true"/>
-      <columns name="NIV_ESCRITURA" type="NUMBER" size="8" presicion="5" isNotNull="true"/>
-      <columns name="NIV_LECTURA" type="NUMBER" size="3" presicion="4" isNotNull="true"/>
+      <columns name="NIV_ESCRITURA" type="NUMBER" size="1" isNotNull="true"/>
+      <columns name="NIV_LECTURA" type="NUMBER" size="1" isNotNull="true"/>
       <columns name="IDE_UUID" size="32" isNotNull="true"/>
-      <primarykey name="ARAN_PK" columns="//@database/@tables.0/@columns.0 //@database/@tables.0/@columns.1 //@database/@tables.0/@columns.2"/>
+      <primarykey name="ARRE_PK" columns="//@database/@tables.0/@columns.0 //@database/@tables.0/@columns.1 //@database/@tables.0/@columns.2 //@database/@tables.0/@columns.3 //@database/@tables.0/@columns.4"/>
     </tables>
   </database>
 </sql:Aplication>

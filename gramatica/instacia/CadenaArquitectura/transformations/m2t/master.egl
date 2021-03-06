@@ -118,7 +118,7 @@ import "../utils.eol";
 		accSrc.populate('nomPrefijo', 'DCmdAccAct');
 		accSrc.generate('../../generated/'+nomBuses+'/src/main/java/'+acc.paquete.getUrlCarpeta()+ '/DCmdAccAct'+nomServcio+ '.java');
 		
-			var acc1Src:Template:= TemplateFactory.load('comando.egl');
+		var acc1Src:Template:= TemplateFactory.load('comando.egl');
 		acc1Src.populate('clase', acc);
 		acc1Src.populate('nombremodulo', modulo.nombre);
 		acc1Src.populate('tipoComando', 'Accion');
@@ -179,7 +179,7 @@ import "../utils.eol";
 	}
 	
 	var daos = Arq!Dao.all;
-    	var paqueteFactory = "";
+    var paqueteFactory = "";
 	for(d in daos) {
 		paqueteFactory = d.paquete;
 		var tIdDao:Template:= TemplateFactory.load('iddao.egl');
@@ -193,16 +193,17 @@ import "../utils.eol";
 	}
 
   	var modulos = Arq!Modulo.all;
+  	var nomPkgDaoFactory = paqueteFactory.substring(0,paqueteFactory.indexOf('.dao')+4);
   	for(m in modulos) {
 		var tIdFactoryDao:Template:= TemplateFactory.load('iddaofactory.egl');
 		tIdFactoryDao.populate('Modulo', m);
 		tIdFactoryDao.populate('Paquete', paqueteFactory);
-		tIdFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/IDDAOFactory" +m.nombre.firstToUpperCase() + '.java');
+		tIdFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+nomPkgDaoFactory.replace("\\.", "/") + "/IDDAOFactory" +m.nombre.firstToUpperCase() + '.java');
 				
 		var tFactoryDao:Template:= TemplateFactory.load('ddaofactory.egl');
 		tFactoryDao.populate('Modulo', m);
 		tFactoryDao.populate('Paquete', paqueteFactory);
-		tFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+paqueteFactory.replace("\\.", "/") + "/impl/oracle/DDAOFactory" +m.nombre.firstToUpperCase() + '.java');
+		tFactoryDao.generate('../../generated/'+nomBuses+ '/src/main/java/'+nomPkgDaoFactory.replace("\\.", "/") + "/impl/DDAOFactory" +m.nombre.firstToUpperCase() + '.java');
 				
 	}
 	

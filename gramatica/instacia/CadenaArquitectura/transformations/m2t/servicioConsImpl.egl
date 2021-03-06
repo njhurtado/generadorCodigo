@@ -1,6 +1,9 @@
 [% import "../utils.eol"; 
 var nombreClase=clase.nombreClase;
 var nomPkgDao=Arq!Dao.all.get(0).paquete;
+
+var nomPkgDaoFactory = nomPkgDao.substring(0,nomPkgDao.indexOf('.dao')+4);
+
 %]
 /**
  * Republica de Colombia
@@ -13,9 +16,9 @@ package [%= clase.paquete %].impl;
 
 import co.gov.dian.muisca.arquitectura.general.excepcion.DExcepcion;
 import co.gov.dian.muisca.arquitectura.interfaces.IDAdminPersistencia;
-import [%= nomPkgDao %].IDDAOFactory[%=nombremodulo%];
+import [%= nomPkgDaoFactory %].IDDAOFactory[%=nombremodulo%];
 import [%= nomPkgDao %].IDDAO[%=nombreClase%];
-import [%= nomPkgDao %].impl.oracle.DDAOFactory[%=nombremodulo%];
+import [%= nomPkgDaoFactory %].impl.DDAOFactory[%=nombremodulo%];
 import [%= clase.paquete  %].DCmdSrvCons[%=nombreClase%];
 
 /**
@@ -31,6 +34,11 @@ import [%= clase.paquete  %].DCmdSrvCons[%=nombreClase%];
  * </pre>
  */
 public class DCmdSrvCons[%=nombreClase%]Impl extends DCmdSrvCons[%=nombreClase%] {
+
+	/**
+	 * Serial version
+	 */
+	private static final long serialVersionUID = 1L;
 
   /**
    * Ejecuta el comando de servicio.
