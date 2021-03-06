@@ -4,7 +4,7 @@ var stringServicio=clase.paquete.replace('co.gov.dian.muisca.','').replace('acci
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -21,7 +21,7 @@ import [%= clase.paquete %].[%=nomPrefijo%][%=nombreClase%];
 /**
  * <p>Titulo: Proyecto MUISCA</p>
  * <p>Descripcion: [%=tipoComando%] utilizado para actualizar un objeto [%=nombreClase%].</p>
- * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Copyright: Copyright (c) 2021</p>
  * <p>Company: DIAN</p>
  *
  * @author gencode

@@ -3,7 +3,7 @@ var nombreClase=clase.nombreClase;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -21,7 +21,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 /**
  * <p>Titulo: Proyecto MUISCA</p>
  * <p>Descripcion: Objeto de transporte para [%= nombreClase%].</p>
- * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Copyright: Copyright (c) 2021</p>
  * <p>Company: DIAN</p>
  *
  * @author user

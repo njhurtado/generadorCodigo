@@ -6,7 +6,7 @@
 
 /**
  * Republica de Colombia
- * Copyright (c) 2019 Dirección de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -20,7 +20,7 @@ import [%=paquete%].*;
 /**
  * <p>Titulo: Proyecto MUISCA</p>
  * <p>Descripcion: Fabrica de Objetos de acceso a datos para [%=nombreClase%].</p>
- * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Copyright: Copyright (c) 2021</p>
  * <p>Company: DIAN</p>
  *
  * @author 

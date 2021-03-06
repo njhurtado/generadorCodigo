@@ -5,7 +5,7 @@ var paqueteTO=Arq!To.all.get(0).paquete;
 
 /**
  * Republica de Colombia
- * Copyright (c) 2004 Dirección de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -23,7 +23,7 @@ import co.gov.dian.muisca.arquitectura.interfaces.implgenerica.comandos.*;
 /**
  * <p>Titulo: Proyecto MUISCA</p>
  * <p>Descripcion: Comando de servicio utilizado para eliminar un objeto [%=nombreClase%].</p>
- * <p>Copyright: Copyright (c) 2019</p>
+ * <p>Copyright: Copyright (c) 2021</p>
  * <p>Company: DIAN</p>
  *
  * @author gen code
