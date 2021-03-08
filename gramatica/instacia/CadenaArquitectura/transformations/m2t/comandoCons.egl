@@ -121,7 +121,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends  DComando[%=tipoComando%] {
 		for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
 		{		
 		//att pk		
-		var attPk=to.pk.atributos.collect(a|text+"pk"+to.nombre.firstToUpperCamelCase()+
+		var attPk=to.pk.atributos.collect(a|text+"pk"+nombreClase+
 		".get"+a.nombre.firstToUpperCamelCase()+"()\",pk"+nombreClase+".get"+a.nombre.firstToUpperCamelCase()+"())").concat(";\n \t \t");
 		%]
 		[%=attPk%];		
