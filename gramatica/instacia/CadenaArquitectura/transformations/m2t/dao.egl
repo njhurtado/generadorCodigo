@@ -136,7 +136,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	/** Atributos de [%=nombreClase%] */
 	private D[%=nombreClase%]AttTO att[%=nombreClase%];
 	
-	[%=lstPTKTos.concat("; \n \t \t")%];
+	[%=lstPTKTos.concat("; \n \t \t")%]
  
  /**
 	 * Inicializa la consulta por llave primaria.
@@ -686,16 +686,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 		validarParametros(operacion,parametros);
 		return true;
 	}
-	
-	private java.math.BigInteger getBigInteger(Object value) {
 		
-		if(value!=null ) {
-			return new java.math.BigInteger(value.toString());
-		}
-		
-		return null;		
-		
-	}
 }
  
   
