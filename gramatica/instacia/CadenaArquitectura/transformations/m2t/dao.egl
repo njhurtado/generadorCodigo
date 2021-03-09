@@ -127,7 +127,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
  
  public class  DDAO[%=nombreClase%] extends DDAO implements IDDAO[%=nombreClase%] {
  
- /** colección de objetos D[%=nombreClase%]TO */
+    /** colección de objetos D[%=nombreClase%]TO */
 	private Collection<D[%=nombreClase%]TO> objetos[%=nombreClase%];
 	/** Objeto de transporte de [%=nombreClase%] */
 	private D[%=nombreClase%]TO to[%=nombreClase%];
@@ -138,7 +138,7 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 	
 	[%=lstPTKTos.concat("; \n \t \t")%]
  
- /**
+    /**
 	 * Inicializa la consulta por llave primaria.
 	 * @param pk[%=nombreClase%] Llave primaria de [%=nombreClase%]
 	 */
@@ -214,17 +214,17 @@ import co.gov.dian.muisca.arquitectura.general.persistencia.dao.DDAO;
 			case ACTUALIZAR:
 				sql.append("update [%=Dao.nombre%]")
 					.append(" set [%=attsUpdate.concat(",")%]")
-					.append(" where [%=pksUpdate.concat(",")%]");
+					.append(" where [%=pksUpdate.concat(" and ")%]");
 				m.put("sentencia1", sql.toString());
 				break;
 			case ELIMINAR:
 				sql.append("delete from [%=Dao.nombre%]")
-					.append(" where [%=pksUpdate.concat(",")%]");
+					.append(" where [%=pksUpdate.concat(" and ")%]");
 				m.put("sentencia1", sql.toString());
 				break;
 			case CONSULTAR_POR_PK:
 				sql.append("select * from [%=Dao.nombre%]")
-					.append(" where [%=pksUpdate.concat(",")%]");
+					.append(" where [%=pksUpdate.concat(" and ")%]");
 				m.put("sentencia1", sql.toString());
 				break;
 			case CONSULTA_GENERICA:
