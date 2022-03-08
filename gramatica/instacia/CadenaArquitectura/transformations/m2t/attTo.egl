@@ -1,7 +1,7 @@
 [% import "../utils.eol"; %]
 /**
  * Republica de Colombia
- * Copyright (c) 2021 Dirección de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 DirecciÃ³n de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -80,20 +80,21 @@ public class D[%= clase.nombreClase %]AttTO implements IDTO {
 			var nombreUpper =att.nombre.firstToUpperCamelCase();
 			if(nombre<>"nivLectura" and nombre<>"nivEscritura" and nombre<>"ideUuid"){
 	%]
-		/**
-	 	* Devuelve el valor de [%=nombre%].
-	 	* @return Un objeto [%=type%] 
-	 	*/
-		public [%=type%] get[%=nombreUpper%] (){
-			return [%=nombre%];
-		}
-		/**
-		 * Establece el valor de [%=nombre%].
-		 * @param [%=nombre%] El nuevo valor de [%=nombre%]
-		 */
-		public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
-			this.[%=nombre%] = [%=nombre%];
-		}
+	/**
+ 	 * Devuelve el valor de [%=nombre%].
+ 	 * @return Un objeto [%=type%] 
+ 	 */
+	public [%=type%] get[%=nombreUpper%] (){
+		return [%=nombre%];
+	}
+	
+	/**
+	 * Establece el valor de [%=nombre%].
+	 * @param [%=nombre%] El nuevo valor de [%=nombre%]
+	 */
+	public void set[%=nombreUpper%]([%=type%] [%=nombre%]) {
+		this.[%=nombre%] = [%=nombre%];
+	}
 		
 	[%
 			}
@@ -101,7 +102,7 @@ public class D[%= clase.nombreClase %]AttTO implements IDTO {
 	%]
 	
 	/**
-	 * Devuelve una representación en String del objeto.
+	 * Devuelve una representaciÃ³n en String del objeto.
 	 * @return String
 	 */
 	public String toString() {
@@ -123,6 +124,5 @@ public class D[%= clase.nombreClase %]AttTO implements IDTO {
 	%]
 		return builder.toString();
 	}
-	
-	
+		
 }
