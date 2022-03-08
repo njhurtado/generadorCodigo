@@ -4,7 +4,7 @@ var paqueteTO=clase.detalle.select(c|c.isTypeOf(Arq!To)).first().paquete;
 %]
 /**
  * Republica de Colombia
- * Copyright (c) 2021 Direcci髇 de Impuestos y Aduanas Nacionales.
+ * Copyright (c) 2021 Direcci贸n de Impuestos y Aduanas Nacionales.
  * (DIAN - www.dian.gov.co).  Todos los Derechos reservados.
  *
  * $Header:$
@@ -36,65 +36,124 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	public static final int CONSULTA_GENERICA = 1;
 	[%		//tipo operacion por fks
 		var text="public static final int CONSULTAR_POR_";
-		var cont=1;
+		var cont=2;
 		var lstPTKTos=new Set;
 		var lstMetodosPTKTos=new Set;
-		var lstCaseValidacion=new Set;
+		var lstCaseValidacion=new OrderedSet;
 		var lstAsignar=new Set;
+		var lstCtrl=new Set;
+		var strLstTipoOper=new OrderedSet;
+			
 		
 		for(to in clase.detalle.select(c|c.isTypeOf(Arq!To)).asOrderedSet()) 
 		{		
 		//Arq!ModoCombo	
-		var lst=to.att.atributos.select(a|a.isModoCombo() and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
-		var strLst=lst.collect(a|text+a.getNomClaseRefModoCombo()+'='+(cont++)).concat("; \n \t \t");	
-		
-		for(a in lst){
-		var nameUpperCamelCase=a.getNomClaseRefModoComboCamelCase();
-		//nameUpperCamelCase.println("nameUpperCamelCase----->");
-		
-		if(nameUpperCamelCase=""){
-		continue;
-		}
-		//add objetos pk fk
-		lstPTKTos.add("/** Llave primaria de "+nameUpperCamelCase+" */ \n \t protected D"+nameUpperCamelCase+'PKTO pk'+nameUpperCamelCase);
-			// inicializar por fks
-		lstMetodosPTKTos.add("/**\n * Inicializa la consulta por "+nameUpperCamelCase+". \n \t* @param pk"+nameUpperCamelCase+
-			" Llave primaria de "+nameUpperCamelCase+" \n \t*/\n"+
-		 "\t public void inicializarConsultarPor"+nameUpperCamelCase
-		 +"(D"+nameUpperCamelCase+"PKTO pk"+nameUpperCamelCase+
-		 ") { \n \t  tipoOperacion = CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+";\n \t  this.pk"+nameUpperCamelCase+" = pk"+
-		 nameUpperCamelCase+";\n \t 	objetos"+nombreClase+"= null;\n \t}"
-		 );
-		 //case para swich
-		 lstCaseValidacion.add("case CONSULTAR_POR_"+a.getNomClaseRefModoCombo()+":\n"
-				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+"\",pk"+nameUpperCamelCase+");\n"
-				+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"()\",pk"+nameUpperCamelCase+".getIde"+nameUpperCamelCase+"());\n"
-				+"\t\t break;");
+			var lst=to.att.atributos.select(a|a.isModoCombo() and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
+			var lstPks=to.pk.atributos.select(a|a.isModoCombo() and a.anotaciones.select(an|an.isTypeOf(ModoCombo)).first.args <> null);
+			var strLst=lst.collect(a|text+a.getNomClaseRefModoCombo()+'='+(cont++)).concat("; \n \t \t");	
+			
+			for(a in lst){
+				var nombreTablaRef = a.getNomClaseRefModoCombo();
+				var nameUpperCamelCase=nombreTablaRef.firstToUpperCamelCaseClase();
+				var claseReferencia = Arq!To.all.select(n | n.nombre = nombreTablaRef).first();
+				var nombreClaseReferencia = claseReferencia.nombreClase;
+				var pksForanea = Arq!PkTo.all.select(n | n.nombre = nombreTablaRef).first();
 				
-		lstAsignar.add("copia.pk"+nameUpperCamelCase+"=pk"+nameUpperCamelCase+";\n");
-		
-		}
+				//nameUpperCamelCase.println("nameUpperCamelCase----->");
+				
+				if(nombreClaseReferencia=""){
+					continue;
+				}
+				if(not lstCtrl.includes(nombreClaseReferencia)){
+					strLstTipoOper.add(text+nombreClaseReferencia.toUpperCase()+"=" + cont.toString() +";");
+					cont++;
+					lstCtrl.add(nombreClaseReferencia);
+					
+						//add objetos pk fk
+					lstPTKTos.add("/** Llave primaria de "+nombreClaseReferencia+" */\n\tprotected D"+nombreClaseReferencia+'PKTO pk'+nombreClaseReferencia);
+						// inicializar por fks
+					lstMetodosPTKTos.add("/**\n \t\t * Inicializa la consulta por "+nombreClaseReferencia+". \n\t * @param pk"+nombreClaseReferencia+
+						" Llave primaria de "+nombreClaseReferencia+" \n \t */\n"+
+					 "\tpublic void inicializarConsultarPor"+nombreClaseReferencia
+					 +"(D"+nombreClaseReferencia+"PKTO pk"+nombreClaseReferencia+
+					 ") { \n \t  tipoOperacion = CONSULTAR_POR_"+nombreClaseReferencia.toUpperCase()+";\n \t  this.pk"+nombreClaseReferencia+" = pk"+
+					 nombreClaseReferencia+";\n \t 	this.objetos"+nombreClase+"= null;\n \t}"
+					 );
+					 //case para swich
+					 lstCaseValidacion.add("case CONSULTAR_POR_"+nombreClaseReferencia.toUpperCase()+":\n\t\t"
+							+"\t\tparametros.put(this.getClass().getName()+\":validar:pk"+nombreClaseReferencia+"\",pk"+nombreClaseReferencia+");\n");						
+					for(pkf in pksForanea.atributos.asOrderedSet()) 
+					{	
+						lstCaseValidacion.add("\t\tparametros.put(this.getClass().getName()+\":validar:pk"+nombreClaseReferencia+".get"+pkf.nombre.firstToUpperCamelCase()+"()\",pk"+nombreClaseReferencia+".get"+pkf.nombre.firstToUpperCamelCase()+"());\n");
+					}
+					
+					lstCaseValidacion.add("\t\tbreak;");		
+					lstAsignar.add("copia.pk"+nombreClaseReferencia+"=pk"+nombreClaseReferencia+";\n");
+				}	
+				
+			}
+			
+			for(a in lstPks){
+				var nombreTablaRef = a.getNomClaseRefModoCombo();
+				var nameUpperCamelCase=nombreTablaRef.firstToUpperCamelCaseClase();
+				var claseReferencia = Arq!To.all.select(n | n.nombre = nombreTablaRef).first();
+				var nombreClaseReferencia = claseReferencia.nombreClase;
+				var pksForanea = Arq!PkTo.all.select(n | n.nombre = nombreTablaRef).first();
+				
+				//nameUpperCamelCase.println("nameUpperCamelCase----->");
+				
+				if(nombreClaseReferencia=""){
+					continue;
+				}
+				if(not lstCtrl.includes(nombreClaseReferencia)){
+					strLstTipoOper.add(text+nombreClaseReferencia.toUpperCase()+"=" + cont.toString() +";");
+					cont++;
+					lstCtrl.add(nombreClaseReferencia);
+					//add objetos pk fk
+					lstPTKTos.add("/** Llave primaria de "+nombreClaseReferencia+" */ \n\tprotected D"+nombreClaseReferencia+'PKTO pk'+nombreClaseReferencia);
+						// inicializar por fks
+					lstMetodosPTKTos.add("/**\n\t * Inicializa la consulta por "+nombreClaseReferencia+". \n \t * @param pk"+nombreClaseReferencia+
+						" Llave primaria de "+nombreClaseReferencia+" \n \t */\n"+
+					 "\tpublic void inicializarConsultarPor"+nombreClaseReferencia
+					 +"(D"+nombreClaseReferencia+"PKTO pk"+nombreClaseReferencia+
+					 ") { \n \t  tipoOperacion = CONSULTAR_POR_"+nombreClaseReferencia.toUpperCase()+";\n \t  this.pk"+nombreClaseReferencia+" = pk"+
+					 nombreClaseReferencia+";\n \t 	this.objetos"+nombreClase+"= null;\n \t}"
+					 );
+					 //case para swich
+					 lstCaseValidacion.add("case CONSULTAR_POR_"+nombreClaseReferencia.toUpperCase()+":\n\t\t"
+							+"\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nombreClaseReferencia+"\",pk"+nombreClaseReferencia+");\n");						
+					for(pkf in pksForanea.atributos.asOrderedSet()) 
+					{	
+						lstCaseValidacion.add("\t\t parametros.put(this.getClass().getName()+\":validar:pk"+nombreClaseReferencia+".get"+pkf.nombre.firstToUpperCamelCase()+"()\",pk"+nombreClaseReferencia+".get"+pkf.nombre.firstToUpperCamelCase()+"());\n");
+					}
+					
+					lstCaseValidacion.add("\t\t break;");		
+					lstAsignar.add("copia.pk"+nombreClaseReferencia+"=pk"+nombreClaseReferencia+";\n");					
+				}
+								
+			}
 			%]		
-		[%=strLst%][% if(strLst.length()>0){%];[%}%]
 				
 		[%
 		}	
 		%]
-		
+	
+	[%=strLstTipoOper.concat("\t \t")%]
+	
 	[%=lstPTKTos.concat("; \n \t \t")%] [% if(lstPTKTos.size()>0){%];[%}%]
 
 	protected D[%=nombreClase%]TO to[%=nombreClase%];
 
-	/** Tipo de operaci髇 de consulta */
+	/** Tipo de operaci贸n de consulta */
 	protected int tipoOperacion = -1;
-	/** Colecci髇 de objetos D[%=nombreClase%]TO */
+	/** Colecci贸n de objetos D[%=nombreClase%]TO */
 	protected Collection<D[%=nombreClase%]TO> objetos[%=nombreClase%];
 		
 	[%=lstMetodosPTKTos.concat("; \n \t \t")%]
 	
 
 	/**
-	 * Inicializa la consulta gen閞ica de [%=nombreClase%].
+	 * Inicializa la consulta gen茅rica de [%=nombreClase%].
 	 * @param att[%=nombreClase%] Atributos de [%=nombreClase%]
 	 */
 	public void inicializarConsultaGenerica(D[%=nombreClase%]TO to[%=nombreClase%]) {
@@ -103,7 +162,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Devuelve la colecci髇 de objetos [%=nombreClase%] que se hayan consultado.
+	 * Devuelve la colecci贸n de objetos [%=nombreClase%] que se hayan consultado.
 	 * @return Un Collection con objetos D[%=nombreClase%]TO
 	 */
 	public Collection<D[%=nombreClase%]TO> getColeccion[%=nombreClase%]() {
@@ -112,7 +171,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 
 	/**
 	 * Ejecuta el comando de [%=tipoComando%].
-	 * @throws DExcepcion Si ocurre alg鷑 error al realizar la
+	 * @throws DExcepcion Si ocurre alg煤n error al realizar la
 	 * la consulta de [%=nombreClase%]
 	 */
 	[%
@@ -148,18 +207,18 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Obtiene la descripci髇 del comando.
-	 * @return Un String con la descripci髇 del comando
+	 * Obtiene la descripci贸n del comando.
+	 * @return Un String con la descripci贸n del comando
 	 */
 	public String getDescripcion() {
 		return "Permite consultar objetos [%=nombreClase%]";
 	}
 
 	/**
-	 * M閠odo para validar los par醡etros inicializados, invocado
-	 * previamente a la ejecuci髇 del comando.
-	 * @return true si los paretros son v醝dos; false de lo contrario
-	 * @throws DValidarExcepcion Si los par醡etros no son v醠idos
+	 * M茅todo para validar los par谩metros inicializados, invocado
+	 * previamente a la ejecuci贸n del comando.
+	 * @return true si los paretros son v谩idos; false de lo contrario
+	 * @throws DValidarExcepcion Si los par谩metros no son v谩lidos
 	 */
 	public boolean validar() throws DValidarExcepcion {
 		Map<String, Object> parametros=new HashMap<String, Object>();
@@ -177,7 +236,7 @@ public class [%=nomPrefijo%][%=nombreClase%] extends DComando[%=tipoComando%] {
 	}
 
 	/**
-	 * Para copiar el contenido del comando actual al comando enviado como par醡etro.
+	 * Para copiar el contenido del comando actual al comando enviado como par谩metro.
 	 * @param comando Comando sobre el cual copiar
 	 */
 	public void asignar(IDComando comando) {
