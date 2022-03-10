@@ -45,7 +45,7 @@ var atribsPk = pkes.atributos;
             <cmp:mensajes globalOnly="true" showDetail="true" showSummary="true" />
         </cmp:panelGrid>
 
-        <cmp:commandLink id="lnkActualizar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccAct[%=nombreJsp%]" action="#{[%=nombreJspLower%].consultar[%=nombreJsp%]}" />
+        <cmp:commandLink id="lnkActualizar[%=nombreJsp%]" nombreAccion="[%=stringNomAccion%].DCmdAccAct[%=nombreJsp%]" action="#{[%=nombreJspLower%].actualizar[%=nombreJsp%]}" />
 	
         <cmp:inputHidden id="modoPresentacionSeleccionBO" value="#{[%=nombreJspLower%].modoPresentacionSeleccionBO}" />
         <cmp:inputHidden id="siguienteURL" value="#{[%=nombreJspLower%].siguienteURL}" />
